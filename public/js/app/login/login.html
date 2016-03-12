@@ -1,0 +1,6 @@
+<div>
+	<p>Entrer votre login et votre mot de passe </p>
+	<input ng-keyup="$event.keyCode == 13 && login()" type="text" ng-model="userInfo.username" placeholder="login"/>
+	<input ng-keyup="$event.keyCode == 13 && login()" ng-model="userInfo.password" placeholder="mot de passe"/>
+	<button ng-click="login()">Se connecter</button> {{erreur}}
+</div>
