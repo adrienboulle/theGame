@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="listeCourses">
+<html ng-app="theGame">
 
   <head>
     <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
     <script src="https://code.angularjs.org/1.4.8/angular-resource.js"></script>
-    <link rel="stylesheet" href="css/style.css" />
     <base href="/"></base>
+    <!-- inject:css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- endinject -->
   </head>
 
   <body>
@@ -15,22 +17,8 @@
   </body>
 
   <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
-  <script src="js/app/app.js"></script>
-  <script src="js/app/resources/user.resource.js"></script>
-  <script src="js/app/resources/login.resource.js"></script>
-  <script src="js/app/resources/signup.resource.js"></script>
-  <script src="js/app/services/user.service.js"></script>
-  <script src="js/app/services/login.service.js"></script>
-  <script src="js/app/services/signup.service.js"></script>
-  <script src="js/app/site/site.js"></script>
-  <script src="js/app/login/login.controller.js"></script>
-  <script src="js/app/login/login.js"></script>
-  <script src="js/app/signup/signup.controller.js"></script>
-  <script src="js/app/signup/signup.js"></script>
-  <script src="js/app/accueil/accueil.controller.js"></script>
-  <script src="js/app/accueil/accueil.js"></script>
-
-
-
+  <!-- inject:js -->
+  <script src="app.js"></script>
+  <!-- endinject -->
 
 </html>
