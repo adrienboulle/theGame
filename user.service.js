@@ -9,7 +9,7 @@ function createUser(username, password, role, callback) {
 			callback(err);
 		} else {
 			var user = new User({
-				username: 'admin',
+				username: username,
 				password: hash.toString('base64'),
 				role: role
 			});
@@ -25,7 +25,7 @@ function findByUsername(username, callback) {
 		if (err || err != null) {
 			callback(err);
 		} else if (user.length > 1) {
-			callback('multiple users found, hum...');
+			callback('multiple users found, hum...this is awkward');
 		} else if (user.length == 0) {
 			callback(null, null);
 		} else {
@@ -48,6 +48,25 @@ function findById(id, callback) {
 	})
 }
 
+function signupUser(username, password, passwordConfirmation, callback){
+	if(passwordConfirmation === password && password.length>5){
+		findByUsername(username, function(err, user) {
+			if(user){
+				callback("Nom d'utilisateur déjà utilisé");
+			}else{
+				createUser(username, password, 'ROLE_USER', function(err, user){
+					callback((!err)?null:'Erreur interne', user);
+				})
+			}
+		})
+
+	}else if(passwordConfirmation!=password){
+		callback("Les mot de passes ne sont pas identiques");
+	}else if(password.length<=5){
+		callback("Mot de passe trop petit, veuillez utiliser 6 caractères au minimun");
+	}
+}
+
 // pour debug
 findByUsername('admin', function(err, user) {
 	if (user == null) {
@@ -66,3 +85,4 @@ findByUsername('admin', function(err, user) {
 exports.findByUsername = findByUsername;
 exports.findById = findById;
 exports.createUser = createUser;
+exports.signupUser = signupUser;

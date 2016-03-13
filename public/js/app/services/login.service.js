@@ -3,7 +3,7 @@ angular.module('listeCourses')
 		'$q',
 		'LoginResource',
 		function($q, LoginResource) {
-  		
+	
 	  		var user = {
 	  			isAuthenticated: false,
 	  			name: undefined

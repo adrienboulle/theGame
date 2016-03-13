@@ -13,6 +13,4 @@ angular.module('listeCourses')
 					$state.reload();
 				})
 			}
-
-
 		}])
