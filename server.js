@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 
-var auth = require('./authentification');
+var auth = require('./authentification.js');
 
 var passport = require('passport')
 var passportLocal = require('passport-local')
