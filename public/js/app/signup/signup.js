@@ -1,13 +1,13 @@
 angular.module('listeCourses')
 	.config(function($stateProvider) {
 		$stateProvider
-	    	.state('site.login', {
+	    	.state('site.signup', {
 	    		parent: 'site',
-	      		url: '/login',
+	      		url: '/signup',
 	      		views: {
 	        		"content@": {
-	        			templateUrl: 'js/app/login/login.html',
-	      				controller: 'LoginController'
+	        			templateUrl: 'js/app/signup/signup.html',
+	      				controller: 'SignupController'
 	        		}
 	      		},
 	      		resolve: {

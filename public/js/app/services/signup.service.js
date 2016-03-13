@@ -12,7 +12,7 @@ angular.module('listeCourses')
 			return {
 				signup: function(userInfo) {
 					var p = $q.defer();
-					SignupResource.login(userInfo).$promise.then(function(data) {
+					SignupResource.signup(userInfo).$promise.then(function(data) {
 						p.resolve(data);
 					}, function(err) {
 						p.reject(err);

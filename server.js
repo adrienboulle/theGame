@@ -3,7 +3,7 @@ var logger = require('express-logger');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
-
+var userService = require('./user.service.js');
 var auth = require('./authentification.js');
 
 var passport = require('passport')
@@ -56,8 +56,14 @@ app.get('/api/users', auth.hasHab(['ROLE_ADM']), function(req, res) {
 	res.send({admin: true});
 });
 
-app.post('/apu/signup', function(req, res) {
-	res.sendStatus(200);
+app.post('/api/signup', function(req, res) {
+	userService.signupUser(req.body.username, req.body.password, req.body.passwordConfirmation, function(err, user){
+		if(!err || err==null){
+			res.sendStatus(200);
+		}else{
+			res.sendStatus(400, err);
+		}
+	});
 });
 
 app.all('/*', function(req, res) {
