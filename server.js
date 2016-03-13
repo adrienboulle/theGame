@@ -56,6 +56,10 @@ app.get('/api/users', auth.hasHab(['ROLE_ADM']), function(req, res) {
 	res.send({admin: true});
 });
 
+app.post('/apu/signup', function(req, res) {
+	res.sendStatus(200);
+});
+
 app.all('/*', function(req, res) {
 	res.sendFile('/public/index.html', { root: __dirname });
 });

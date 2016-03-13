@@ -1,0 +1,7 @@
+<div>
+	<p>Veuillez completer les informations ci dessous</p>
+	<input ng-keyup="$event.keyCode == 13 && signup()" type="text" ng-model="userInfo.username" placeholder="Enter user name"/>
+	<input ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.password" placeholder="Enter password"/>
+	<input ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.passwordConfirmation" placeholder="Confirm password"/>
+	<button ng-click="signup()">S'enregistrer</button> {{erreur}}
+</div>
