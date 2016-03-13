@@ -9,7 +9,7 @@ function verifyCredentials(username, password, done) {
 	userService.findByUsername(username, function(err, user) {
 		if (err || err != null) {
 			done(err, null);
-		} else {
+		} else if (user) {
 			var combined = new Buffer(user.password, 'base64');
 			cryptoPassword.verifyPassword(password, combined, function(err, loggedIn) {
 				if (err) done(err, null);
@@ -19,6 +19,8 @@ function verifyCredentials(username, password, done) {
 					done(null, null);
 				}
 			})
+		} else {
+			done(null, null);
 		}
 	})
 }
