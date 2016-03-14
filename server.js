@@ -1,14 +1,20 @@
-var express = require('express');
-var logger = require('express-logger');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var expressSession = require('express-session');
-var userService = require('./user.service.js');
-var auth = require('./authentification.js');
+var express 		= require('express');
+var app 			= express();
+var port 			= process.env.PORT || 8085;
+var mongoose 		= require('mongoose');
+var passport 		= require('passport');
 
-var app = express();
+var logger 			= require('express-logger');
+var bodyParser 		= require('body-parser');
+var cookieParser 	= require('cookie-parser');
+var expressSession 	= require('express-session');
 
-auth.config(app);
+var configDb 		= require('./config/database.js');
+
+var path 			= require('path');
+
+// configuration =============================================================
+mongoose.connect(configDb.url);
 
 app.use(logger({path: __dirname + '/logfile.txt'}));
 app.use(express.static(__dirname + '/public'));
@@ -19,53 +25,16 @@ app.use(expressSession({
 	resave: false,
 	saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());	
 
-app.get('/api/login', function(req, res) {
-	var user;
-	if (req.user) {
-		user = {
-			username: req.user.username,
-			role: req.user.role
-		}
-	} else {
-		user = {}
-	}
+global.appRoot = path.resolve(__dirname);
 
-	res.send({
-		isAuthenticated: req.isAuthenticated(),
-		user: user
-	});
-});
+// routes ====================================================================
+require('./app/routes/routes.js')(app, passport);
+require('./config/passport.js')(passport);
 
-app.delete('/api/login', function(req, res) {
-	req.logout();
-	res.sendStatus(200);
-});
-
-app.post('/api/login', auth.getStrategy(), function(req, res) {
-	res.sendStatus(200);
-});
-
-app.get('/api/users', auth.hasHab(['ROLE_ADM']), function(req, res) {
-	res.send({admin: true});
-});
-
-app.post('/api/signup', function(req, res) {
-	userService.signupUser(req.body.username, req.body.password, req.body.passwordConfirmation, function(err, user){
-		if(!err || err==null){
-			res.sendStatus(200);
-		}else{
-			res.sendStatus(400, err);
-		}
-	});
-});
-
-app.all('/*', function(req, res) {
-	res.sendFile('/public/index.html', { root: __dirname });
-});
-
-var port = process.env.PORT || 8085;
-
+// launch ====================================================================
 app.listen(port, function() {
 	console.log('http://localhost:' + port)
 });
