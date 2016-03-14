@@ -63,10 +63,13 @@ gulp.task('inject', function () {
     	.pipe(gulp.dest('./public/'));
 });
 
-
 gulp.task('build', function(callback) {
-  runSequence('clean',
+	runSequence('clean',
               'import',
 			  'inject',
               callback);
+	
+	gulp.watch('sources/**/*', ['build']);
 });
+
+gulp.task('default', ['build']);
