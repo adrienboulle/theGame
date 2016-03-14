@@ -15,8 +15,16 @@
     "passport": "^0.3.2"
   },
   "devDependencies": {
-    "gulp-inject": "^3.0.0",
-    "gulp-uglify": "^1.5.3"
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.1",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.5",
+    "stream-series": "^0.1.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
