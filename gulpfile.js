@@ -4,8 +4,10 @@ var runSequence = require('run-sequence');
 var inject = require('gulp-inject');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var series = require('stream-series');
 var gulpUtil = require('gulp-util');
 var es = require('event-stream');
+var merge = require('merge-stream');
 var angularFilesort = require('gulp-angular-filesort');
 
 var conf = {
@@ -17,8 +19,8 @@ gulp.task('clean', function () {
 		.pipe(clean());
 });
 
-gulp.task('dev', function () {
-	var target = gulp.src('./sources/index.html')
+gulp.task('import', function () {
+	gulp.src('./sources/index.html')
 		.pipe(gulp.dest('./public/'));
   	
 	var htmlStream = gulp.src(['./sources/js/app/**/*.html'])
@@ -26,13 +28,16 @@ gulp.task('dev', function () {
 
   	var cssStream = gulp.src(['./sources/**/*.css'])
   		.pipe(conf.prod ? concat('style.css') : gulpUtil.noop())
-  		.pipe(gulp.dest('./public/'));
-
-	return jsStream = gulp.src(['./sources/**/*.js'])
+  		.pipe(gulp.dest('./public/css/'));
+		
+	var jsAppStream = gulp.src(['./sources/js/app/**/*.js'])
 		.pipe(angularFilesort())
 		.pipe(conf.prod ? concat('app.js') : gulpUtil.noop())
   		.pipe(conf.prod ? uglify().on('error', gulpUtil.log) : gulpUtil.noop())
-	  	.pipe(gulp.dest('./public/'));
+		.pipe(gulp.dest('./public/js/app/'));
+				
+	return merge(jsAppStream, cssStream, htmlStream);
+		
 });
 
 gulp.task('inject', function () {
@@ -40,17 +45,28 @@ gulp.task('inject', function () {
 
   	var cssStream = gulp.src(['./public/**/*.css']);
 
-	var jsStream = gulp.src(['./public/**/*.js']);
+	var pathJsAngular = (conf.prod) ? ['./sources/js/imports/angular.min.js'] : ['./sources/js/imports/angular.js'];
+	var pathJsDep = (conf.prod) ? ['./sources/js/imports/**/*.min.js', '!./sources/js/imports/angular.min.js'] : ['./sources/js/imports/**/*.js', '!./sources/js/imports/**/*.min.js', '!./sources/js/imports/angular.js'];
 
+	var jsAng = gulp.src(pathJsAngular)
+	  	.pipe(gulp.dest('./public/js/imports'));
+	
+	var jsDepStream = gulp.src(pathJsDep)
+		.pipe(conf.prod ? concat('imports.js') : gulpUtil.noop())
+	  	.pipe(gulp.dest('./public/js/imports'));
+	
+	var jsAppStream = gulp.src(['./public/js/app/**/*.js']);
+		
 	return target
-		.pipe(inject(es.merge(cssStream, jsStream), {relative: true}))
+		.pipe(inject(cssStream, {relative: true}))
+		.pipe(inject(series(jsAng, jsDepStream, jsAppStream), {relative: true}))
     	.pipe(gulp.dest('./public/'));
 });
 
 
 gulp.task('build', function(callback) {
   runSequence('clean',
-              'dev',
+              'import',
 			  'inject',
               callback);
 });
