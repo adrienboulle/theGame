@@ -6,10 +6,9 @@ var expressSession = require('express-session');
 var userService = require('./user.service.js');
 var auth = require('./authentification.js');
 
-var passport = require('passport')
-var passportLocal = require('passport-local')
-
 var app = express();
+
+auth.config(app);
 
 app.use(logger({path: __dirname + '/logfile.txt'}));
 app.use(express.static(__dirname + '/public'));
@@ -20,11 +19,6 @@ app.use(expressSession({
 	resave: false,
 	saveUninitialized: false
 }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new passportLocal.Strategy(auth.verifyCredentials));
 
 app.get('/api/login', function(req, res) {
 	var user;
@@ -48,7 +42,7 @@ app.delete('/api/login', function(req, res) {
 	res.sendStatus(200);
 });
 
-app.post('/api/login', passport.authenticate('local'), function(req, res) {
+app.post('/api/login', auth.getStrategy(), function(req, res) {
 	res.sendStatus(200);
 });
 

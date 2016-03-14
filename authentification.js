@@ -5,6 +5,17 @@ var passportLocal = require('passport-local')
 
 var userService = require('./user.service.js');
 
+function config(app) {
+	app.use(passport.initialize());
+	app.use(passport.session());	
+
+	passport.use(new passportLocal.Strategy(verifyCredentials));
+}
+
+function getStrategy(app) {
+	return passport.authenticate('local');
+}
+
 function verifyCredentials(username, password, done) {
 	userService.findByUsername(username, function(err, user) {
 		if (err || err != null) {
@@ -61,5 +72,7 @@ passport.deserializeUser(function(id, done) {
 	})
 });
 
+exports.config = config;
+exports.getStrategy = getStrategy;
 exports.hasHab = hasHab;
 exports.verifyCredentials = verifyCredentials;
