@@ -11,8 +11,6 @@ var expressSession 	= require('express-session');
 
 var configDb 		= require('./config/database.js');
 
-var path 			= require('path');
-
 // configuration =============================================================
 mongoose.connect(configDb.url);
 
@@ -27,8 +25,6 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());	
-
-global.appRoot = path.resolve(__dirname);
 
 // routes ====================================================================
 require('./app/routes/routes.js')(app, passport);

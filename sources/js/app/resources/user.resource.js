@@ -4,13 +4,17 @@
 			'$resource',
 			'$location',
 			'$q',
-			function($resource, $location, $q) {
-	  			
-	  			return $resource('/api/user/:id', {id: '@id'}, {
-					'get': {
-						method: 'GET'
-					}
-	  			})
+			UserResource
+		]);
 
-	  		}]);
+	function UserResource($resource, $location, $q) {
+			
+		return $resource('/api/user/:id', {id: '@id'}, {
+			'get': {
+				method: 'GET'
+			}
+		})
+
+	}
+
 })();

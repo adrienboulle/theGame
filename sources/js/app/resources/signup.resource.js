@@ -4,13 +4,17 @@
 			'$resource',
 			'$location',
 			'$q',
-			function($resource, $location, $q) {
-	  			
-	  			return $resource('/api/signup', {}, {
-					'signup': {
-						method: 'POST'
-					}
-	  			})
+			SignupResource
+		]);
 
-	  		}]);
+	function SignupResource($resource, $location, $q) {
+			
+		return $resource('/api/signup', {}, {
+			'signup': {
+				method: 'POST'
+			}
+		})
+
+	}
+
 })();

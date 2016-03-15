@@ -5,14 +5,18 @@
 			'$state',
 			'LoginService',
 			'user',
-			function($scope, $state, LoginService, user) {
-			
-				$scope.user = user;
+			AccueilController
+		]);
 
-				$scope.logout = function() {
-					LoginService.logout().then(function() {
-						$state.reload();
-					})
-				}
-			}])
+	function AccueilController($scope, $state, LoginService, user) {
+	
+		$scope.user = user;
+
+		$scope.logout = function() {
+			LoginService.logout().then(function() {
+				$state.reload();
+			})
+		}
+	}
+
 })();
