@@ -1,39 +1,34 @@
-var mongoose = require('mongoose');
+'user strict'
 
-var userSchema = mongoose.Schema({
+var mongoose = require('mongoose'),
+	Schema   = mongoose.Schema,
+	crypto   = require('../utils/crypto.js');
+
+var UserSchema = new Schema({
 	username: String,
 	password: String,
 	role: String
 });
 
-userSchema.methods.verifyCredentials = function(username, password, done) {
-	this.findByUsername(username, function(err, user) {
-		if (err || err != null) {
-			done(err, null);
-		} else if (user) {
-			var combined = new Buffer(user.password, 'base64');
-			cryptoPassword.verifyPassword(password, combined, function(err, loggedIn) {
-				if (err) done(err, null);
-				if (loggedIn) {
-					done(null, {_id:user._id.toString(), name: user.username, role: user.role});
-				} else {
-					done(null, null);
-				}
-			})
-		} else {
-			done(null, null);
-		}
+UserSchema.methods.verifyCredentials = function(password, callback) {
+	var combined = new Buffer(this.password, 'base64');
+	crypto.verifyPassword(password, combined, function(err, loggedIn) {
+		return callback(err, loggedIn);
 	})
 }
 
-userSchema.methods.hasHab = function(roles) {
-	var succes = false;
-	for (var i = 0; i < roles.length; i++) {
-		if (req.user.role === roles[i]) {
-			return true;
-		}
+UserSchema.methods.hasRole = function(roles) {
+	if (!roles) {
+		throw 'hasHab function take an array in parameter'
+	} else {
+		return roles.indexOf(this.role) !== -1;
 	}
-	return false;
+}
+
+UserSchema.methods.toJson = function() {
+	var obj = this.toObject();
+  	delete obj.password;
+  	return obj;
 } 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);

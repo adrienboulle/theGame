@@ -1,3 +1,5 @@
+'user strict'
+
 var crypto = require('crypto');
 
 // larger numbers mean better security, less

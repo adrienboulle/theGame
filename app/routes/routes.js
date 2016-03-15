@@ -1,6 +1,8 @@
-var User = require('../models/user.js');
-var passportLocal = require('passport-local');
-var crypto = require('../utils/crypto.js')
+'user strict'
+
+var User = require('../models/user.js'),
+	passportLocal = require('passport-local'),
+	crypto = require('../utils/crypto.js');
 
 module.exports = function(app, passport) {
 
@@ -15,19 +17,9 @@ module.exports = function(app, passport) {
 
 	// get current user
 	app.get('/api/login', function(req, res) {
-		var user;
-		if (req.user) {
-			user = {
-				username: req.user.username,
-				role: req.user.role
-			}
-		} else {
-			user = {}
-		}
-
 		res.send({
 			isAuthenticated: req.isAuthenticated(),
-			user: user
+			user: (req.user) ? req.user : {}
 		});
 	});
 
@@ -68,48 +60,36 @@ module.exports = function(app, passport) {
 
 	// middleware
 	function hasRole(roles) {
-		return function hasHab(req, res, next) {
-			if (!req.isAuthenticated()) {
-				return res.redirect('/');
-			} else if (!roles) {
-				return next();
-			} else {
-				for (var i = 0; i < roles.length; i++) {
-					if (req.user.role === roles[i]) {
+		return function hasRole(req, res, next) {
+			if (req.isAuthenticated()) {
+				User.findOne({_id: req.user._id}, function(err, user) {
+					if (!err && user.hasRole(roles)) {
 						return next();
 					}
-				}
+				})
+			} else {
+				return res.redirect('/');
 			}
-			return res.redirect('/');
 		}
 	}
 
 	function verifyCredentials(username, password, done) {
 		User.findOne({username: username}, function(err, user) {
-			if (err) {
-				setTimeout(function() {
-					done(err, null);
-				}, 1000);
-			} else if (user) {
-				var combined = new Buffer(user._doc.password, 'base64');
-				crypto.verifyPassword(password, combined, function(err, loggedIn) {
-					if (err) done(err, null);
-					if (loggedIn) {
-						done(null, {_id:user._doc._id.toString(), name: user._doc.username, role: user._doc.role});
-					} else {
-						done(null, null);
+			if (!err && user) {
+				user.verifyCredentials(password, function(err, passwordOk) {
+					if (passwordOk) {
+						return done(null, user.toJson());
 					}
 				})
-			} else {
-				setTimeout(function() {
-					done(null, null);
-				}, 1000);
 			}
+			setTimeout(function() {
+				return done(err, null);
+			}, 1000);
 		})
 	}
 
 	function signUp(userData, done) {
-		if(userData.passwordConfirmation === userData.password && userData.password.length>5){
+		if (userData.passwordConfirmation === userData.password && userData.password.length > 5){
 			User.findOne({username: userData.username}, function(err, user) {
 				if (user) {
 					done("Nom d'utilisateur déjà utilisé");
@@ -137,4 +117,3 @@ module.exports = function(app, passport) {
 		}
 	}
 }
-

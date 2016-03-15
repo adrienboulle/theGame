@@ -1,15 +1,17 @@
-var express 		= require('express');
-var app 			= express();
-var port 			= process.env.PORT || 8085;
-var mongoose 		= require('mongoose');
-var passport 		= require('passport');
+'user strict'
 
-var logger 			= require('express-logger');
-var bodyParser 		= require('body-parser');
-var cookieParser 	= require('cookie-parser');
-var expressSession 	= require('express-session');
+var express 		= require('express'),
+	app 			= express(),
+	port 			= process.env.PORT || 8085,
+	mongoose 		= require('mongoose'),
+	passport 		= require('passport'),
 
-var configDb 		= require('./config/database.js');
+	logger 			= require('express-logger'),
+	bodyParser 		= require('body-parser'),
+	cookieParser 	= require('cookie-parser'),
+	expressSession 	= require('express-session'),
+
+	configDb 		= require('./config/database.js');
 
 // configuration =============================================================
 mongoose.connect(configDb.url);
