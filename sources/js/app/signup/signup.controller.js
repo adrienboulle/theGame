@@ -5,6 +5,7 @@
 			'$state',
 			'$resource',
 			'user',
+			'SignupService',
 			SignupController
 		]);
 
