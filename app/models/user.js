@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	username: String,
 	password: String,
-	role: String
+	role: String,
+	roles: [String]
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
@@ -21,7 +22,12 @@ UserSchema.methods.hasRole = function(roles) {
 	if (!roles) {
 		throw 'hasHab function take an array in parameter'
 	} else {
-		return roles.indexOf(this.role) !== -1;
+		for (var i = 0; i < roles.length; i++) {
+			if (roles.indexOf(this.roles[i]) !== -1) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

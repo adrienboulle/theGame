@@ -6,6 +6,21 @@ var User = require('../models/user.js'),
 
 module.exports = function(app, passport) {
 
+	// le temps de passer de role à roleS
+	User.find({}, function(err, users) {
+		 for (var i = 0; i < users.length; i++) {
+		 	var user = users[i];
+		 	var roles = [];
+		 	roles.push(user._doc.role);
+		 	user._doc.roles = roles;
+		 	user.markModified('roles');
+		 	user.save();
+		 }
+	 });
+
+
+
+
 	passport.use(new passportLocal.Strategy(verifyCredentials));
 
 	// login ===================================================================
