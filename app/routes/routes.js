@@ -96,10 +96,11 @@ module.exports = function(app, passport) {
 						return done(null, user.toJson());
 					}
 				})
+			} else {
+				setTimeout(function() {
+					return done(err, null);
+				}, 1000);
 			}
-			setTimeout(function() {
-				return done(err, null);
-			}, 1000);
 		})
 	}
 
