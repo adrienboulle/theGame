@@ -1,3 +1,7 @@
 body {
 	background-color: #ccc;
 }
+
+.erreur{
+	background-color: #E9383F;
+}

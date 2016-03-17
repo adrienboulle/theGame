@@ -1,8 +1,12 @@
 <div>
 	<p>Veuillez completer les informations ci dessous</p>
-	<input ng-keyup="$event.keyCode == 13 && signup()" type="text" ng-model="userInfo.username" placeholder="Enter user name"/> {{userInfo.usernameValidation()}}</br>
-	<input type="password" ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.password" placeholder="Enter password"/> {{validation.password()}}</br>
-	<input type="password" ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.passwordConfirmation" placeholder="Confirm password"/> {{validation.passwordConfirmation()}}</br>
-	<button ng-click="signup()">S'enregistrer</button> {{erreur}}
+	<input ng-class="{erreur:userInfo.isErreurUsername()}" ng-keyup="$event.keyCode == 13 && signup()" type="text" ng-model="userInfo.username" placeholder="Enter user name"/> {{userInfo.usernameValidation()}}</br>
+
+	<input ng-class="{erreur:userInfo.isErreurPassword()}" type="password" ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.password" placeholder="Enter password"/> {{userInfo.passwordValidation()}}</br>
+
+	<input ng-class="{erreur:userInfo.isErreurPasswordConfirmation()}" type="password" ng-keyup="$event.keyCode == 13 && signup()" ng-model="userInfo.passwordConfirmation" placeholder="Confirm password"/> {{userInfo.passwordConfirmationValidation()}}</br>
+
+	<button ng-click="signup()">S'enregistrer</button>
+	
 	<button ui-sref="site.accueil">Retour</button>
 </div>
