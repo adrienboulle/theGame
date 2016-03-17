@@ -11,7 +11,16 @@
 
 	function SignupController($scope, $state, $resource, user, SignupService) {
 		
-		$scope.userInfo = {username:'', password:'', passwordConfirmation:''};
+		$scope.userInfo = {
+			username:'', 
+			password:'', 
+			passwordConfirmation:'',
+			usernameValidation: function(){
+				if (this.username.length < 5){
+					return "Yo pouleeeet"
+				}
+			}
+		};
 
 		$scope.erreur = '';
 
