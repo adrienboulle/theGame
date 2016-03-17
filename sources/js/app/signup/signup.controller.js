@@ -28,7 +28,7 @@
 				return this.erreurPasswordConfirmation;
 			},
 			usernameValidation: function(){
-				if (this.username.length < 6){
+				if (this.username.length < 6 && this.username.length !=0){
 					this.erreurUsername = true;
 					return "6 caractères minimum";
 				}else{
@@ -36,7 +36,7 @@
 				}
 			},
 			passwordValidation: function(){
-				if (this.password.length < 8){
+				if (this.password.length < 8 && this.password.length !=0){
 					this.erreurPassword = true;
 					return "8 caractères minimum";
 				}else{
