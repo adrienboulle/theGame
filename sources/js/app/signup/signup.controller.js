@@ -27,7 +27,6 @@
 			} else {
 				$scope.erreur = 'non valide';
 			}
-			$scope.userForm.$submitted = false;
 		}
 	}
 

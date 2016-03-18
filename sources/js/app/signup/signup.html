@@ -7,7 +7,7 @@
 			<form name="userForm" novalidate>
 				
 				<!-- USERNAME -->
-				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine && userForm.$submitted}">
+				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
 					<label>Username</label>
 					<input 
 						name="username"
@@ -15,23 +15,23 @@
 						required
 						class="form-control"
 						ng-minlength="3"
-						ng-maxlength="10"
+						ng-maxlength="15"
 						type="text" 
 						placeholder="Enter your username"
 						ng-keyup="$event.keyCode == 13 && signup()" /> 
 					<p 
-						ng-show="userForm.username.$error.required && !userForm.username.$pristine && userForm.$submitted"
+						ng-show="userForm.username.$error.required && !userForm.username.$pristine"
 						class="help-block">Your username is required.</p>
 					<p 
-						ng-show="userForm.username.$error.minlength && !userForm.username.$pristine && userForm.$submitted" 
+						ng-show="userForm.username.$error.minlength && !userForm.username.$pristine" 
 						class="help-block">Your username is too short.</p>
 					<p 
-						ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine && userForm.$submitted" 
+						ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine" 
 						class="help-block">Your username is too long.</p>
 				</div>
 
 				<!-- PASSWORD -->
-				<div class="form-group" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine && userForm.$submitted}">
+				<div class="form-group" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
 					<label>Password</label>
 					<input 
 						name="password"
@@ -43,15 +43,15 @@
 						placeholder="Enter your password" 
 						ng-keyup="$event.keyCode == 13 && signup()" />
 					<p 
-						ng-show="userForm.password.$error.required && !userForm.password.$pristine && userForm.$submitted" 
+						ng-show="userForm.password.$error.required && !userForm.password.$pristine" 
 						class="help-block">Your password is required.</p>
 					<p 
-						ng-show="userForm.password.$error.minlength && !userForm.password.$pristine && userForm.$submitted" 
+						ng-show="userForm.password.$error.minlength && !userForm.password.$pristine" 
 						class="help-block">Your password is too short.</p>
 				</div>
 
 				<!-- PASSWORD CONFIRMATION -->
-				<div class="form-group" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine && userForm.$submitted}">
+				<div class="form-group" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
 					<label>Password confirmation</label>
 					<input 
 						name="passwordConfirmation"
@@ -63,10 +63,10 @@
 						placeholder="Enter your password again" 
 						ng-keyup="$event.keyCode == 13 && signup()" />
 					<p 
-						ng-show="userForm.passwordConfirmation.$error.required && !userForm.passwordConfirmation.$pristine && userForm.$submitted" 
+						ng-show="userForm.passwordConfirmation.$error.required && !userForm.passwordConfirmation.$pristine" 
 						class="help-block">Your must confirm your password.</p>
-					<p 
-						ng-show="userForm.passwordConfirmation.$error.match && !userForm.passwordConfirmation.$pristine && userForm.$submitted" 
+					<p 	
+						ng-show="userForm.passwordConfirmation.$error.match && !userForm.passwordConfirmation.$pristine" 
 						class="help-block">The passwords does not match.</p>
 				</div>
 				<button 
