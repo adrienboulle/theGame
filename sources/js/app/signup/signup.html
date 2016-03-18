@@ -6,27 +6,8 @@
 			<!-- SIGNUP FORM -->
 			<form name="userForm" novalidate>
 				
-				<!-- NAME -->
-				<div class="form-group" ng-class="{'has-error': userForm.name.$invalid && !userForm.name.$pristine}">
-					<label>Name</label>
-					<div>
-						<input 
-							name="name"
-							ng-model="userInfo.name" 
-							required
-							class="form-control"
-							type="text" 
-							placeholder="Enter your name"
-							ng-keyup="$event.keyCode == 13 && signup()" />
-					</div>	
-
-					<p 
-						ng-show="userForm.name.$invalid && !userForm.name.$pristine" 
-						class="help-block">Your name is required.</p>
-				</div>
-
 				<!-- USERNAME -->
-				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
+				<div class="form-group" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine && userForm.$submitted}">
 					<label>Username</label>
 					<input 
 						name="username"
@@ -39,18 +20,18 @@
 						placeholder="Enter your username"
 						ng-keyup="$event.keyCode == 13 && signup()" /> 
 					<p 
-						ng-show="userForm.username.$error.required && !userForm.username.$pristine"
+						ng-show="userForm.username.$error.required && !userForm.username.$pristine && userForm.$submitted"
 						class="help-block">Your username is required.</p>
 					<p 
-						ng-show="userForm.username.$error.minlength && !userForm.username.$pristine" 
+						ng-show="userForm.username.$error.minlength && !userForm.username.$pristine && userForm.$submitted" 
 						class="help-block">Your username is too short.</p>
 					<p 
-						ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine" 
+						ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine && userForm.$submitted" 
 						class="help-block">Your username is too long.</p>
 				</div>
 
 				<!-- PASSWORD -->
-				<div class="form-group" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
+				<div class="form-group" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine && userForm.$submitted}">
 					<label>Password</label>
 					<input 
 						name="password"
@@ -62,31 +43,34 @@
 						placeholder="Enter your password" 
 						ng-keyup="$event.keyCode == 13 && signup()" />
 					<p 
-						ng-show="userForm.password.$error.required && !userForm.password.$pristine" 
+						ng-show="userForm.password.$error.required && !userForm.password.$pristine && userForm.$submitted" 
 						class="help-block">Your password is required.</p>
 					<p 
-						ng-show="userForm.password.$error.minlength && !userForm.password.$pristine" 
+						ng-show="userForm.password.$error.minlength && !userForm.password.$pristine && userForm.$submitted" 
 						class="help-block">Your password is too short.</p>
 				</div>
 
 				<!-- PASSWORD CONFIRMATION -->
-				<div class="form-group" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
+				<div class="form-group" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine && userForm.$submitted}">
 					<label>Password confirmation</label>
 					<input 
 						name="passwordConfirmation"
 						ng-model="userInfo.passwordConfirmation" 
 						required
+						match="password"
 						class="form-control"
 						type="password" 
 						placeholder="Enter your password again" 
 						ng-keyup="$event.keyCode == 13 && signup()" />
 					<p 
-						ng-show="userForm.passwordConfirmation.$error.required && !userForm.password.$pristine" 
+						ng-show="userForm.passwordConfirmation.$error.required && !userForm.passwordConfirmation.$pristine && userForm.$submitted" 
 						class="help-block">Your must confirm your password.</p>
+					<p 
+						ng-show="userForm.passwordConfirmation.$error.match && !userForm.passwordConfirmation.$pristine && userForm.$submitted" 
+						class="help-block">The passwords does not match.</p>
 				</div>
 				<button 
 					type="submit" 
-					ng-disabled="userForm.$invalid"
 					class="btn btn-primary" 
 					ng-click="signup()">S'enregistrer</button>
 				<button 

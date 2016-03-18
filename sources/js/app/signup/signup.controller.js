@@ -7,10 +7,11 @@
 			'user',
 			'SignupService',
 			SignupController
-		]);
+		])
+		.directive('match',
+			MatchDirective);
 
 	function SignupController($scope, $state, $resource, user, SignupService) {
-		
 		
 		$scope.erreur = '';
 
@@ -24,9 +25,28 @@
 					$scope.erreur = 'Erreur !';
 				})
 			} else {
-				$scope.errur = 'non valide';
+				$scope.erreur = 'non valide';
 			}
+			$scope.userForm.$submitted = false;
 		}
+	}
+
+	function MatchDirective() {
+		return {
+		    restrict: 'A',
+		    require: '?ngModel',
+		    link: function(scope, elm, attr, ctrl) {
+				if (!ctrl) return; 
+
+				ctrl.$validators.match = function(modelValue, viewValue) {
+					return modelValue && modelValue === ctrl.$$parentForm[attr.match].$modelValue;
+				}
+
+				attr.$observe('match', function() {
+					ctrl.$validate();
+				})
+	    	}
+  		}
 	}
 
 })();
