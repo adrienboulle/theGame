@@ -6,17 +6,17 @@
  <div ng-show="!user.isAuthenticated">
  	<div class="container">
  		<div class="row">
- 			<div class="col-sm-12">
+ 			<div class="col-md-12">
  				<h1 class="text-center">Ca te plait ?</h1>
  			</div>
  		</div>
  		<div class="row">
-		 	<div class="col-sm-6">
+		 	<div class="col-md-3 col-md-offset-3">
 		 		<!-- SIGNIN FORM -->
 		 		<form name="userForm" novalidate>
 					<h2>Se connecter</h2>
 					<div class="row">
-						<div class="form-group col-xs-6">
+						<div class="form-group col-md-12">
 							<label>Nom d'utilisateur</label>
 							<input 
 								name="username"
@@ -28,7 +28,7 @@
 						</div>
 					</div>	
 					<div class="row">
-						<div class="form-group col-xs-6">
+						<div class="form-group col-md-12">
 							<label>Mot de passe</label>
 							<input 
 								name="password"
@@ -46,7 +46,7 @@
 					</button> {{erreur}}
 				</form>
 			</div>
-			<div class="col-sm-6">  
+			<div class="col-md-6">  
 				<!-- SIGNUP FORM -->
 				<form name="userForm" novalidate>
 						
@@ -54,7 +54,7 @@
 					<h2>S'enregistrer</h2>
 
 					<div class="row">
-						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
 							<label>Nom d'utilisateur</label>
 							<input 
 								name="username"
@@ -80,7 +80,7 @@
 						<!-- PASSWORD -->
 
 					<div class="row">
-						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
 							<label>Mot de passe</label>
 							<input 
 								name="password"
@@ -103,7 +103,7 @@
 						<!-- PASSWORD CONFIRMATION -->
 
 					<div class="row">
-						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
 							<label>Confirmation du mot de passe</label>
 							<input 
 								name="passwordConfirmation"
