@@ -65,7 +65,10 @@
 								ng-maxlength="15"
 								type="text" 
 								placeholder="Entrer nom d'utilisateur"
-								ng-keyup="$event.keyCode == 13 && signup()" /> 
+								ng-keyup="$event.keyCode == 13 && signup()" />
+							<md-tooltip md-direction="bottom">
+			          	Refresh
+			        </md-tooltip>
 							<p 
 								ng-show="userForm.username.$error.required && !userForm.username.$pristine"
 								class="help-block">Nom d'utilisateur requis</p>
