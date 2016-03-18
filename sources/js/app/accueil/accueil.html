@@ -2,6 +2,133 @@
  	<p>hello {{user.name}} !</p>
 	<button ng-click="logout()">logout</button>
  </div>
+
  <div ng-show="!user.isAuthenticated">
- 	<p>Please <a ui-sref="site.login">log in</a> or <a ui-sref="site.signup">sign up</a></p>
+ 	<div class="container">
+ 		<div class="row">
+ 			<div class="col-sm-12">
+ 				<h1 class="text-center">Ca te plait ?</h1>
+ 			</div>
+ 		</div>
+ 		<div class="row">
+		 	<div class="col-sm-6">
+		 		<!-- SIGNIN FORM -->
+		 		<form name="userForm" novalidate>
+					<h2>Se connecter</h2>
+					<div class="row">
+						<div class="form-group col-xs-6">
+							<label>Nom d'utilisateur</label>
+							<input 
+								name="username"
+								ng-model="userInfo.username" 
+								class="form-control"
+								type="text" 
+								placeholder="Entrer nom d'utilisateur" 
+								ng-keyup="$event.keyCode == 13 && login()" />
+						</div>
+					</div>	
+					<div class="row">
+						<div class="form-group col-xs-6">
+							<label>Mot de passe</label>
+							<input 
+								name="password"
+								ng-model="userInfo.password"
+								class="form-control"
+								type="password" 
+								placeholder="Entrer mot de passe" 
+								ng-keyup="$event.keyCode == 13 && login()" />
+						</div>
+					</div>
+					<button 
+						type="submit" 
+						class="btn btn-primary" 
+						ng-click="signup()">Se connecter
+					</button> {{erreur}}
+				</form>
+			</div>
+			<div class="col-sm-6">  
+				<!-- SIGNUP FORM -->
+				<form name="userForm" novalidate>
+						
+					<!-- USERNAME -->
+					<h2>S'enregistrer</h2>
+
+					<div class="row">
+						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
+							<label>Nom d'utilisateur</label>
+							<input 
+								name="username"
+								ng-model="userInfo.username" 
+								required
+								class="form-control"
+								ng-minlength="3"
+								ng-maxlength="15"
+								type="text" 
+								placeholder="Entrer nom d'utilisateur"
+								ng-keyup="$event.keyCode == 13 && signup()" /> 
+							<p 
+								ng-show="userForm.username.$error.required && !userForm.username.$pristine"
+								class="help-block">Nom d'utilisateur requis</p>
+							<p 
+								ng-show="userForm.username.$error.minlength && !userForm.username.$pristine" 
+								class="help-block">Nom d'utilisateur trop court</p>
+							<p 
+								ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine" 
+								class="help-block">Nom d'utilisateur trop long</p>
+						</div>
+					</div>
+						<!-- PASSWORD -->
+
+					<div class="row">
+						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
+							<label>Mot de passe</label>
+							<input 
+								name="password"
+								ng-model="userInfo.password" 
+								required
+								class="form-control"
+								ng-minlength="8"
+								type="password" 
+								placeholder="Entrer mot de passe" 
+								ng-keyup="$event.keyCode == 13 && signup()" />
+							<p 
+								ng-show="userForm.password.$error.required && !userForm.password.$pristine" 
+								class="help-block">Mot de passe requis</p>
+							<p 
+								ng-show="userForm.password.$error.minlength && !userForm.password.$pristine" 
+								class="help-block">Mot de passe trop court</p>
+						</div>
+					</div>
+
+						<!-- PASSWORD CONFIRMATION -->
+
+					<div class="row">
+						<div class="form-group col-xs-6" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
+							<label>Confirmation du mot de passe</label>
+							<input 
+								name="passwordConfirmation"
+								ng-model="userInfo.passwordConfirmation" 
+								required
+								match="password"
+								class="form-control"
+								type="password" 
+								placeholder="Confirmer mot de passe" 
+								ng-keyup="$event.keyCode == 13 && signup()" />
+							<p 
+								ng-show="userForm.passwordConfirmation.$error.required && !userForm.passwordConfirmation.$pristine" 
+								class="help-block">Veuillez confirmer votre mot de passe</p>
+							<p 	
+								ng-show="userForm.passwordConfirmation.$error.match && !userForm.passwordConfirmation.$pristine" 
+								class="help-block">Mot de passes différents</p>
+						</div>
+					</div>
+					<button 
+						type="submit" 
+						class="btn btn-primary" 
+						ng-click="signup()">S'enregistrer
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
  </div>
