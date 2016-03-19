@@ -1,9 +1,12 @@
 (function(){
 	angular.module('theGame', [
 		'ngResource',
-		'ui.router'
+		'ui.router',
+		'ngMaterial',
+		'ngAnimate',
+		'ngMessages'
 		])
-	angular.module('theGame', ['ngResource','ui.router'])
+	angular.module('theGame')
 		.config([
 			'$stateProvider',
 			'$urlRouterProvider',

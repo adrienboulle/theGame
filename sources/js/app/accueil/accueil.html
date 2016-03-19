@@ -13,14 +13,14 @@
  		<div class="row">
 		 	<div class="col-md-3 col-md-offset-3">
 		 		<!-- SIGNIN FORM -->
-		 		<form name="userForm" novalidate>
+		 		<form name="userFormSignin" novalidate>
 					<h2>Se connecter</h2>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label>Nom d'utilisateur</label>
 							<input 
 								name="username"
-								ng-model="userInfo.username" 
+								ng-model="userInfoSignin.username" 
 								class="form-control"
 								type="text" 
 								placeholder="Entrer nom d'utilisateur" 
@@ -32,7 +32,7 @@
 							<label>Mot de passe</label>
 							<input 
 								name="password"
-								ng-model="userInfo.password"
+								ng-model="userInfoSignin.password"
 								class="form-control"
 								type="password" 
 								placeholder="Entrer mot de passe" 
@@ -48,81 +48,83 @@
 			</div>
 			<div class="col-md-6">  
 				<!-- SIGNUP FORM -->
-				<form name="userForm" novalidate>
+				<form name="userFormSignup" novalidate>
 						
 					<!-- USERNAME -->
 					<h2>S'enregistrer</h2>
 
 					<div class="row">
-						<div class="form-group col-md-6" ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine}">
 							<label>Nom d'utilisateur</label>
-							<input 
-								name="username"
-								ng-model="userInfo.username" 
-								required
-								class="form-control"
-								ng-minlength="3"
-								ng-maxlength="15"
-								type="text" 
-								placeholder="Entrer nom d'utilisateur"
-								ng-keyup="$event.keyCode == 13 && signup()" />
-							<md-tooltip md-direction="bottom">
-			          	Refresh
-			        </md-tooltip>
-							<p 
-								ng-show="userForm.username.$error.required && !userForm.username.$pristine"
-								class="help-block">Nom d'utilisateur requis</p>
-							<p 
-								ng-show="userForm.username.$error.minlength && !userForm.username.$pristine" 
-								class="help-block">Nom d'utilisateur trop court</p>
-							<p 
-								ng-show="userForm.username.$error.maxlength && !userForm.username.$pristine" 
-								class="help-block">Nom d'utilisateur trop long</p>
+							<div>
+								<input 
+									name="username"
+									ng-model="userInfoSignup.username" 
+									required
+									class="form-control"
+									ng-minlength="3"
+									ng-maxlength="15"
+									type="text" 
+									placeholder="Entrer nom d'utilisateur"
+									ng-keyup="$event.keyCode == 13 && signup()" />
+								<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine">
+						          	Nom d'utilisateur requis
+						        </md-tooltip>
+						        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine">
+						          	Nom d'utilisateur trop court
+						        </md-tooltip>
+						        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine">
+						          	Nom d'utilisateur trop long
+						        </md-tooltip>
+						    </div>
 						</div>
 					</div>
-						<!-- PASSWORD -->
-
+						
+					<!-- PASSWORD -->
 					<div class="row">
-						<div class="form-group col-md-6" ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine}">
 							<label>Mot de passe</label>
-							<input 
-								name="password"
-								ng-model="userInfo.password" 
-								required
-								class="form-control"
-								ng-minlength="8"
-								type="password" 
-								placeholder="Entrer mot de passe" 
-								ng-keyup="$event.keyCode == 13 && signup()" />
-							<p 
-								ng-show="userForm.password.$error.required && !userForm.password.$pristine" 
-								class="help-block">Mot de passe requis</p>
-							<p 
-								ng-show="userForm.password.$error.minlength && !userForm.password.$pristine" 
-								class="help-block">Mot de passe trop court</p>
+							<div>
+								<input 
+									name="password"
+									ng-model="userInfoSignup.password" 
+									required
+									class="form-control"
+									ng-minlength="8"
+									type="password" 
+									placeholder="Entrer mot de passe" 
+									ng-keyup="$event.keyCode == 13 && signup()" />
+								<md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.required && !userFormSignup.password.$pristine">
+						          	Mot de passe requis
+						        </md-tooltip>
+						        <md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.minlength && !userFormSignup.password.$pristine">
+						          	Mot de passe trop court
+						        </md-tooltip>
+						    </div>
 						</div>
 					</div>
 
-						<!-- PASSWORD CONFIRMATION -->
-
+					<!-- PASSWORD CONFIRMATION -->
 					<div class="row">
-						<div class="form-group col-md-6" ng-class="{'has-error': userForm.passwordConfirmation.$invalid && !userForm.passwordConfirmation.$pristine}">
+						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$error && !userFormSignup.passwordConfirmation.$pristine}">
 							<label>Confirmation du mot de passe</label>
-							<input 
-								name="passwordConfirmation"
-								ng-model="userInfo.passwordConfirmation" 
-								required
-								match="password"
-								class="form-control"
-								type="password" 
-								placeholder="Confirmer mot de passe" 
-								ng-keyup="$event.keyCode == 13 && signup()" />
-							<p 
-								ng-show="userForm.passwordConfirmation.$error.required && !userForm.passwordConfirmation.$pristine" 
-								class="help-block">Veuillez confirmer votre mot de passe</p>
-							<p 	
-								ng-show="userForm.passwordConfirmation.$error.match && !userForm.passwordConfirmation.$pristine" 
-								class="help-block">Mot de passes différents</p>
+							<div>
+								<input 
+									name="passwordConfirmation"
+									ng-model="userInfoSignup.passwordConfirmation" 
+									required
+									match="password"
+									class="form-control"
+									type="password" 
+									placeholder="Confirmer mot de passe" 
+									ng-keyup="$event.keyCode == 13 && signup()" />
+								<md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.required && !userFormSignup.passwordConfirmation.$pristine">
+						          	Veuillez confirmer votre mot de passe
+						        </md-tooltip>
+						        <md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.match && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine">
+						          	Les mots de passes sont différents
+						        </md-tooltip>
+						    </div>
 						</div>
 					</div>
 					<button 

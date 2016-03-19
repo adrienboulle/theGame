@@ -2,3 +2,8 @@ body {
 	padding-top:30px; 
 	background-color: #EBEBEB;
 }
+
+md-tooltip .md-content {
+	background-color: #a94442;
+	font-size: 13px;
+}

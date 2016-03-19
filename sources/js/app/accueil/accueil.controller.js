@@ -4,11 +4,14 @@
 			'$scope',
 			'$state',
 			'LoginService',
+			'SignupService',
 			'user',
 			AccueilController
-		]);
+		])
+		.directive('match',
+			MatchDirective);
 
-	function AccueilController($scope, $state, LoginService, user) {
+	function AccueilController($scope, $state, LoginService, SignupService, user) {
 	
 		$scope.user = user;
 
@@ -17,65 +20,19 @@
 				$state.reload();
 			})
 		}
-	}
-
-})();
-
-(function(){
-	angular.module('theGame')
-		.controller('LoginController', [
-			'$scope',
-			'$state',
-			'$resource',
-			'user',
-			'LoginService',
-			LoginController
-		]);
-
-	function LoginController($scope, $state, $resource, user, LoginService) {
-		
-		$scope.userInfo = {username:'', password:''};
-
-		$scope.erreur = '';
 
 		$scope.login = function() {
-			LoginService.login($scope.userInfo).then(function(data) {
-				$state.go('site.accueil', {}, {
-					reload: true
-				});
+			LoginService.login($scope.userInfoSignin).then(function(data) {
+				$state.reload();
 			}, function(data) {
 				$scope.erreur = 'Erreur !';
 			})
 		}
 
-	
-	}
-
-})();
-
-(function(){
-	angular.module('theGame')
-		.controller('SignupController', [
-			'$scope',
-			'$state',
-			'$resource',
-			'user',
-			'SignupService',
-			SignupController
-		])
-		.directive('match',
-			MatchDirective);
-
-	function SignupController($scope, $state, $resource, user, SignupService) {
-		
-		$scope.erreur = '';
-
 		$scope.signup = function() {
-			if ($scope.userForm.$valid) {
-				SignupService.signup($scope.userInfo).then(function(data) {
-					$state.go('site.login', {}, {
-						reload: true
-					});
+			if ($scope.userFormSignup.$valid) {
+				SignupService.signup($scope.userInfoSignup).then(function(data) {
+					$state.reload();
 				}, function(data) {
 					$scope.erreur = 'Erreur !';
 				})
@@ -93,7 +50,7 @@
 				if (!ctrl) return; 
 
 				ctrl.$validators.match = function(modelValue, viewValue) {
-					return modelValue && modelValue === ctrl.$$parentForm[attr.match].$modelValue;
+					return modelValue && modelValue === ctrl.$$parentForm[attr.match].$viewValue;
 				}
 
 				attr.$observe('match', function() {
@@ -102,5 +59,4 @@
 	    	}
   		}
 	}
-
 })();
