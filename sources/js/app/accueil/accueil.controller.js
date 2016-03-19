@@ -8,8 +8,13 @@
 			'user',
 			AccueilController
 		])
-		.directive('match',
-			MatchDirective);
+		.directive('match',[
+			MatchDirective
+		])
+		.directive('removeHandlers', [
+			'$timeout',
+			RemoveHandlers
+		]);
 
 	function AccueilController($scope, $state, LoginService, SignupService, user) {
 	
@@ -59,4 +64,16 @@
 	    	}
   		}
 	}
+
+	function RemoveHandlers($timeout) {
+		return {
+		    restrict: 'A',
+		    link: function(scope, elm, attr, ctrl) {
+				$timeout(function() {
+					elm.off();
+				}, 0);
+	    	}
+  		}
+	}
+
 })();

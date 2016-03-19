@@ -5,16 +5,31 @@
 
  <div ng-show="!user.isAuthenticated">
  	<div class="container">
- 		<div class="row">
+		<div class="row">
  			<div class="col-md-12">
- 				<h1 class="text-center">Ca te plait ?</h1>
+ 				<nav class="navbar navbar-inverse">
+				  <div class="container-fluid">
+				    <div class="navbar-header">
+				      <a class="navbar-brand" >B&G</a>
+				    </div>
+				    <ul class="nav navbar-nav">
+				      <li class="active"><a href="#">Accueil</a></li>
+				      <li><a href="#">Page 1</a></li>
+				      <li><a href="#">Page 2</a></li>
+				      <li><a href="#">Page 3</a></li>
+				    </ul>
+				    <ul class="nav navbar-nav navbar-right">
+				        <li><a href="#">Se connecter</a></li>
+				    </ul>
+				  </div>
+				</nav>
  			</div>
  		</div>
  		<div class="row">
 		 	<div class="col-md-3 col-md-offset-3">
 		 		<!-- SIGNIN FORM -->
 		 		<form name="userFormSignin" novalidate>
-					<h2>Se connecter</h2>
+					<h2>S'identifier</h2>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label>Nom d'utilisateur</label>
@@ -56,8 +71,8 @@
 					<div class="row">
 						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine}">
 							<label>Nom d'utilisateur</label>
-							<div>
-								<input 
+							<div remove-handlers>
+								<input
 									name="username"
 									ng-model="userInfoSignup.username" 
 									required
@@ -70,7 +85,7 @@
 								<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine">
 						          	Nom d'utilisateur requis
 						        </md-tooltip>
-						        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine">
+						      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine">
 						          	Nom d'utilisateur trop court
 						        </md-tooltip>
 						        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine">
@@ -84,7 +99,7 @@
 					<div class="row">
 						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine}">
 							<label>Mot de passe</label>
-							<div>
+							<div remove-handlers>
 								<input 
 									name="password"
 									ng-model="userInfoSignup.password" 
@@ -108,7 +123,7 @@
 					<div class="row">
 						<div class="form-group col-md-6" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$error && !userFormSignup.passwordConfirmation.$pristine}">
 							<label>Confirmation du mot de passe</label>
-							<div>
+							<div remove-handlers>
 								<input 
 									name="passwordConfirmation"
 									ng-model="userInfoSignup.passwordConfirmation" 

@@ -1,9 +1,8 @@
-body {
-	padding-top:30px; 
-	background-color: #EBEBEB;
+html, body {
+	background-color: #EBEBEB !important;
 }
 
-md-tooltip ._md-content {
-	background-color: #a94442;
-	font-size: 13px;
+md-tooltip .md-content {
+	background-color: #A94442 !important;
+	font-size: 13px !important;
 }
