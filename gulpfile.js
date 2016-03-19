@@ -59,20 +59,17 @@ gulp.task('inject', function () {
 
   	var cssStream = gulp.src(['./public/**/*.css']);
 
-	var pathJsJQ = ['./public/**/jquery*.js'];
-	var pathJsAngular = ['./public/**/angular.js'];
-	var pathJsDep = ['./public/**/*.js', '!./public/**/angular.js', '!./public/**/jquery*.js'];
+	var pathJsJQ = ['./public/imports/**/jquery*.js'];
+	var pathJsAngular = ['./public/imports/**/angular.js'];
+	var pathJsDep = ['./public/imports/**/*.js', '!./public/imports/**/angular.js', '!./public/imports/**/jquery*.js'];
 
-	var jsJq = gulp.src(pathJsJQ)
-	  	.pipe(gulp.dest('./public/js/imports'));
+	var jsJq = gulp.src(pathJsJQ);
 
-	var jsAng = gulp.src(pathJsAngular)
-	  	.pipe(gulp.dest('./public/js/imports'));
+	var jsAng = gulp.src(pathJsAngular);
 	
 	var jsDepStream = gulp.src(pathJsDep)
-		.pipe(conf.prod ? concat('imports.js') : gulpUtil.noop())
-	  	.pipe(gulp.dest('./public/js/imports'));
-	
+		.pipe(conf.prod ? concat('imports.js') : gulpUtil.noop());
+
 	var jsAppStream = gulp.src(['./public/js/app/**/*.js']);
 		
 	return target
