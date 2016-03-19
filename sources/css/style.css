@@ -3,7 +3,7 @@ body {
 	background-color: #EBEBEB;
 }
 
-md-tooltip .md-content {
+md-tooltip ._md-content {
 	background-color: #a94442;
 	font-size: 13px;
 }
