@@ -15,22 +15,12 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var setVisible = function () {
-                        element.removeClass('hidden');
-                    },
-                    setHidden = function () {
-                        element.addClass('hidden');
+                var setHidden = function () {
+                        element.remove();
                     },
                     defineVisibility = function (reset) {
-                        var result;
-                        if (reset) {
-                            setVisible();
-                        }
-
                         UserService.hasRole(roles).then(function(result) {
-                            if (result) {
-                                setVisible();
-                            } else {
+                            if (!result) {
                                 setHidden();
                             }
                         });
@@ -51,28 +41,18 @@
                 rule: '=isAuth'
             },
             link: function (scope, element, attrs) {
-                var setVisible = function () {
-                        element.removeClass('hidden');
+                var setHidden = function () {
+                        element.remove();
                     },
-                    setHidden = function () {
-                        element.addClass('hidden');
-                    },
-                    defineVisibility = function (reset) {
-                        var result;
-                        if (reset) {
-                            setHidden();
-                        }
-
+                    defineVisibility = function () {
                         UserService.isAuthenticated().then(function(result) {
-                            if (result === scope.rule) {
-                                setVisible();
-                            } else {
+                            if (result !== scope.rule) {
                                 setHidden();
                             }
                         });
                     }
 
-                defineVisibility(true);
+                defineVisibility();
             }
         };
     }
