@@ -131,7 +131,8 @@ module.exports = function(app, passport) {
 							var user = new User({
 								username: userData.username,
 								password: hash.toString('base64'),
-								role: 'ROLE_USER'
+								roles: ['ROLE_USER'],
+								actif: false
 							});
 							user.save(function(err, user) {
 								done(err, user);	
