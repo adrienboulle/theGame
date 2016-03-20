@@ -1,4 +1,6 @@
 (function(){
+	'use strict'
+
 	angular.module('theGame')
 		.controller('AccueilController', [
 			'$scope',
@@ -6,17 +8,17 @@
 			'LoginService',
 			'SignupService',
 			'user',
-			AccueilController
+			accueilController
 		])
 		.directive('match',[
-			MatchDirective
+			matchDirective
 		])
 		.directive('removeHandlers', [
 			'$timeout',
-			RemoveHandlers
+			removeHandlers
 		]);
 
-	function AccueilController($scope, $state, LoginService, SignupService, user) {
+	function accueilController($scope, $state, LoginService, SignupService, user) {
 	
 		$scope.user = user;
 
@@ -47,7 +49,7 @@
 		}
 	}
 
-	function MatchDirective() {
+	function matchDirective() {
 		return {
 		    restrict: 'A',
 		    require: '?ngModel',
@@ -65,7 +67,7 @@
   		}
 	}
 
-	function RemoveHandlers($timeout) {
+	function removeHandlers($timeout) {
 		return {
 		    restrict: 'A',
 		    link: function(scope, elm, attr, ctrl) {

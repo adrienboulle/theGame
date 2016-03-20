@@ -1,22 +1,24 @@
 (function(){
-	angular.module('theGame')
-		.config([
-			'$stateProvider',
-			Config
-		]);
+    'use strict'
 
-	function Config($stateProvider) {
+    angular.module('theGame')
+		    .config([
+            '$stateProvider',
+            Config
+		    ]);
+
+    function Config($stateProvider) {
 		$stateProvider
     		.state('site.accueil', {
-    			parent: 'site',
+            parent: 'site',
       			url: '/accueil',
       			views: {
-        			'content@': {
-        				templateUrl: 'js/app/accueil/accueil.html',
-      					controller: 'AccueilController'
-      				}
+                'content@': {
+        				    templateUrl: 'js/app/accueil/accueil.html',
+      					     controller: 'AccueilController'
+      				  }
       			}
     		})
-	}
+    }
 
 })();

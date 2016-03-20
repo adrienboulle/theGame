@@ -1,4 +1,6 @@
 (function(){
+	'use strict'
+
 	angular.module('theGame')
 		.config([
 			'$stateProvider',
@@ -9,13 +11,22 @@
 		$stateProvider
 	    	.state('site', {
 	    		abstract: true,
+	    		views: {
+	    			'navbar@': {
+        				templateUrl: 'js/app/components/navbar/navbar.html',
+      					controller: 'NavbarController'
+      				}
+	    		},
 	    		resolve : {
 	    			user: [
-	    				'LoginService',
-	    				function(LoginService) {
-		    				return LoginService.currentUser().then(function(user) {
-		    					return user;
-		    				});		
+	    				'$q',
+	    				'UserService',
+	    				function($q, UserService) {
+		    				var d = $q.defer();
+		    				UserService.user().then(function(user) {
+		    					d.resolve(user);
+		    				});
+		    				return d.promise;
 	    				}
 	    			]
 	    		}
