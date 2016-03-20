@@ -18,7 +18,10 @@
 
 	function Config($stateProvider, $urlRouterProvider, $locationProvider) {
 		$locationProvider.html5Mode(true);
-		$urlRouterProvider.otherwise("/accueil");
+		$urlRouterProvider.otherwise(function($injector, $location) {
+			var $state = $injector.get('$state');
+			$state.go('site.accueil');
+		})
 	}
 
 })();

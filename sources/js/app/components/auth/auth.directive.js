@@ -15,12 +15,21 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var setHidden = function () {
-                        element.remove();
+                var setVisible = function () {
+                        element.removeClass('hidden');
+                    },
+                    setHidden = function () {
+                        element.addClass('hidden');
                     },
                     defineVisibility = function (reset) {
+                        var result;
+                        if (reset) {
+                            setHidden();
+                        }
                         UserService.hasRole(roles).then(function(result) {
-                            if (!result) {
+                            if (result) {
+                                setVisible();
+                            } else {
                                 setHidden();
                             }
                         });
@@ -28,7 +37,7 @@
                     roles = attrs.hasRole.replace(/\s+/g, '').split(';');
 
                 if (roles.length > 0) {
-                    defineVisibility();
+                    defineVisibility(true);
                 }
             }
         };
@@ -41,18 +50,28 @@
                 rule: '=isAuth'
             },
             link: function (scope, element, attrs) {
-                var setHidden = function () {
-                        element.remove();
+                var setVisible = function () {
+                        element.removeClass('hidden');
                     },
-                    defineVisibility = function () {
+                    setHidden = function () {
+                        element.addClass('hidden');
+                    },
+                    defineVisibility = function (reset) {
+                        var result;
+                        if (reset) {
+                            setHidden();
+                        }
+
                         UserService.isAuthenticated().then(function(result) {
-                            if (result !== scope.rule) {
+                            if (result === scope.rule) {
+                                setVisible();
+                            } else {
                                 setHidden();
                             }
                         });
                     }
 
-                defineVisibility();
+                defineVisibility(true);
             }
         };
     }
