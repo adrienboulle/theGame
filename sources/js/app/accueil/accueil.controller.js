@@ -23,13 +23,6 @@
 	
 		$scope.user = user;
 
-		UserService.isAuthenticated().then(function(result) {
-			if (result) {
-				$scope.userInfoSignin = {};
-				$scope.userInfoSignup = {};
-			}
-		})
-
 		$scope.logout = function() {
 			LoginService.logout().then(function() {
 				$state.reload();
