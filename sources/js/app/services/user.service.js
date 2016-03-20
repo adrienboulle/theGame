@@ -10,105 +10,103 @@
 		]);
 
 	function UserService($q, UserResource, LoginResource) {
-	  		
-  		var _user,
-  			_authenticated,
-  			_cache,
-  			_init = function() {
-  				_authenticated = undefined;
-  				_user = undefined;
+	  	
+	  	// variables qui seront tout le temps accessibles
+  		var user,
+  			authenticated,
+  			cache,
+  			init = function() {
+  				authenticated = undefined;
+  				user = undefined;
   			};
 
-  		_init();
+  		// on initie les variables
+  		init();
   		
   		return {
+  			// remet à 0 le service (ie. si login ou logout)
 			init: function() {
-				_init();
+				init();
 			},
+			// acces à l'utilisateur connecté
 			user: function() {
+				// on va appeler le serveur, on renvois donc une promesse
 				var p = $q.defer();
-				if (_user) {
-					p.resolve(_user);
+
+				if (user) {
+					// si user est défini, alors on a déjà reçu la réponse du serveur
+					// on resolve directement
+					p.resolve(user);
+				} else if (cache) {
+					// cache est défini, alors un appel au serveur est en cours,
+					// on renvois donc la promesse cache
+					p = cache;
 				} else {
-					_cache = p;
+					// sinon, on va faire un appel au serveur pour nous renvoyer l'utilisateur en session
+					// pour éviter de faire plusieurs appels, on va mettre en cache la promesse 
+					// pour la partager entre les appels au service
+					cache = p;
 					LoginResource.get().$promise.then(function(data) {
+						// en fonciton de la réponse du serveur, on renseigne les variables
 						if (data.isAuthenticated) {
-							_authenticated = true;
-							_user = data.user;
+							authenticated = true;
+							user = data.user;
 						} else {
-							_authenticated = false;
-							_user = {};
+							authenticated = false;
+							user = {};
 						}
-						p.resolve(_user);
-						_cache = undefined;
+						// on resolve et on met cache à undefined car il n'y a plus d'appel au serveur en attente
+						p.resolve(user);
+						cache = undefined;
 					})
 				}
 				return p.promise;
 			},
-			login: function(userInfo) {
-				var p = $q.defer();
-				UserResource.login().then(function(data) {
-					_user = data;
-					p.resolve(_user);
-				})
-				return p.promise;
-			},
 			hasRole: function(roles) {
-				var p = $q.defer();
-				var _self = this;
-
-				var _f = function() {
-					p.resolve(_hasRole(roles));
-				}
-
-				var _hasRole = function(roles) {
-					if (_authenticated === false || (_user && !_user.roles)) {
-						return false;
-					}
-
-					for (var i = 0; i < roles.length; i++) {
-						if (_user.roles.indexOf(roles[i]) !== -1) {
-							return true;
+				var _self = this,
+					_p = $q.defer(),
+					_hasRole = function(roles) {
+						for (var i = 0; i < roles.length; i++) {
+							if (user.roles.indexOf(roles[i]) !== -1) {
+								return true;
+							}
 						}
+						return false;
+					};
+
+
+				// on appel la méthode .user de ce service pour éviter d'avoir à gérer les appels au serveur
+				// si jamais _user n'est pas encore resolved
+				_self.user().then(function() {
+					// à ce moment les variabmes authenticated et user sont nécessairement définies 
+					if (authenticated && user.roles) {
+						if (_hasRole(roles)) {
+							_p.resolve(true);
+						} else {
+							_p.resolve(false);	
+						}
+					} else {
+						_p.resolve(false);
 					}
-
-					return false;
-				}
-
-				if (_cache) {
-					_cache.promise.then(_f);
-				} else if (_user) {
-					_f();
-				} else {
-					_self.user().then(_f);
-				}
-				
-				return p.promise;                      
+				})
+				return _p.promise;                      
 			},
 			isAuthenticated: function() {
-				var p = $q.defer();
-				var _self = this;
+				var _self = this,
+					_p = $q.defer();
 
-				var _f = function() {
-					p.resolve(_isAuthenticated());
-				}
 
-				var _isAuthenticated = function() {
-					if (_authenticated === true) {
-						return true;
+				// on appel la méthode .user de ce service pour éviter d'avoir à gérer les appels au serveur
+				// si jamais _user n'est pas encore resolved
+				_self.user().then(function() {
+					// à ce moment les variables authenticated et user sont nécessairement définies 
+					if (authenticated === true) {
+						_p.resolve(true);
+					} else {
+						_p.resolve(false);
 					}
-					return false;
-				}
-
-				if (_cache) {
-					_cache.promise.then(_f);
-				} else if (_user) {
-					_f();
-				} else {
-					_self.user().then(_f);
-				}
-				
-				return p.promise;       
+				})
+				return _p.promise;       
 			}
 		}
 	 }

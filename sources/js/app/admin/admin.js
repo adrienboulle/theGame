@@ -14,9 +14,9 @@
       			url: '/admin',
       			views: {
                 'content@': {
-        				    templateUrl: 'js/app/admin/admin.html',
+        				templateUrl: 'js/app/admin/admin.html',
       			        controller: 'AdminController'
-      				  }
+      				}
       			},
             resolve : {
                 admin: [
