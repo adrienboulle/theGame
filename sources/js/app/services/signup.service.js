@@ -5,16 +5,11 @@
 		.factory('SignupService', [
 			'$q',
 			'SignupResource',
-			SignupResource
+			signupResource
 		]);
 
-	function SignupResource($q, SignupResource) {
+	function signupResource($q, SignupResource) {
 
-  		var user = {
-  			isAuthenticated: false,
-  			name: undefined
-  		}
-		
 		return {
 			signup: function(userInfo) {
 				var p = $q.defer();

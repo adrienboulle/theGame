@@ -4,12 +4,10 @@
 	angular.module('theGame')
 		.factory('LoginResource', [
 			'$resource',
-			'$location',
-			'$q',
-			LoginResource
+			loginResource
 		]);
 
-	function LoginResource($resource, $location, $q) {
+	function loginResource($resource) {
   							
 		return $resource('/api/login', {}, {
 			'login': {

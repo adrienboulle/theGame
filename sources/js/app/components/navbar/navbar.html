@@ -7,21 +7,44 @@
 		    	</div>
 		    	<ul class="nav navbar-nav">
 		      		<li 
-		      			ng-class="{active: $state.is('site.accueil')}">
+		      			ui-sref-active="active">
 		      			<a ui-sref="site.accueil">Accueil</a>
 		      		</li>
 		      		<li 
-		      			ng-class="{active: $state.is('site.page1')}">
+		      			ui-sref-active="active">
 		      			<a href="#">Page 1</a>
 		      		</li>
 		      		<li 
-		      			ng-class="{active: $state.is('site.page2')}">
+		      			ui-sref-active="active">
 		      			<a href="#">Page 2</a>
 		      		</li>
 		      		<li 
-		      			ng-class="{active: $state.is('site.admin')}"
+		      			ui-sref-active="active"
 		      			has-role="ROLE_ADM">
-		      			<a ui-sref="site.admin">Admin</a>
+		      			<a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        	<span>
+                            	<span>
+                                	Admin
+                            	</span>
+                            	<b class="caret"></b>
+                        	</span>
+                    	</a>
+	                    <ul class="dropdown-menu">
+	                        <li ui-sref-active="active" >
+	                        	<a ui-sref="#" data-toggle="collapse" data-target=".navbar-collapse.in">
+	                    			<span translate="global.menu.entities.bankAccount">
+	                    				Conf.
+	                    			</span>
+	                    		</a>
+	                    	</li>
+	                        <li ui-sref-active="active" >
+	                        	<a ui-sref="site.admin.users" data-toggle="collapse" data-target=".navbar-collapse.in">
+	                    			<span translate="global.menu.entities.bankAccount">
+	                    				Users
+	                    			</span>
+	                    		</a>
+	                    	</li>
+	                    </ul>
 		      		</li>
 		    	</ul>
 		    	<ul class="nav navbar-nav navbar-right">

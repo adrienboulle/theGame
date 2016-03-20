@@ -6,10 +6,10 @@
 			'$q',
 			'UserResource',
 			'LoginResource',
-			UserService
+			userService
 		]);
 
-	function UserService($q, UserResource, LoginResource) {
+	function userService($q, UserResource, LoginResource) {
 	  	
 	  	// variables qui seront tout le temps accessibles
   		var user,

@@ -6,21 +6,6 @@ var User = require('../models/user.js'),
 
 module.exports = function(app, passport) {
 
-	// le temps de passer de role à roleS
-	User.find({}, function(err, users) {
-		 for (var i = 0; i < users.length; i++) {
-		 	var user = users[i];
-		 	var roles = [];
-		 	roles.push(user._doc.role);
-		 	user._doc.roles = roles;
-		 	user.markModified('roles');
-		 	user.save();
-		 }
-	 });
-
-
-
-
 	passport.use(new passportLocal.Strategy(verifyCredentials));
 
 	// login ===================================================================
@@ -53,9 +38,9 @@ module.exports = function(app, passport) {
 		}
 
 		signUp(user, function(err, user){
-			if(err){
+			if (err) {
 				res.sendStatus(400, err);
-			}else{
+			} else {
 				res.sendStatus(200);
 			}
 		});
@@ -63,9 +48,36 @@ module.exports = function(app, passport) {
 
 	// admin ==================================================================
 
-	// test pour hab ROLE_ADMIN
+	// ramène la liste des utilisateurs
 	app.get('/api/users', hasRole(['ROLE_ADM']), function(req, res) {
-		res.send({admin: true});
+		User.find({}, function(err, users) {
+			if (err) {
+				res.sendStatus(500, err);
+			} else {
+				res.send(users);
+			}
+		})
+	});
+
+	// acive/desactive des utilisateurs
+	app.post('/api/users/actif', hasRole(['ROLE_ADM']), function(req, res) {
+		User.find({'_id': { $in: req.body.ids}}, function(err, users) {
+			if (err) {
+				res.sendStatus(500, err);
+			} else {
+				for (var i = 0; i < users.length; i++) {
+					var user = users[i];
+					user.actif = req.body.actif;
+					user.save(function(err) {
+						if (err) {
+							res.sendStatus(500);
+						} else {
+							res.sendStatus(200);
+						}
+					});
+				}
+			}
+		})
 	});
 
 	// tout le reste
@@ -92,13 +104,15 @@ module.exports = function(app, passport) {
 		User.findOne({username: username}, function(err, user) {
 			if (!err && user) {
 				user.verifyCredentials(password, function(err, passwordOk) {
-					if (passwordOk) {
+					if (passwordOk && !err) {
 						return done(null, user.toJson());
+					} else {
+						return done(err, null);
 					}
 				})
 			} else {
 				setTimeout(function() {
-					return done(err, null);
+					return done('ERLOG404', null);
 				}, 1000);
 			}
 		})

@@ -7,13 +7,17 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	username: String,
 	password: String,
-	role: String,
-	roles: [String]
+	roles: [String],
+	actif: Boolean
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
+	if (!this.actif) return callback("ERLOG401", false);
 	var combined = new Buffer(this.password, 'base64');
 	crypto.verifyPassword(password, combined, function(err, loggedIn) {
+		if (!err && !loggedIn) {
+			err = "ERLOG403";
+		}
 		return callback(err, loggedIn);
 	})
 }
@@ -22,7 +26,7 @@ UserSchema.methods.hasRole = function(roles) {
 	if (!roles) {
 		throw 'hasHab function take an array in parameter'
 	} else {
-		for (var i = 0; i < roles.length; i++) {
+		for (var i = 0; i < this.roles.length; i++) {
 			if (roles.indexOf(this.roles[i]) !== -1) {
 				return true;
 			}

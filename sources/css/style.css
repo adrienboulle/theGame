@@ -34,3 +34,59 @@ h2.h2-form {
 	margin-bottom: 15px;
 	margin-top: 0px;
 }
+
+.div-table {
+	display: table;
+}
+
+.div-row {
+	display: table-row;
+}
+
+.div-cell {
+	display: table-cell;
+	text-align: left;
+}
+
+.w100 {
+	width: 100%;
+}
+
+.adm {
+    background-color: #D84545 !important;
+}
+
+.user {
+    background-color: #2FB145 !important;
+}
+
+.role {
+	display: inline-block;
+	padding-right: 5px;
+}
+
+.users {
+	background-color: #CACACA;
+}
+
+.users .div-cell.divh {
+	background-color: #A09E9E !important;
+}
+
+.users .div-cell {
+	padding: 4px 8px;
+}
+
+.users.div-table {
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+md-switch {
+	margin: 0 !important;
+}
+
+.error {
+	padding-top: 11px;
+	color: red;
+}

@@ -6,19 +6,19 @@
 			'$q',
 			'LoginResource',
 			'UserService',
-			LoginResource
+			loginResource
 		]);
 
-	function LoginResource($q, LoginResource, UserService) {
+	function loginResource($q, LoginResource, UserService) {
 	
 		return {
 			login: function(userInfo) {
 				var p = $q.defer();
-				LoginResource.login(userInfo).$promise.then(function(data) {
+				LoginResource.login(userInfo).$promise.then(function(rep) {
 					UserService.init();
-					p.resolve(data);
+					p.resolve(rep.data);
 				}, function(err) {
-					p.reject(err);
+					p.reject(err.data);
 				})
 				return p.promise;
 			},

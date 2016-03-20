@@ -1,0 +1,31 @@
+<div class="row" is-auth="true">
+	<div class="col-md-12 text-center">
+		<div class="div-table w100 users">
+			<div class="div-row">
+				<div class="div-cell divh">
+					Username
+				</div>
+				<div class="div-cell divh">
+					Roles
+				</div>
+				<div class="div-cell divh">
+					Actif
+				</div>
+			</div>
+			<div class="div-row" ng-repeat="u in users">
+				<div class="div-cell">
+					{{u.username}}
+				</div>
+				<div class="div-cell">
+					<div class="role" ng-repeat="r in u.roles">
+						<span class="label label-info {{r.toLowerCase().slice(5)}}">{{r.slice(5)}}</span>
+					</div>
+				</div>
+				<div class="div-cell">
+					<md-switch class="md-primary" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">
+					</md-switch>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

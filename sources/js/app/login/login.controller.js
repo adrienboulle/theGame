@@ -27,7 +27,13 @@
 			LoginService.login($scope.userInfoSignin).then(function(data) {
 				$state.go('site.accueil', null, {reload: true});
 			}, function(data) {
-				$scope.erreur = 'Erreur !';
+				if (data.indexOf('ERLOG401') != -1) {
+					$scope.erreur = 'Votre compte a ete désactivé';
+				} else if (data.indexOf('ERLOG403') != -1) {
+					$scope.erreur = 'Mot de passe erroné';
+				} else if (data.indexOf('ERLOG404') != -1) {
+					$scope.erreur = 'Utilisateur inexistant';
+				}
 			})
 		}
 

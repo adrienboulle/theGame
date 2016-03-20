@@ -4,12 +4,10 @@
 	angular.module('theGame')
 		.factory('UserResource', [
 			'$resource',
-			'$location',
-			'$q',
-			UserResource
+			userResource
 		]);
 
-	function UserResource($resource, $location, $q) {
+	function userResource($resource) {
 			
 		return $resource('/api/user/:id', {id: '@id'}, {
 			'get': {
