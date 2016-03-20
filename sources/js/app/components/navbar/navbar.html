@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-12">
+		<nav class="navbar navbar-inverse">
+		  	<div class="container-fluid">
+		    	<div class="navbar-header">
+		      		<a class="navbar-brand" >B&G</a>
+		    	</div>
+		    	<ul class="nav navbar-nav">
+		      		<li 
+		      			ng-class="{active: $state.is('site.accueil')}">
+		      			<a ui-sref="site.accueil">Accueil</a>
+		      		</li>
+		      		<li 
+		      			ng-class="{active: $state.is('site.page1')}">
+		      			<a href="#">Page 1</a>
+		      		</li>
+		      		<li 
+		      			ng-class="{active: $state.is('site.page2')}">
+		      			<a href="#">Page 2</a>
+		      		</li>
+		      		<li 
+		      			ng-class="{active: $state.is('site.admin')}"
+		      			has-role="ROLE_ADM">
+		      			<a ui-sref="site.admin">Admin</a>
+		      		</li>
+		    	</ul>
+		    	<ul class="nav navbar-nav navbar-right">
+		        	<li is-auth="true"><a>Hello {{user.username}} !</a></li>
+		    	</ul>
+		  	</div>
+		</nav>
+	</div>
+</div>
