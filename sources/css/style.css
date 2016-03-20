@@ -75,6 +75,7 @@ h2.h2-form {
 
 .users .div-cell {
 	padding: 4px 8px;
+	vertical-align: middle;
 }
 
 .users.div-table {
