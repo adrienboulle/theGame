@@ -10,6 +10,7 @@ var express 		= require('express'),
 	bodyParser 		= require('body-parser'),
 	cookieParser 	= require('cookie-parser'),
 	expressSession 	= require('express-session'),
+	role 		= require('./app/utils/role.js');
 
 	configDb 		= require('./config/database.js');
 
@@ -27,6 +28,9 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());	
+
+// roles ====================================================================
+require('./config/roles.js')(role);
 
 // routes ====================================================================
 require('./app/routes/routes.js')(app, passport);
