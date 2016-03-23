@@ -7,8 +7,8 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	username: String,
 	password: String,
-	roles: [String],
-	actif: Boolean
+	actif: Boolean,
+	roles: [String]
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
