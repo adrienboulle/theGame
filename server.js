@@ -30,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());	
 
 // roles ====================================================================
-require('./config/roles.js')(role);
+require('./config/role.js')(role);
 
 // routes ====================================================================
 require('./app/routes/routes.js')(app, passport);
