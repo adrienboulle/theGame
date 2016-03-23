@@ -8,9 +8,9 @@ var express 		= require('express'),
 
 	logger 			= require('express-logger'),
 	bodyParser 		= require('body-parser'),
-	cookieParser 	= require('cookie-parser'),
-	expressSession 	= require('express-session'),
-	role 		= require('./app/utils/role.js');
+	cookieParser 		= require('cookie-parser'),
+	expressSession 		= require('express-session'),
+	role 			= require('./app/utils/role.js');
 
 	configDb 		= require('./config/database.js');
 
@@ -33,7 +33,7 @@ app.use(passport.session());
 require('./config/role.js')(role);
 
 // routes ====================================================================
-require('./app/routes/routes.js')(app, passport);
+require('./app/routes/routes.js')(app, passport, role);
 require('./config/passport.js')(passport);
 
 // launch ====================================================================
