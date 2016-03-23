@@ -4,7 +4,7 @@ var User = require('../models/user.js'),
 	passportLocal = require('passport-local'),
 	crypto = require('../utils/crypto.js');
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, role) {
 
 	passport.use(new passportLocal.Strategy(verifyCredentials));
 
@@ -49,7 +49,7 @@ module.exports = function(app, passport) {
 	// admin ==================================================================
 
 	// ramène la liste des utilisateurs
-	app.get('/api/users', hasRole(['ROLE_ADM']), function(req, res) {
+	app.get('/api/users', role.want('view users'), function(req, res) {
 		User.find({}, function(err, users) {
 			if (err) {
 				res.sendStatus(500, err);
