@@ -22,6 +22,28 @@
 				
 				return p.promise;
 			},
+			removeRole: function(user, role) {
+				var p = $q.defer();
+
+				$http.post('/api/users/role/delete', {'id': user._id, 'role': role})
+					.then(function() {
+						p.resolve();
+					}, function() {
+						p.reject();
+					});
+				return p.promise;
+			},
+			addRole: function(user, role) {
+				var p = $q.defer();
+
+				$http.post('/api/users/role/add', {'id': user._id, 'role': role.alias})
+					.then(function() {
+						p.resolve();
+					}, function() {
+						p.reject();
+					});
+				return p.promise;
+			},
 			toogleActif: function(ids, actif) {
 				$http.post('/api/users/actif', {'ids': ids, 'actif': actif})
 					.then(function() {

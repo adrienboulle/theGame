@@ -1,6 +1,7 @@
 'user strict'
 
 var User = require('../models/user.js'),
+	Role = require('../models/role.js'),
 	passportLocal = require('passport-local'),
 	crypto = require('../utils/crypto.js');
 
@@ -59,7 +60,7 @@ module.exports = function(app, passport, role) {
 		})
 	});
 
-	// acive/desactive des utilisateurs
+	// active/desactive des utilisateurs
 	app.post('/api/users/actif', hasRole(['ROLE_ADM']), function(req, res) {
 		User.find({'_id': { $in: req.body.ids}}, function(err, users) {
 			if (err) {
@@ -76,6 +77,59 @@ module.exports = function(app, passport, role) {
 						}
 					});
 				}
+			}
+		})
+	});
+
+	// ramène la liste des roles actifs
+	app.get('/api/roles', hasRole(['ROLE_ADM']), function(req, res) {
+		Role.find({'active': true}, function(err, roles) {
+			if (err) {
+				res.sendStatus(500, err);
+			} else {
+				res.send(roles);
+			}
+		})
+	});
+
+	// retire un role à un utilisateur
+	app.post('/api/users/role/delete', hasRole(['ROLE_ADM']), function(req, res) {
+		User.findOne({'_id': req.body.id}, function(err, user) {
+			if (err) {
+				res.sendStatus(500, err);
+			} else {
+				for (var i = 0; i < user.roles.length; i++) {
+					if (user.roles[i] === req.body.role) {
+						user.roles.splice(i, 1);
+					}
+				}
+				user.markModified('roles');
+				user.save(function(err) {
+					if (err) {
+						res.sendStatus(500);
+					} else {
+						res.sendStatus(200);
+					}
+				});
+			}
+		})
+	});
+
+		// retire un role à un utilisateur
+	app.post('/api/users/role/add', hasRole(['ROLE_ADM']), function(req, res) {
+		User.findOne({'_id': req.body.id}, function(err, user) {
+			if (err) {
+				res.sendStatus(500, err);
+			} else {
+				user.roles.push(req.body.role);
+				user.markModified('roles');
+				user.save(function(err) {
+					if (err) {
+						res.sendStatus(500);
+					} else {
+						res.sendStatus(200);
+					}
+				});
 			}
 		})
 	});

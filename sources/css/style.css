@@ -53,11 +53,15 @@ h2.h2-form {
 }
 
 .adm {
-    background-color: #D84545 !important;
+    background-color: #EA6969 !important;
 }
 
 .user {
     background-color: #2FB145 !important;
+}
+
+.select {
+	background-color:  #F7F7F7;
 }
 
 .role {
@@ -80,7 +84,6 @@ h2.h2-form {
 
 .users.div-table {
 	border-radius: 6px;
-	overflow: hidden;
 }
 
 md-switch {
@@ -90,4 +93,82 @@ md-switch {
 .error {
 	padding-top: 11px;
 	color: red;
+}
+
+.md-chips .md-chip.select {
+	background-color: white !important;
+    padding-right: 4px !important;
+}
+
+.md-chips .md-chip {
+	height: 22px !important;
+	border-radius: 4px !important;
+	line-height: 23px !important;
+	padding: 0 17px 0 8px !important;
+	margin: 0px 8px 0px 0px !important;
+}
+
+.md-chips {
+	font-size: 13px !important;
+	padding: 0 !important;
+}
+
+.md-chips .md-chip .md-chip-remove {
+	width: 20px !important;
+	height: 20px !important;
+	top: 1px;
+	outline: none;
+}
+
+.md-chips .md-chip-input-container {
+	display: none !important;
+}
+
+md-chips {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+	box-shadow: none !important;
+}
+
+md-chips.md-default-theme .md-chip.md-focused, md-chips .md-chip.md-focused {
+	background: rgb(224,224,224) !important;
+	color: inherit !important;
+}
+
+md-chips.md-default-theme .md-chip.md-focused md-icon, md-chips .md-chip.md-focused md-icon {
+	color: rgba(0,0,0,0.54) !important;
+}
+
+.md-chips .md-chip .md-chip-content {
+	padding-right: 7px;
+}
+
+.md-chips select.md-chip {
+	background-color: white;
+    height: 22px;
+    border: none;
+    outline: none;
+    margin-left: -9px !important;
+}
+
+.md-chips .md-chip.select .md-chip-content {
+	padding-right: 0px !important;
+}
+
+.addBtn {
+	border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    outline: none;
+    padding: 0;
+    background-color: white;
+}
+
+.addBtn md-icon {
+	width: 22px !important;
+	height: 22px !important;
 }

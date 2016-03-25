@@ -1,0 +1,8 @@
+<div style="display: inline-flex">
+	<div>
+		<span ng-click="panel = !panel" class="label label-info {{role.toLowerCase().slice(5)}}">{{role.slice(5)}}</span>
+	</div>
+	<div class="del" ng-class="{hid: !panel, sho: panel}">
+		<span class="glyphicon glyphicon-remove delX"/>
+	</div>
+</div>

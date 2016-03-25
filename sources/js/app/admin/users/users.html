@@ -17,8 +17,36 @@
 					{{u.username}}
 				</div>
 				<div class="div-cell">
-					<div class="role" ng-repeat="r in u.roles">
-						<span class="label label-info {{r.toLowerCase().slice(5)}}">{{r.slice(5)}}</span>
+					<div class="div-row">
+						<div class="div-cell">
+							<md-chips ng-repeat="r in u.roles track by r" readonly="false">
+								<md-chip class="md-chip {{r.toLowerCase().slice(5)}}">
+									<div class="md-chip-content">
+										<span>
+								        	<strong>{{r.slice(5)}}</strong>
+								        </span>
+									</div>
+									<div class="md-chip-remove-container">
+										<button ng-click="removeRole(u, r)" class="md-chip-remove" type="button">
+											<md-icon md-svg-icon="md-close" aria-hidden="true">
+											</md-icon>    
+										</button>
+									</div>
+								</md-chip>
+							<md-chips>
+						</div>
+						<div class="div-cell">
+							<div ng-show="roles.length != u.roles.length" class="dropdown">
+								<button class="addBtn" ng-click="addRole(u, selectedRole)" data-toggle="dropdown">
+									<md-icon md-svg-src="/svg/add.svg" aria-hidden="true">
+									</md-icon>    
+								</button>
+
+								<ul class="dropdown-menu">
+									<li ng-click="addRole(u, r)" ng-repeat="r in roles | notIn:u.roles"><a href="#">{{r.alias}}</a></li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="div-cell">
