@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		Filtre : 
 		<md-chips ng-repeat="r in roles | orderBy:'-level'" readonly="false">
-			<md-chip ng-init="r.selected = true" ng-click="r.selected = !r.selected" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
+			<md-chip ng-init="r.selected = false" ng-click="r.selected = !r.selected" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
 				<div class="md-chip-content">
 					<span>
 			        	<strong>{{r.alias.slice(5)}}</strong>
