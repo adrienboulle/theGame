@@ -55,12 +55,18 @@ module.exports = function(app, passport, role) {
 
 	// ramène la liste des utilisateurs
 	app.get('/api/users', role.want('view users'), function(req, res) {
-		User.find({}, function(err, users) {
-			if (err) {
-				res.sendStatus(500, err);
-			} else {
-				res.send(users);
-			}
+		User.find({})
+			.populate('roles')
+			.exec(function(err, users) {
+				var usersJson = [];
+				for (var i = 0; i < users.length; i++) {
+					usersJson.push(users[i].toJson())
+				}
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					res.send(usersJson);
+				}
 		})
 	});
 
@@ -98,43 +104,52 @@ module.exports = function(app, passport, role) {
 
 	// retire un role à un utilisateur
 	app.post('/api/users/role/delete', role.want("remove role"), role.levelDelta(-1), function(req, res) {
-		User.findOne({'_id': req.body.id}, function(err, user) {
-			if (err) {
-				res.sendStatus(500, err);
-			} else {
-				for (var i = 0; i < user.roles.length; i++) {
-					if (user.roles[i] === req.body.role) {
-						user.roles.splice(i, 1);
+		User.findOne({'_id': req.body.id})
+			.populate('roles')
+			.exec(function(err, user) {
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					for (var i = 0; i < user.roles.length; i++) {
+						if (user.roles[i].id === req.body.roleId) {
+							user.roles.splice(i, 1);
+						}
 					}
+					user.markModified('roles');
+					user.save(function(err) {
+						if (err) {
+							res.sendStatus(500);
+						} else {
+							res.sendStatus(200);
+						}
+					});
 				}
-				user.markModified('roles');
-				user.save(function(err) {
-					if (err) {
-						res.sendStatus(500);
-					} else {
-						res.sendStatus(200);
-					}
-				});
-			}
 		})
 	});
 
 	// ajoute un role à un utilisateur
 	app.post('/api/users/role/add', role.want("add role"), role.levelDelta(0), function(req, res) {
-		User.findOne({'_id': req.body.id}, function(err, user) {
-			if (err) {
-				res.sendStatus(500, err);
-			} else {
-				user.roles.push(req.body.role);
-				user.markModified('roles');
-				user.save(function(err) {
-					if (err) {
-						res.sendStatus(500);
-					} else {
-						res.sendStatus(200);
+		User.findOne({'_id': req.body.id})
+			.populate('roles')
+			.exec(function(err, user) {
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					for (var i = 0; i < user.roles.length; i++) {
+						if (user.roles[i].id === req.body.roleId) {
+							return res.sendStatus(400);
+						}
 					}
-				});
-			}
+					user.roles.push(req.body.roleId);
+					user.markModified('roles');
+					user.save(function(err) {
+						if (err) {
+							res.sendStatus(500);
+						} else {
+							res.sendStatus(200);
+						}
+					});
+				}
 		})
 	});
 

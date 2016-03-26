@@ -25,14 +25,14 @@
 				<div class="div-cell">
 					<div class="div-row">
 						<div class="div-cell nopadding">
-							<md-chips ng-repeat="r in u.roles track by r" readonly="false">
-								<md-chip class="md-chip {{r.toLowerCase().slice(5)}}" ng-class="{noMod: !canAct(u, false)}">
+							<md-chips ng-repeat="r in u.roles | orderBy:'-level'" readonly="false">
+								<md-chip class="md-chip {{r.alias.toLowerCase().slice(5)}}" ng-class="{noMod: curUser.level >= u.level && curUser.level !== 0}">
 									<div class="md-chip-content">
 										<span>
-								        	<strong>{{r.slice(5)}}</strong>
+								        	<strong>{{r.alias.slice(5)}}</strong>
 								        </span>
 									</div>
-									<div ng-show="canAct(u, false)" class="md-chip-remove-container">
+									<div ng-show="curUser.level < u.level || curUser.level == 0" class="md-chip-remove-container">
 										<button ng-click="removeRole(u, r)" class="md-chip-remove" type="button">
 											<md-icon md-svg-icon="md-close" aria-hidden="true">
 											</md-icon>    
@@ -49,7 +49,7 @@
 								</button>
 
 								<ul class="dropdown-menu">
-									<li ng-click="addRole(u, r)" ng-repeat="r in filteredItems = (rolesArr | orderBy:'-level' | notIn:u.roles) "><a href="#">{{r.alias}}</a></li>
+									<li ng-click="addRole(u, r)" ng-repeat="r in filteredItems = (roles | orderBy:'-level' | notIn:u.roles:curUser.level) track by $index"><a href="#">{{r.alias}}</a></li>
 								</ul>
 							</div>
 						</div>
@@ -59,11 +59,11 @@
 					{{u.lastConnexion | date:'dd/MM/yyyy HH:mm:ss'}}
 				</div>
 				<div class="div-cell">
-					<md-switch ng-class="{'md-primary': canAct(u, false)}" ng-disabled="!canAct(u, false)" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">
+					<md-switch ng-class="{'md-primary': curUser.level < u.level || curUser.level == 0}" ng-disabled="curUser.level >= u.level && curUser.level !== 0" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">
 					</md-switch>
 				</div>
 				<div class="div-cell btn-mini">
-					<md-button ng-disabled="!canAct(u, false)" class="md-fab md-primary" aria-label="Use Android">
+					<md-button ng-disabled="curUser.level >= u.level && curUser.level !== 0" class="md-fab md-primary" aria-label="Use Android">
 						<md-icon md-svg-src="/svg/raz.svg"></md-icon>
 					</md-button>
 				</div>

@@ -20,7 +20,7 @@
                         '$timeout',
                         function($q, $state, UserService, $timeout) {
                             var defered = $q.defer();
-                            UserService.hasRole(['ROLE_ADM']).then(function(result) {
+                            UserService.hasLevel(1).then(function(result) {
                                 if (result) {
                                     return defered.resolve(true);
                                 } else {

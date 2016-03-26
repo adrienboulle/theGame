@@ -6,10 +6,14 @@
             'UserService', 
             hasRole
         ])
+        .directive('hasLevel', [
+            'UserService', 
+            hasLevel
+        ])
         .directive('isAuth', [
             'UserService', 
             isAuth
-        ])
+        ]);
 
     function hasRole(UserService) {
         return {
@@ -39,6 +43,36 @@
                 if (roles.length > 0) {
                     defineVisibility(true);
                 }
+            }
+        };
+    }
+
+     function hasLevel(UserService) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var setVisible = function () {
+                        element.removeClass('hidden');
+                    },
+                    setHidden = function () {
+                        element.addClass('hidden');
+                    },
+                    defineVisibility = function (reset) {
+                        var result;
+                        if (reset) {
+                            setHidden();
+                        }
+                        UserService.hasLevel(level).then(function(result) {
+                            if (result) {
+                                setVisible();
+                            } else {
+                                setHidden();
+                            }
+                        });
+                    },
+                    level = Number(attrs.hasLevel);
+
+                defineVisibility(true);
             }
         };
     }

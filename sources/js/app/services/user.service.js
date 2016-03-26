@@ -63,37 +63,44 @@
 				}
 				return p.promise;
 			},
-			// retourne les roles de l'utilisateur connecté avec le plus bas level
-			maxRoles: function() {
+			// retourne les roles de l'utilisateur connecté avec le meilleur level (le plus bas)
+			bestRoles: function() {
 				var _self = this,
 					_p = $q.defer(),
-					_minLevel,
-					_mapRoles = new Map(),
-					_maxRoles = [];
+					_bestRoles = [];
 
 
 				_self.user().then(function() {
 					if (authenticated && user.roles) {
-						RolesService.getAll().then(function(data) {
-							for (var i = 0; i < data.length; i++) {
-								_mapRoles.set(data[i].alias, data[i]);
+						for (var i = 0; i < user.roles.length; i++) {
+							if (user.roles[i].level === user.level) {
+								_bestRoles.push(user.roles[i]);		
 							}
-							for (var i = 0; i < user.roles.length; i++) {
-								if (_minLevel === undefined) {
-									_minLevel = _mapRoles.get(user.roles[i]).level;
-								} else if (_mapRoles.get(user.roles[i]).level < _minLevel) {
-									_minLevel = _mapRoles.get(user.roles[i]).level;
-								}
-							}
-							_mapRoles.forEach(function(role, alias) {
-								if (role.level === _minLevel) {
-									_maxRoles.push(role);
-								}
-								_p.resolve(_maxRoles);
-							})
-						})
+						}
+						_p.resolve(_bestRoles);
 					} else {
 						_p.resolve([]);
+					}
+				})
+				return _p.promise;
+			},
+			hasLevel: function(lvl) {
+				var _self = this,
+					_p = $q.defer();
+
+
+				// on appel la méthode .user de ce service pour éviter d'avoir à gérer les appels au serveur
+				// si jamais user n'est pas encore resolved
+				_self.user().then(function() {
+					// à ce moment les variabmes authenticated et user sont nécessairement définies 
+					if (authenticated && user.level !== undefined) {
+						if (user.level <= lvl) {
+							_p.resolve(true);
+						} else {
+							_p.resolve(false);	
+						}
+					} else {
+						_p.resolve(false);
 					}
 				})
 				return _p.promise;
@@ -103,8 +110,10 @@
 					_p = $q.defer(),
 					_hasRole = function(roles) {
 						for (var i = 0; i < roles.length; i++) {
-							if (user.roles.indexOf(roles[i]) !== -1) {
-								return true;
+							for (var j = 0; j < user.roles.length; j++) {
+								if (user.roles[j]._id === roles[i]._id) {
+									return true;
+								}
 							}
 						}
 						return false;
@@ -112,7 +121,7 @@
 
 
 				// on appel la méthode .user de ce service pour éviter d'avoir à gérer les appels au serveur
-				// si jamais _user n'est pas encore resolved
+				// si jamais user n'est pas encore resolved
 				_self.user().then(function() {
 					// à ce moment les variabmes authenticated et user sont nécessairement définies 
 					if (authenticated && user.roles) {
@@ -133,7 +142,7 @@
 
 
 				// on appel la méthode .user de ce service pour éviter d'avoir à gérer les appels au serveur
-				// si jamais _user n'est pas encore resolved
+				// si jamais user n'est pas encore resolved
 				_self.user().then(function() {
 					// à ce moment les variables authenticated et user sont nécessairement définies 
 					if (authenticated === true) {

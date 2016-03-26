@@ -22,10 +22,10 @@
 				
 				return p.promise;
 			},
-			removeRole: function(user, role) {
+			removeRole: function(user, roleId) {
 				var p = $q.defer();
 
-				$http.post('/api/users/role/delete', {'id': user._id, 'role': role})
+				$http.post('/api/users/role/delete', {'id': user._id, 'roleId': roleId})
 					.then(function() {
 						p.resolve();
 					}, function() {
@@ -33,10 +33,10 @@
 					});
 				return p.promise;
 			},
-			addRole: function(user, role) {
+			addRole: function(user, roleId) {
 				var p = $q.defer();
 
-				$http.post('/api/users/role/add', {'id': user._id, 'role': role.alias})
+				$http.post('/api/users/role/add', {'id': user._id, 'roleId': roleId})
 					.then(function() {
 						p.resolve();
 					}, function() {

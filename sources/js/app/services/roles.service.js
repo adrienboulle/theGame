@@ -20,18 +20,18 @@
 				})
 				return p.promise;
 			},
-			getSupEgal: function(lvl) {
+			getBetterOrEquals: function(lvl) {
 				var _self = this,
-					_rolesSupEgal = [],
+					_rolesBetterOrEquals = [],
 					_p = $q.defer();
 
 				_self.getAll().then(function(roles) {
 					for (var i = 0; i < roles.length; i++) {
 						if (roles[i].level >= lvl) {
-							_rolesSupEgal.push(roles[i]);
+							_rolesBetterOrEquals.push(roles[i]);
 						}
 					}
-					_p.resolve(_rolesSupEgal);
+					_p.resolve(_rolesBetterOrEquals);
 				})
 				return _p.promise;      
 			},

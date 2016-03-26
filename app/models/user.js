@@ -8,7 +8,7 @@ var UserSchema = new Schema({
 	username: String,
 	password: String,
 	actif: Boolean,
-	roles: [String],
+	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
 	lastConnexion: Date
 });
 
@@ -23,22 +23,22 @@ UserSchema.methods.verifyCredentials = function(password, callback) {
 	})
 }
 
-UserSchema.methods.hasRole = function(roles) {
-	if (!roles) {
-		throw 'hasHab function take an array in parameter'
-	} else {
-		for (var i = 0; i < this.roles.length; i++) {
-			if (roles.indexOf(this.roles[i]) !== -1) {
-				return true;
-			}
+UserSchema.methods.getLevel = function() {
+	var _bestLevel;
+	for (var i = 0; i < this.roles.length; i++) {
+		if (_bestLevel === undefined) {
+			_bestLevel = this.roles[i].level;
+		} else {
+			_bestLevel = (this.roles[i].level < _bestLevel) ? this.roles[i].level : _bestLevel;
 		}
-		return false;
 	}
+	return _bestLevel;
 }
 
 UserSchema.methods.toJson = function() {
 	var obj = this.toObject();
   	delete obj.password;
+  	obj.level = this.getLevel();
   	return obj;
 } 
 

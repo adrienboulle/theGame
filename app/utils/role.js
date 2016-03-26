@@ -24,22 +24,21 @@ var Role = function() {
 				callback(err, roles);
 			});
 		}
-		
 	}
 
-	this.getLevel = function(fn, id, callback) {
+	this.getLevel = function(fn, ids, callback) {
 		
 		if (typeof fn === 'function') {
 			return this.getLevelFunction = fn;
 		}
 		
 		if (!this.getLevelFunction) {
-			var err = new Error("You must provide a function to get user level");
+			var err = new Error("You must provide a function to get users level");
 			callback(err);
 		}
 
 		if (this.getLevelFunction) {
-			this.getLevelFunction(id, function(err, level) {
+			this.getLevelFunction(ids, function(err, level) {
 				callback(err, level);
 			});
 		}
@@ -47,8 +46,9 @@ var Role = function() {
 	}
 
 	this.init = function(options) {
+		var options = options || {};
+
 		this.conf = {
-			superAdminAlias: options.superAdminAlias || 'SUPER_ADMIN',
 			rolesFieldName: options.rolesFieldName || 'roles',
 			actionsFieldName: options.actionsFieldName || 'actions'
 		}
@@ -59,21 +59,14 @@ var Role = function() {
 		var self = this;
 		return function middleware(req, res, next) {
 			if (req.isAuthenticated()) {
-				self.getRolesConf(null, function(err, confRoles) {
-					if (err) {
-						console.error(err);
-						return res.sendStatus(500);
+				var userRoles = req.user[self.conf.rolesFieldName];
+				for (var i = 0; i < userRoles.length; i++) {
+					var actions = userRoles[i][self.conf.actionsFieldName];
+					if (actions.indexOf(action) != -1 || actions.indexOf("*") != -1) {
+						return next();
 					}
-					var userRoles = req.user[self.conf.rolesFieldName];
-					for (var i = 0; i < userRoles.length; i++) {
-						var actions = confRoles.get(userRoles[i]);
-						if (actions
-							&& (actions.indexOf(action) != -1 || actions.indexOf("*") != -1)) {
-							return next();
-						}
-					}
-					return res.sendStatus(403);
-				})
+				}
+				return res.sendStatus(403);
 			} else {
 				return res.sendStatus(403);
 			}
@@ -91,21 +84,19 @@ var Role = function() {
 				} else {
 					ids.push(req.body.id);
 				}
-				self.getLevel(null, ids, function(err, minLevel) {
+				self.getLevel(null, ids, function(err, bestLevel) {
 					if (err) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
-					if (minLevel === undefined) {
+					if (bestLevel === undefined) {
 						return next();
 					}
-					self.getLevel(null, req.user._id, function(err, minLevelUser) {
-						if (minLevelUser <= minLevel + levelDelta || minLevelUser === 0) {
-							return next();
-						} else {
-							return res.sendStatus(403);
-						}
-					})
+					if (req.user.level <= bestLevel + levelDelta || req.user.level === 0) {
+						return next();
+					} else {
+						return res.sendStatus(403);
+					}
 				})
 			} else {
 				return res.sendStatus(403);
