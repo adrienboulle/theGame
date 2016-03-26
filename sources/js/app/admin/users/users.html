@@ -1,4 +1,18 @@
-<div class="row" is-auth="true">
+<div class="row">
+	<div class="col-md-12">
+		Filtre : 
+		<md-chips ng-repeat="r in roles | orderBy:'-level'" readonly="false">
+			<md-chip ng-init="r.selected = true" ng-click="r.selected = !r.selected" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
+				<div class="md-chip-content">
+					<span>
+			        	<strong>{{r.alias.slice(5)}}</strong>
+			        </span>
+				</div>
+			</md-chip>
+		<md-chips>
+	</div>
+</div>
+<div class="row top10">
 	<div class="col-md-12 text-center">
 		<div class="div-table w100 users">
 			<div class="div-row divh">
@@ -6,7 +20,9 @@
 					Username
 				</div>
 				<div class="div-cell divh roles">
-					Roles
+					Roles inactifs :
+					<md-checkbox class="md-primary" ng-model="showInactive" ng-init="showInactive = true" aria-label="Montrer inacrifs">
+					</md-checkbox>
 				</div>
 				<div class="div-cell divh derCon">
 					Dernière connexion
@@ -18,7 +34,7 @@
 					raz
 				</div>
 			</div>
-			<div class="div-row" ng-repeat="u in users">
+			<div class="div-row" ng-repeat="u in users | hasRoleSelected:roles">
 				<div class="div-cell">
 					{{u.username}}
 				</div>
@@ -26,13 +42,13 @@
 					<div class="div-row">
 						<div class="div-cell nopadding">
 							<md-chips ng-repeat="r in u.roles | orderBy:'-level'" readonly="false">
-								<md-chip class="md-chip {{r.alias.toLowerCase().slice(5)}}" ng-class="{noMod: curUser.level >= u.level && curUser.level !== 0}">
+								<md-chip ng-show="r.active || showInactive" class="md-chip {{r.alias.toLowerCase().slice(5)}}" ng-class="{noMod: curUser.level >= u.level && curUser.level !== 0}">
 									<div class="md-chip-content">
 										<span>
 								        	<strong>{{r.alias.slice(5)}}</strong>
 								        </span>
 									</div>
-									<div ng-show="curUser.level < u.level || curUser.level == 0" class="md-chip-remove-container">
+									<div ng-show="!(curUser.level >= u.level && curUser.level !== 0)" class="md-chip-remove-container">
 										<button ng-click="removeRole(u, r)" class="md-chip-remove" type="button">
 											<md-icon md-svg-icon="md-close" aria-hidden="true">
 											</md-icon>    

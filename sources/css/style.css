@@ -2,6 +2,10 @@ html, body {
 	background-color: #EBEBEB !important;
 }
 
+.top10 {
+	margin-top: 10px;
+}
+
 md-tooltip .md-content {
 	background-color: #A94442 !important;
 	font-size: 13px !important;
@@ -95,6 +99,10 @@ h2.h2-form {
 	width: auto;
 }
 
+.users .roles md-checkbox {
+	margin-bottom: 0px !important;
+}
+
 .users .active {
 	width: 50px;
 }
@@ -152,6 +160,18 @@ md-switch {
 
 .md-chips .md-chip-input-container {
 	display: none !important;
+}
+
+md-chip {
+	outline: none !important;
+}
+
+md-chip.selectable {
+	cursor: pointer !important;
+}
+
+md-chip.selectable.selected {
+	box-shadow: 0px 0px 1px 2px #757474 !important;
 }
 
 md-chips {

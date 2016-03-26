@@ -20,7 +20,7 @@
                         '$timeout',
                         function($q, $state, UserService, $timeout) {
                             var defered = $q.defer();
-                            UserService.hasLevel(1).then(function(result) {
+                            UserService.hasLevel(10).then(function(result) {
                                 if (result) {
                                     return defered.resolve(true);
                                 } else {

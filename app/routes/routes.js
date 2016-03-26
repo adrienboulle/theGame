@@ -93,7 +93,7 @@ module.exports = function(app, passport, role) {
 
 	// ramène la liste des roles actifs
 	app.get('/api/roles', role.want('view roles'), function(req, res) {
-		Role.find({'active': true}, function(err, roles) {
+		Role.find({}, function(err, roles) {
 			if (err) {
 				res.sendStatus(500, err);
 			} else {
