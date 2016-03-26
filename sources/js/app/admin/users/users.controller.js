@@ -86,19 +86,23 @@
 	function hasRoleSelected() {
 		return function(items, roles) {
 			var users = [],
+				idsRS = [],
 				ids = [];
 
 			if (items) {
+				for (var i = 0; i < roles.length; i++) {
+					if (roles[i].selected === true) {
+						idsRS.push(roles[i]._id);
+					}
+				}
+				if (idsRS.length === 0) return items;
 				// pour chaque user
 				for (var i = 0; i < items.length; i++) {
 					// pour chaque role de l'user
 					for (var j = 0; j < items[i].roles.length; j++) {
-						// pour chaque role
-						for (var k = 0; k < roles.length; k++) {
-							if (roles[k].selected && roles[k]._id === items[i].roles[j]._id && ids.indexOf(items[i]._id) === -1) {
-								ids.push(items[i]._id);
-								users.push(items[i]);
-							}
+						if (idsRS.indexOf(items[i].roles[j]._id) !== -1 && ids.indexOf(items[i]._id) === -1) {
+							ids.push(items[i]._id);
+							users.push(items[i]);
 						}
 					}
 				}
