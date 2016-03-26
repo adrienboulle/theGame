@@ -1,15 +1,21 @@
 <div class="row" is-auth="true">
 	<div class="col-md-12 text-center">
 		<div class="div-table w100 users">
-			<div class="div-row">
-				<div class="div-cell divh">
+			<div class="div-row divh">
+				<div class="div-cell divh username lhc">
 					Username
 				</div>
-				<div class="div-cell divh">
+				<div class="div-cell divh roles">
 					Roles
 				</div>
-				<div class="div-cell divh">
+				<div class="div-cell divh derCon">
+					Dernière connexion
+				</div>
+				<div class="div-cell divh active">
 					Actif
+				</div>
+				<div class="div-cell divh raz text-center rhc">
+					raz
 				</div>
 			</div>
 			<div class="div-row" ng-repeat="u in users">
@@ -18,15 +24,15 @@
 				</div>
 				<div class="div-cell">
 					<div class="div-row">
-						<div class="div-cell">
+						<div class="div-cell nopadding">
 							<md-chips ng-repeat="r in u.roles track by r" readonly="false">
-								<md-chip class="md-chip {{r.toLowerCase().slice(5)}}">
+								<md-chip class="md-chip {{r.toLowerCase().slice(5)}}" ng-class="{noMod: !canAct(u, false)}">
 									<div class="md-chip-content">
 										<span>
 								        	<strong>{{r.slice(5)}}</strong>
 								        </span>
 									</div>
-									<div class="md-chip-remove-container">
+									<div ng-show="canAct(u, false)" class="md-chip-remove-container">
 										<button ng-click="removeRole(u, r)" class="md-chip-remove" type="button">
 											<md-icon md-svg-icon="md-close" aria-hidden="true">
 											</md-icon>    
@@ -35,23 +41,31 @@
 								</md-chip>
 							<md-chips>
 						</div>
-						<div class="div-cell">
-							<div ng-show="roles.length != u.roles.length" class="dropdown">
-								<button class="addBtn" ng-click="addRole(u, selectedRole)" data-toggle="dropdown">
+						<div class="div-cell nopadding">
+							<div class="dropdown" ng-show="filteredItems.length > 0">
+								<button class="addBtn" data-toggle="dropdown">
 									<md-icon md-svg-src="/svg/add.svg" aria-hidden="true">
 									</md-icon>    
 								</button>
 
 								<ul class="dropdown-menu">
-									<li ng-click="addRole(u, r)" ng-repeat="r in roles | notIn:u.roles"><a href="#">{{r.alias}}</a></li>
+									<li ng-click="addRole(u, r)" ng-repeat="r in filteredItems = (rolesArr | orderBy:'-level' | notIn:u.roles) "><a href="#">{{r.alias}}</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="div-cell">
-					<md-switch class="md-primary" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">
+					{{u.lastConnexion | date:'dd/MM/yyyy HH:mm:ss'}}
+				</div>
+				<div class="div-cell">
+					<md-switch ng-class="{'md-primary': canAct(u, false)}" ng-disabled="!canAct(u, false)" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">
 					</md-switch>
+				</div>
+				<div class="div-cell btn-mini">
+					<md-button ng-disabled="!canAct(u, false)" class="md-fab md-primary" aria-label="Use Android">
+						<md-icon md-svg-src="/svg/raz.svg"></md-icon>
+					</md-button>
 				</div>
 			</div>
 		</div>

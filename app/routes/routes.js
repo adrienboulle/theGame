@@ -13,7 +13,11 @@ module.exports = function(app, passport, role) {
 
 	// log in
 	app.post('/api/login', passport.authenticate('local'), function(req, res) {
-		res.sendStatus(200);
+		User.findOne({_id:req.user._id}, function(err, user) {
+			user.lastConnexion = new Date();
+			user.save();
+			res.sendStatus(200);
+		})
 	});
 
 	// get current user
@@ -61,7 +65,7 @@ module.exports = function(app, passport, role) {
 	});
 
 	// active/desactive des utilisateurs
-	app.post('/api/users/actif', hasRole(['ROLE_ADM']), function(req, res) {
+	app.post('/api/users/actif', role.want('toogle user'), role.levelDelta(-1), function(req, res) {
 		User.find({'_id': { $in: req.body.ids}}, function(err, users) {
 			if (err) {
 				res.sendStatus(500, err);
@@ -82,7 +86,7 @@ module.exports = function(app, passport, role) {
 	});
 
 	// ramène la liste des roles actifs
-	app.get('/api/roles', hasRole(['ROLE_ADM']), function(req, res) {
+	app.get('/api/roles', role.want('view roles'), function(req, res) {
 		Role.find({'active': true}, function(err, roles) {
 			if (err) {
 				res.sendStatus(500, err);
@@ -93,7 +97,7 @@ module.exports = function(app, passport, role) {
 	});
 
 	// retire un role à un utilisateur
-	app.post('/api/users/role/delete', hasRole(['ROLE_ADM']), function(req, res) {
+	app.post('/api/users/role/delete', role.want("remove role"), role.levelDelta(-1), function(req, res) {
 		User.findOne({'_id': req.body.id}, function(err, user) {
 			if (err) {
 				res.sendStatus(500, err);
@@ -115,8 +119,8 @@ module.exports = function(app, passport, role) {
 		})
 	});
 
-		// retire un role à un utilisateur
-	app.post('/api/users/role/add', hasRole(['ROLE_ADM']), function(req, res) {
+	// ajoute un role à un utilisateur
+	app.post('/api/users/role/add', role.want("add role"), role.levelDelta(0), function(req, res) {
 		User.findOne({'_id': req.body.id}, function(err, user) {
 			if (err) {
 				res.sendStatus(500, err);

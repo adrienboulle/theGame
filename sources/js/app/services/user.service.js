@@ -6,10 +6,11 @@
 			'$q',
 			'UserResource',
 			'LoginResource',
+			'RolesService',
 			userService
 		]);
 
-	function userService($q, UserResource, LoginResource) {
+	function userService($q, UserResource, LoginResource, RolesService) {
 	  	
 	  	// variables qui seront tout le temps accessibles
   		var user,
@@ -61,6 +62,41 @@
 					})
 				}
 				return p.promise;
+			},
+			// retourne les roles de l'utilisateur connecté avec le plus bas level
+			maxRoles: function() {
+				var _self = this,
+					_p = $q.defer(),
+					_minLevel,
+					_mapRoles = new Map(),
+					_maxRoles = [];
+
+
+				_self.user().then(function() {
+					if (authenticated && user.roles) {
+						RolesService.getAll().then(function(data) {
+							for (var i = 0; i < data.length; i++) {
+								_mapRoles.set(data[i].alias, data[i]);
+							}
+							for (var i = 0; i < user.roles.length; i++) {
+								if (_minLevel === undefined) {
+									_minLevel = _mapRoles.get(user.roles[i]).level;
+								} else if (_mapRoles.get(user.roles[i]).level < _minLevel) {
+									_minLevel = _mapRoles.get(user.roles[i]).level;
+								}
+							}
+							_mapRoles.forEach(function(role, alias) {
+								if (role.level === _minLevel) {
+									_maxRoles.push(role);
+								}
+								_p.resolve(_maxRoles);
+							})
+						})
+					} else {
+						_p.resolve([]);
+					}
+				})
+				return _p.promise;
 			},
 			hasRole: function(roles) {
 				var _self = this,

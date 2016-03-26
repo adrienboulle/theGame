@@ -8,7 +8,8 @@ var UserSchema = new Schema({
 	username: String,
 	password: String,
 	actif: Boolean,
-	roles: [String]
+	roles: [String],
+	lastConnexion: Date
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
