@@ -62,7 +62,7 @@ var Role = function() {
 				var userRoles = req.user[self.conf.rolesFieldName];
 				for (var i = 0; i < userRoles.length; i++) {
 					var actions = userRoles[i][self.conf.actionsFieldName];
-					if (actions.indexOf(action) != -1 || actions.indexOf("*") != -1) {
+					if (userRoles[i].active && (actions.indexOf(action) != -1 || actions.indexOf("*") != -1)) {
 						return next();
 					}
 				}

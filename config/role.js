@@ -13,7 +13,7 @@ module.exports = function(role) {
 
 	role.getLevel(function(ids, done) {
 		User.find({'_id': { $in: ids}})
-			.populate('roles')
+			.populate('roles', {active:true})
 			.exec(function(err, users) {
 				var _bestLevel;
 				for (var i = 0; i < users.length; i++) {

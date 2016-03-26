@@ -26,6 +26,7 @@ UserSchema.methods.verifyCredentials = function(password, callback) {
 UserSchema.methods.getLevel = function() {
 	var _bestLevel;
 	for (var i = 0; i < this.roles.length; i++) {
+		if (!this.roles[i].active) continue;
 		if (_bestLevel === undefined) {
 			_bestLevel = this.roles[i].level;
 		} else {
