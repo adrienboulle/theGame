@@ -14,6 +14,10 @@
 		.directive('match',[
 			matchDirective
 		])
+		.directive('unique',[
+			'SignupService',
+			uniqueDirective
+		])
 		.directive('removeHandlers', [
 			'$timeout',
 			removeHandlers
@@ -59,6 +63,29 @@
 
 				ctrl.$validators.match = function(modelValue, viewValue) {
 					return modelValue && modelValue === ctrl.$$parentForm[attr.match].$viewValue;
+				}
+
+				attr.$observe('match', function() {
+					ctrl.$validate();
+				})
+	    	}
+  		}
+	}
+
+	function uniqueDirective(SignupService, $q) {
+		return {
+		    restrict: 'A',
+		    require: '?ngModel',
+		    link: function(scope, elm, attr, ctrl) {
+				if (!ctrl) return; 
+				
+				ctrl.$validators.unique = function(modelValue, viewValue) {
+					if (modelValue && modelValue.length > 0) {
+						SignupService.testUsername(modelValue).then(function(exists) {
+							ctrl.$setValidity('unique', !exists);
+						})
+					}
+					return;
 				}
 
 				attr.$observe('match', function() {

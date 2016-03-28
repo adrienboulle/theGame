@@ -51,6 +51,12 @@ module.exports = function(app, passport, role) {
 		});
 	});
 
+	app.get('/api/signup/:login', function(req, res) {
+		User.count({username:req.params.login}, function(err, nb) {
+			res.send({exists:nb !== 0});
+		})
+	});
+
 	// admin ==================================================================
 
 	// ramène le nombre d'utilisateurs
@@ -280,7 +286,7 @@ module.exports = function(app, passport, role) {
 	}
 
 	function signUp(userData, done) {
-		if (userData.passwordConfirmation === userData.password && userData.password.length > 5){
+		if (userData.passwordConfirmation === userData.password && userData.password.length > 2){
 			User.findOne({username: userData.username}, function(err, user) {
 				if (user) {
 					done("Nom d'utilisateur déjà utilisé");
@@ -289,15 +295,18 @@ module.exports = function(app, passport, role) {
 						if (err) {
 							callback(err);
 						} else {
-							var user = new User({
-								username: userData.username,
-								password: hash.toString('base64'),
-								roles: ['ROLE_USER'],
-								actif: false
-							});
-							user.save(function(err, user) {
-								done(err, user);	
-							});
+							Role.findOne({alias:'ROLE_USER'}, function(err, role) {
+								var user = new User({
+									username: userData.username,
+									password: hash.toString('base64'),
+									roles: [role.id],
+									actif: false,
+									creation: new Date()
+								});
+								user.save(function(err, user) {
+									done(err, user);	
+								});
+							})
 						}
 					})
 				}

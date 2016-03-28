@@ -73,6 +73,7 @@
 								<label>Nom d'utilisateur</label>
 								<div remove-handlers>
 									<input
+										unique
 										ng-focus="signupFocus = true; signinFocus = false"
 										name="username"
 										ng-model="userInfoSignup.username" 
@@ -85,6 +86,9 @@
 										ng-keyup="$event.keyCode == 13 && signup()" />
 									<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine">
 							          	Nom d'utilisateur requis
+							        </md-tooltip>
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.unique && !userFormSignup.username.$pristine">
+							          	Ce nom d'utilisateur est déjà pris
 							        </md-tooltip>
 							      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine">
 							          	Nom d'utilisateur trop court
@@ -107,7 +111,7 @@
 										ng-model="userInfoSignup.password" 
 										required
 										class="form-control"
-										ng-minlength="8"
+										ng-minlength="3"
 										type="password" 
 										placeholder="Entrer mot de passe" 
 										ng-keyup="$event.keyCode == 13 && signup()" />

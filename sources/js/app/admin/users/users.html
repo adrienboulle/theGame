@@ -32,6 +32,9 @@
 				<div class="div-cell divh derCon">
 					Dernière connexion
 				</div>
+				<div class="div-cell divh crea">
+					Création
+				</div>
 				<div class="div-cell divh active">
 					Actif
 				</div>
@@ -77,6 +80,9 @@
 				</div>
 				<div class="div-cell">
 					{{u.lastConnexion | date:'dd/MM/yyyy HH:mm:ss'}}
+				</div>
+				<div class="div-cell">
+					{{u.creation | date:'dd/MM/yyyy HH:mm:ss'}}
 				</div>
 				<div class="div-cell">
 					<md-switch ng-class="{'md-primary': !(curUser.level >= u.level && curUser.level !== 0)}" ng-disabled="curUser.level >= u.level && curUser.level !== 0" ng-model="u.actif" ng-change="setActive(u, u.actif)" aria-label="actif">

@@ -5,10 +5,11 @@ var mongoose = require('mongoose'),
 	crypto   = require('../utils/crypto.js');
 
 var UserSchema = new Schema({
-	username: String,
+	username: {type: String, unique: true},
 	password: String,
 	actif: Boolean,
 	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+	creation: Date,
 	lastConnexion: Date
 });
 
