@@ -60,7 +60,7 @@ module.exports = function(app, passport, role) {
 	// admin ==================================================================
 
 	// ramène le nombre d'utilisateurs
-	app.get('/api/users/count', role.want('count users'), function(req, res) {
+	app.get('/api/users/count', role.want('view users'), function(req, res) {
 		
 		var query = {}
 
