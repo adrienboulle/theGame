@@ -53,9 +53,65 @@ module.exports = function(app, passport, role) {
 
 	// admin ==================================================================
 
+	// ramène le nombre d'utilisateurs
+	app.get('/api/users/count', role.want('count users'), function(req, res) {
+		
+		var query = {}
+
+		var filtres = req.query.filtres;
+
+		if (filtres) {
+			filtres = JSON.parse(filtres);
+		} else {
+			filtres = [];
+		}
+
+		for (var i = 0; i < filtres.length; i++) {
+			switch (filtres[i].name) {
+				case "roles":
+					query.roles = {
+						"$in":filtres[i].data
+					}
+					break;
+			}
+		}
+
+
+		User.count(query, function(err, nb) {
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					res.send({count:nb});
+				}
+		})
+	});
+
 	// ramène la liste des utilisateurs
-	app.get('/api/users', role.want('view users'), function(req, res) {
-		User.find({})
+	app.get('/api/users/:page', role.want('view users'), function(req, res) {
+		var page = req.params.page;
+		var skip = (page - 1) * 10;
+
+		var query = {}
+
+		var filtres = req.query.filtres;
+
+		if (filtres) {
+			filtres = JSON.parse(filtres);
+		} else {
+			filtres = [];
+		}
+
+		for (var i = 0; i < filtres.length; i++) {
+			switch (filtres[i].name) {
+				case "roles":
+					query.roles = {
+						"$in":filtres[i].data
+					}
+					break;
+			}
+		}
+
+		User.find(query, null, {skip:skip, limit: 10})
 			.populate('roles')
 			.exec(function(err, users) {
 				var usersJson = [];
@@ -69,6 +125,7 @@ module.exports = function(app, passport, role) {
 				}
 		})
 	});
+
 
 	// active/desactive des utilisateurs
 	app.post('/api/users/actif', 

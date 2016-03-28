@@ -4,6 +4,7 @@
 	angular.module('theGame', [
 		'ngResource',
 		'ui.router',
+		'ui.bootstrap',
 		'ngMaterial',
 		'ngAnimate',
 		'ngMessages'

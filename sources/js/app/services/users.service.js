@@ -12,14 +12,30 @@
 	function usersService($q, $http, UsersResource) {
 	  	  		
   		return {
-			getAll: function() {
+			getAll: function(page, filtres) {
 				// on va appeler le serveur, on renvois donc une promesse
 				var p = $q.defer();
 
-				UsersResource.get().$promise.then(function(data) {
+				if (!filtres || filtres.length === 0) filtres = [];
+
+				UsersResource.get({page:page}, {filtres: JSON.stringify(filtres)}).$promise.then(function(data) {
 					p.resolve(data);
 				})
 				
+				return p.promise;
+			},
+			getCount: function(filtres) {
+				// on va appeler le serveur, on renvois donc une promesse
+				var p = $q.defer();
+				
+				if (!filtres || filtres.length === 0) filtres = [];
+
+				$http.get('/api/users/count', {params: {'filtres': JSON.stringify(filtres)}})
+					.then(function(rep) {
+						p.resolve(rep.data.count);
+					}, function() {
+						p.reject();
+					});
 				return p.promise;
 			},
 			removeRole: function(user, roleId) {

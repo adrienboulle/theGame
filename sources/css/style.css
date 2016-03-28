@@ -14,7 +14,7 @@ md-tooltip .md-content {
 fieldset.fsStyle {
     border: 1px solid #C5C0C0;
     padding: 15px;
-    border-radius: 15px;
+    border-radius: 8px;
     height: 340px;
 }
 
@@ -101,6 +101,10 @@ h2.h2-form {
 
 .users .roles md-checkbox {
 	margin-bottom: 0px !important;
+}
+
+.users .derCon {
+	width: 160px;
 }
 
 .users .active {
@@ -240,4 +244,20 @@ md-chips.md-default-theme .md-chip.md-focused md-icon, md-chips .md-chip.md-focu
 
 .btn-mini .md-button {
 	padding: 2px 0;
+}
+
+.pagination > li > a, 
+.pagination > li > span {
+	background-color: #CACACA !important;
+	color: #424450 !important;
+}
+
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
+	background-color: #A09E9E !important;
+	border-color: #A09E9E !important;
 }

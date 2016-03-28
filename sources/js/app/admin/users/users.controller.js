@@ -23,13 +23,29 @@
 	function usersController($scope, $state, LoginService, SignupService, UsersService, UserService, RolesService, user) {
 		
 		$scope.curUser = user;
+		$scope.curPage = 1;
+		$scope.filtres = new filtres();
 
-		$scope.init = function() {
-			UsersService.getAll().then(function(data) {
+		$scope.init = function() {		
+			if ($scope.roles) {
+				var filtre = new $scope.filtre("roles");
+				for (var i = 0; i < $scope.roles.length; i++) {
+					if ($scope.roles[i].selected) filtre.add($scope.roles[i]._id);
+				}
+				if (filtre.data.length > 0) {
+					$scope.filtres.set(filtre);
+				} else {
+					$scope.filtres.unset(filtre);
+				}
+			}
+			UsersService.getAll($scope.curPage, $scope.filtres.arr).then(function(data) {
 				$scope.users = data;
 			})
+			UsersService.getCount($scope.filtres.arr).then(function(data) {
+				$scope.nbUsers = data;
+			})
 		}
-
+	
 		$scope.init();
 
 		RolesService.getAll().then(function(data) {
@@ -58,6 +74,37 @@
 				user.actif = _back;
 			});
 		}		
+
+		function filtres() {
+			this.arr = [];
+			this.set = function(filtre) {
+				for (var i = 0; i < this.arr.length; i++) {
+					if (this.arr[i].name === filtre.name) {
+						return this.arr[i] = filtre;
+					}
+				}
+				this.arr.push(filtre);
+			}
+
+			this.unset = function(filtre) {
+				for (var i = 0; i < this.arr.length; i++) {
+					if (this.arr[i].name === filtre.name) {
+						return this.arr.splice(i, 1);
+					}
+				}
+			}
+		}
+
+		$scope.filtre = function(name, data) {
+			this.name = name;
+			this.data = [];
+			this.add = function(f) {
+				for (var i = 0; i < this.data.length; i++) {
+					if (this.data.indexOf(f) !== -1) return;
+				}
+				this.data.push(f);
+			}
+		}
 	}
 
 	function notInFilter() {
@@ -80,35 +127,6 @@
 			}
 			return roles;
 		}
-	}
-
-	function hasRoleSelected() {
-		return function(items, roles) {
-			var users = [],
-				idsRS = [],
-				ids = [];
-
-			if (items && roles) {
-				for (var i = 0; i < roles.length; i++) {
-					if (roles[i].selected === true) {
-						idsRS.push(roles[i]._id);
-					}
-				}
-				if (idsRS.length === 0) return items;
-				// pour chaque user
-				for (var i = 0; i < items.length; i++) {
-					// pour chaque role de l'user
-					for (var j = 0; j < items[i].roles.length; j++) {
-						if (idsRS.indexOf(items[i].roles[j]._id) !== -1 && ids.indexOf(items[i]._id) === -1) {
-							ids.push(items[i]._id);
-							users.push(items[i]);
-						}
-					}
-				}
-			}
-			return users;
-		}
-	}
-		
+	}		
 
 })();

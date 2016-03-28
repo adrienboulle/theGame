@@ -1,8 +1,8 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-3">
 		Filtre : 
 		<md-chips ng-repeat="r in roles | orderBy:'-level'" readonly="false">
-			<md-chip ng-init="r.selected = false" ng-click="r.selected = !r.selected" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
+			<md-chip ng-init="r.selected = false" ng-click="r.selected = !r.selected; init()" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
 				<div class="md-chip-content">
 					<span>
 			        	<strong>{{r.alias.slice(5)}}</strong>
@@ -11,10 +11,15 @@
 			</md-chip>
 		<md-chips>
 	</div>
+	<div class="col-md-3">
+		<div>
+			Total : {{nbUsers}}
+		</div>
+	</div>
 </div>
 <div class="row top10">
 	<div class="col-md-12 text-center">
-		<div class="div-table w100 users">
+		<div class="div-table w100 users ng-cloak">
 			<div class="div-row divh">
 				<div class="div-cell divh username lhc">
 					Username
@@ -34,14 +39,14 @@
 					raz
 				</div>
 			</div>
-			<div class="div-row" ng-repeat="u in users | hasRoleSelected:roles">
+			<div class="div-row" ng-repeat="u in users">
 				<div class="div-cell">
 					{{u.username}}
 				</div>
 				<div class="div-cell">
 					<div class="div-row">
 						<div class="div-cell nopadding">
-							<md-chips ng-repeat="r in u.roles | orderBy:'-level'" readonly="false">
+							<md-chips ng-repeat="r in u.roles | orderBy:'-level'" readonly="false" class="ng-cloak">
 								<md-chip ng-show="r.active || showInactive" class="md-chip {{r.alias.toLowerCase().slice(5)}}" ng-class="{noMod: curUser.level >= u.level && curUser.level !== 0}">
 									<div class="md-chip-content">
 										<span>
@@ -63,7 +68,6 @@
 									<md-icon md-svg-src="/svg/add.svg" aria-hidden="true">
 									</md-icon>    
 								</button>
-
 								<ul class="dropdown-menu">
 									<li ng-click="addRole(u, r)" ng-repeat="r in filteredItems = (roles | orderBy:'-level' | notIn:u.roles:curUser.level) track by $index"><a href="#">{{r.alias}}</a></li>
 								</ul>
@@ -82,6 +86,15 @@
 					<md-button ng-disabled="curUser.level >= u.level && curUser.level !== 0" class="md-fab md-primary" aria-label="Use Android">
 						<md-icon md-svg-src="/svg/raz.svg"></md-icon>
 					</md-button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 text-center">
+		<div class="div-table w100">
+			<div class="div-row">
+				<div class="div-cell text-center">
+					<uib-pagination boundary-links="true" ng-change="init()" items-per-page="10" total-items="nbUsers" ng-model="curPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
 				</div>
 			</div>
 		</div>

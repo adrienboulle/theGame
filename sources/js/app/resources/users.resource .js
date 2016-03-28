@@ -9,10 +9,13 @@
 
 	function usersResource($resource) {
 			
-		return $resource('/api/users', {}, {
+		return $resource('/api/users/:page', {page:'@page'}, {
 			'get': {
 				method: 'GET',
 				isArray: true,
+				params: {
+					filtres: '@filtres'
+				}
 			}
 		})
 
