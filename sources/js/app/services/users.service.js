@@ -35,6 +35,12 @@
 			},
 			addRole: function(user, roleId) {
 				var p = $q.defer();
+				
+				for (var i = 0; i < user.roles.length; i++) {
+					if (user.roles[i]._id === roleId) {
+						p.reject();
+					}
+				}
 
 				$http.post('/api/users/role/add', {'id': user._id, 'roleId': roleId})
 					.then(function() {
@@ -45,12 +51,16 @@
 				return p.promise;
 			},
 			toogleActif: function(ids, actif) {
+				var p = $q.defer();
+
 				$http.post('/api/users/actif', {'ids': ids, 'actif': actif})
 					.then(function() {
-						// todo si ok
+						p.resolve();
 					}, function() {
-						// todo si nok
+						p.reject();
 					});
+
+				return p.promise;
 			}
 		}
 	 }

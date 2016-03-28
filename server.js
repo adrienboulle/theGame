@@ -8,9 +8,9 @@ var express 		= require('express'),
 
 	logger 			= require('express-logger'),
 	bodyParser 		= require('body-parser'),
-	cookieParser 		= require('cookie-parser'),
-	expressSession 		= require('express-session'),
-	role 			= require('./app/utils/role.js');
+	cookieParser 	= require('cookie-parser'),
+	expressSession 	= require('express-session'),
+	role 			= require('./app/utils/role/role.js');
 
 	configDb 		= require('./config/database.js');
 

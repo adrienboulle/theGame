@@ -19,11 +19,6 @@
 
 	function Config($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider) {
 		
-		$mdThemingProvider.theme('default')
-    		.primaryPalette('blue');
-
-    	$mdThemingProvider.setDefaultTheme('altTheme');
-    	$mdThemingProvider.alwaysWatchTheme(true);
 
 		$locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise(function($injector, $location) {

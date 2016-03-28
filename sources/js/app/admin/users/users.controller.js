@@ -24,9 +24,13 @@
 		
 		$scope.curUser = user;
 
-		UsersService.getAll().then(function(data) {
-			$scope.users = data;
-		})
+		$scope.init = function() {
+			UsersService.getAll().then(function(data) {
+				$scope.users = data;
+			})
+		}
+
+		$scope.init();
 
 		RolesService.getAll().then(function(data) {
 			if (data[0]) {
@@ -36,28 +40,23 @@
 
 		$scope.removeRole = function(user, role) {
 			UsersService.removeRole(user, role._id).then(function() {
-				for (var i = 0; i < user.roles.length; i++) {
-					if (user.roles[i]._id === role._id) {
-						user.roles.splice(i, 1);
-					}
-				}
+				$scope.init();
 			})
 		}
 
 		$scope.addRole = function(user, role) {
-			for (var i = 0; i < user.roles.length; i++) {
-				if (user.roles[i]._id === role._id) {
-					return;
-				}
-			}
 			UsersService.addRole(user, role._id).then(function() {
-				user.roles.push(role);
-				return;
+				$scope.init();
 			})
 		}
 
 		$scope.setActive = function(user, actif) {
-			UsersService.toogleActif([user._id], actif);
+			var _back = !user.actif;
+			UsersService.toogleActif([user._id], actif).then(function() {
+
+			}, function() {
+				user.actif = _back;
+			});
 		}		
 	}
 
@@ -89,7 +88,7 @@
 				idsRS = [],
 				ids = [];
 
-			if (items) {
+			if (items && roles) {
 				for (var i = 0; i < roles.length; i++) {
 					if (roles[i].selected === true) {
 						idsRS.push(roles[i]._id);

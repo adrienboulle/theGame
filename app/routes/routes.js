@@ -71,107 +71,138 @@ module.exports = function(app, passport, role) {
 	});
 
 	// active/desactive des utilisateurs
-	app.post('/api/users/actif', role.want('toogle user'), role.levelDelta(-1), function(req, res) {
-		User.find({'_id': { $in: req.body.ids}}, function(err, users) {
-			if (err) {
-				res.sendStatus(500, err);
-			} else {
-				for (var i = 0; i < users.length; i++) {
-					var user = users[i];
-					user.actif = req.body.actif;
-					user.save(function(err) {
-						if (err) {
-							res.sendStatus(500);
-						} else {
-							res.sendStatus(200);
-						}
-					});
+	app.post('/api/users/actif', 
+
+		// middlewares
+		// vérifie que l'utilisateur connecté peut activer/desactiver des utilisateurs
+		role.want('toogle user'), 
+
+		// verifie que l'utilisateur connecté peut agir sur un utilisateur
+		// -1 -> différence de lvl nécessaire (-1 : au moins moins bon de 1)
+		// field:ids -> les ids des utilisateurs sur lesquels on veut agir sont renseignés dans le body sous le field 'ids'
+		// isArray:true -> on agit sur plusieurs utilisateurs 
+		role.levelDelta(-1, {field:'ids', isArray:true}), 
+
+		function(req, res) {
+			User.find({'_id': { $in: req.body.ids}}, function(err, users) {
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					for (var i = 0; i < users.length; i++) {
+						var user = users[i];
+						user.actif = req.body.actif;
+						user.save(function(err) {
+							if (err) {
+								res.sendStatus(500);
+							} else {
+								res.sendStatus(200);
+							}
+						});
+					}
 				}
-			}
-		})
+			})
 	});
 
 	// ramène la liste des roles actifs
-	app.get('/api/roles', role.want('view roles'), function(req, res) {
-		Role.find({}, function(err, roles) {
-			if (err) {
-				res.sendStatus(500, err);
-			} else {
-				res.send(roles);
-			}
-		})
+	app.get('/api/roles', 
+
+		role.want('view roles'), 
+
+		function(req, res) {
+			Role.find({}, function(err, roles) {
+				if (err) {
+					res.sendStatus(500, err);
+				} else {
+					res.send(roles);
+				}
+			})
 	});
 
 	// retire un role à un utilisateur
-	app.post('/api/users/role/delete', role.want("remove role"), role.levelDelta(-1), function(req, res) {
-		User.findOne({'_id': req.body.id})
-			.populate('roles')
-			.exec(function(err, user) {
-				if (err) {
-					res.sendStatus(500, err);
-				} else {
-					for (var i = 0; i < user.roles.length; i++) {
-						if (user.roles[i].id === req.body.roleId) {
-							user.roles.splice(i, 1);
+	app.post('/api/users/role/delete', 
+
+		// middlewares
+		// vérifie que l'utilisateur connecté peut retirer des roles
+		role.want("remove role"), 
+		// verifie que l'utilisateur connecté peut agir sur un utilisateur
+		// -1 -> différence de lvl nécessaire (-1 : au moins moins bon de 1)
+		// field:id -> l'id de l'utilisateur sur lequel on veut agir est renseigné dans le body sous le field 'id'
+		// isArray:false -> on agit sur un seul utilisateur 
+		role.levelDelta(-1, {field:'id', isArray:false}), 
+		// verifie que l'utilisateur connecté peut agir sur le role
+		// -1 -> différence de lvl nécessaire (-1 : au moins moins bon de 1)
+		// field:roleId -> l'id du role sur lequel on veut agir est renseigné dans le body sous le field 'roleId'
+		role.actRole(-1, {field:'roleId'}), 
+
+		function(req, res) {
+			User.findOne({'_id': req.body.id})
+				.populate('roles')
+				.exec(function(err, user) {
+					if (err) {
+						res.sendStatus(500, err);
+					} else {
+						for (var i = 0; i < user.roles.length; i++) {
+							if (user.roles[i].id === req.body.roleId) {
+								user.roles.splice(i, 1);
+							}
 						}
+						user.markModified('roles');
+						user.save(function(err) {
+							if (err) {
+								res.sendStatus(500);
+							} else {
+								res.sendStatus(200);
+							}
+						});
 					}
-					user.markModified('roles');
-					user.save(function(err) {
-						if (err) {
-							res.sendStatus(500);
-						} else {
-							res.sendStatus(200);
-						}
-					});
-				}
-		})
+			})
 	});
 
 	// ajoute un role à un utilisateur
-	app.post('/api/users/role/add', role.want("add role"), role.levelDelta(0), function(req, res) {
-		User.findOne({'_id': req.body.id})
-			.populate('roles')
-			.exec(function(err, user) {
-				if (err) {
-					res.sendStatus(500, err);
-				} else {
-					for (var i = 0; i < user.roles.length; i++) {
-						if (user.roles[i].id === req.body.roleId) {
-							return res.sendStatus(400);
-						}
-					}
-					user.roles.push(req.body.roleId);
-					user.markModified('roles');
-					user.save(function(err) {
+	app.post('/api/users/role/add', 
+
+			// middlewares
+			// vérifie que l'utilisateur connecté peut ajouter des roles
+			role.want("add role"), 
+			// verifie que l'utilisateur connecté peut agir un utilisateur
+			// 0 -> différence de lvl nécessaire (0 : même lvl ou moins bon)
+			// field:id -> l'id de l'utilisateur sur lequel on veut agir est renseigné dans le body sous le field 'id'
+			// isArray:false -> on agit sur un seul utilisateur 
+			role.levelDelta(0, {field:'id', isArray:false}), 
+			// verifie que l'utilisateur connecté peut agir sur le role
+			// 0 -> différence de lvl nécessaire (0 : même lvl ou moins bon)
+			// field:roleId -> l'id du role sur lequel on veut agir est renseigné dans le body sous le field 'roleId'
+			role.actRole(0, {field:'roleId'}), 
+			
+			function(req, res) {
+				User.findOne({'_id': req.body.id})
+					.populate('roles')
+					.exec(function(err, user) {
 						if (err) {
-							res.sendStatus(500);
+							res.sendStatus(500, err);
 						} else {
-							res.sendStatus(200);
+							for (var i = 0; i < user.roles.length; i++) {
+								if (user.roles[i].id === req.body.roleId) {
+									return res.sendStatus(400);
+								}
+							}
+							user.roles.push(req.body.roleId);
+							user.markModified('roles');
+							user.save(function(err) {
+								if (err) {
+									res.sendStatus(500);
+								} else {
+									res.sendStatus(200);
+								}
+							});
 						}
-					});
-				}
-		})
+				})
 	});
 
 	// tout le reste
 	app.all('/*', function(req, res) {
 		res.sendFile('/public/index.html', { root: process.env.NODE_PATH });
 	});
-
-	// middleware
-	function hasRole(roles) {
-		return function hasRole(req, res, next) {
-			if (req.isAuthenticated()) {
-				User.findOne({_id: req.user._id}, function(err, user) {
-					if (!err && user.hasRole(roles)) {
-						return next();
-					}
-				})
-			} else {
-				return res.redirect('/');
-			}
-		}
-	}
 
 	function verifyCredentials(username, password, done) {
 		User.findOne({username: username}, function(err, user) {

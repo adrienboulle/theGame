@@ -11,10 +11,13 @@ module.exports = function(role) {
 		})
 	});
 
-	role.getLevel(function(ids, done) {
+	role.getUsersBestLevel(function(ids, done) {
 		User.find({'_id': { $in: ids}})
-			.populate('roles', {active:true})
+			.populate('roles')
 			.exec(function(err, users) {
+				if (err) {
+					done(err, null);
+				}
 				var _bestLevel;
 				for (var i = 0; i < users.length; i++) {
 					if (_bestLevel === undefined) {
@@ -23,7 +26,7 @@ module.exports = function(role) {
 						_bestLevel = (users[i].getLevel() < _bestLevel) ? users[i].getLevel() : _bestLevel;
 					}
 				}
-				done(err, _bestLevel);
+				done(null, _bestLevel);
 		})
 	});
 

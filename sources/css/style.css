@@ -235,7 +235,7 @@ md-chips.md-default-theme .md-chip.md-focused md-icon, md-chips .md-chip.md-focu
 
 .btn-mini button:not([disabled="disabled"]) md-icon {
 	display: inline;
-	color: rgba(0,0,0,0.61) !important;
+	color: rgba(255, 255, 255, 0.61) !important;
 }
 
 .btn-mini .md-button {
