@@ -1,9 +1,10 @@
 'user strict'
 
-var User = require('../models/user.js'),
-	Role = require('../models/role.js'),
-	passportLocal = require('passport-local'),
-	crypto = require('../utils/crypto.js');
+var User 			= require('../models/user.js'),
+	Role 			= require('../models/role.js'),
+	passportLocal 	= require('passport-local'),
+	mailUtils		= require('../utils/mails.js');
+	crypto 			= require('../utils/crypto.js');
 
 module.exports = function(app, passport, role) {
 
@@ -44,7 +45,7 @@ module.exports = function(app, passport, role) {
 
 		signUp(user, function(err, user){
 			if (err) {
-				res.sendStatus(400, err);
+				res.sendStatus(400);
 			} else {
 				res.sendStatus(200);
 			}
@@ -85,7 +86,7 @@ module.exports = function(app, passport, role) {
 
 		User.count(query, function(err, nb) {
 				if (err) {
-					res.sendStatus(500, err);
+					res.sendStatus(500);
 				} else {
 					res.send({count:nb});
 				}
@@ -125,7 +126,7 @@ module.exports = function(app, passport, role) {
 					usersJson.push(users[i].toJson())
 				}
 				if (err) {
-					res.sendStatus(500, err);
+					res.sendStatus(500);
 				} else {
 					res.send(usersJson);
 				}
@@ -149,7 +150,7 @@ module.exports = function(app, passport, role) {
 		function(req, res) {
 			User.find({'_id': { $in: req.body.ids}}, function(err, users) {
 				if (err) {
-					res.sendStatus(500, err);
+					res.sendStatus(500);
 				} else {
 					for (var i = 0; i < users.length; i++) {
 						var user = users[i];
@@ -174,7 +175,7 @@ module.exports = function(app, passport, role) {
 		function(req, res) {
 			Role.find({}, function(err, roles) {
 				if (err) {
-					res.sendStatus(500, err);
+					res.sendStatus(500);
 				} else {
 					res.send(roles);
 				}
@@ -202,7 +203,7 @@ module.exports = function(app, passport, role) {
 				.populate('roles')
 				.exec(function(err, user) {
 					if (err) {
-						res.sendStatus(500, err);
+						res.sendStatus(500);
 					} else {
 						for (var i = 0; i < user.roles.length; i++) {
 							if (user.roles[i].id === req.body.roleId) {
@@ -242,7 +243,7 @@ module.exports = function(app, passport, role) {
 					.populate('roles')
 					.exec(function(err, user) {
 						if (err) {
-							res.sendStatus(500, err);
+							res.sendStatus(500);
 						} else {
 							for (var i = 0; i < user.roles.length; i++) {
 								if (user.roles[i].id === req.body.roleId) {
@@ -279,7 +280,7 @@ module.exports = function(app, passport, role) {
 				})
 			} else {
 				setTimeout(function() {
-					return done('ERLOG404', null);
+					return done("ERLOG404", null);
 				}, 1000);
 			}
 		})
@@ -289,7 +290,7 @@ module.exports = function(app, passport, role) {
 		if (userData.passwordConfirmation === userData.password && userData.password.length > 2) {
 			User.findOne({username: userData.username}, function(err, user) {
 				if (user) {
-					done("Nom d'utilisateur déjà utilisé");
+					done("ERRLOG403");
 				} else {
 					crypto.hashPassword(userData.password, function(err, hash) {
 						if (err) {
@@ -306,6 +307,23 @@ module.exports = function(app, passport, role) {
 										token: token
 									});
 									user.save(function(err, user) {
+										if (!err) {
+
+											var appUrl = "http://" + config.host;
+											appUrl += (config.port.length != 0) ? ":" + config.port : ""; 
+
+											var mail = {
+												from: '"The Game" <the@game.com>',
+												to: 'thegamebg@yopmail.com',
+												subject: 'Confirmation email',
+												html: '<b><a href="' + appUrl + '/api/signup/valid/' + token + '">Confirmer mon mail</a></b>'
+											}
+											mailUtils.sendMail(mail, function(err, info) {
+												if (err) {
+													// todo si pb mail
+												}
+											});
+										}
 										done(err, user);	
 									});
 								})
@@ -320,4 +338,5 @@ module.exports = function(app, passport, role) {
 			done("Mot de passe trop petit, veuillez utiliser 6 caractères au minimun");
 		}
 	}
+
 }

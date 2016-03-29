@@ -12,6 +12,8 @@ var express 		= require('express'),
 	expressSession 	= require('express-session'),
 	role 			= require('./app/utils/role/role.js');
 
+	config 			= require('./config.js');
+
 	configDb 		= require('./config/database.js');
 
 // configuration =============================================================
