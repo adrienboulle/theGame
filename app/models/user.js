@@ -10,7 +10,8 @@ var UserSchema = new Schema({
 	actif: Boolean,
 	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
 	creation: Date,
-	lastConnexion: Date
+	lastConnexion: Date,
+	token: String
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {

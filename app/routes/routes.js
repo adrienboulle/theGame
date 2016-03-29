@@ -296,16 +296,20 @@ module.exports = function(app, passport, role) {
 							callback(err);
 						} else {
 							Role.findOne({alias:'ROLE_USER'}, function(err, role) {
-								var user = new User({
-									username: userData.username,
-									password: hash.toString('base64'),
-									roles: [role.id],
-									actif: false,
-									creation: new Date()
-								});
-								user.save(function(err, user) {
-									done(err, user);	
-								});
+								crypto.generateToken(32, function(err, token){
+									console.log(req.body);
+									var user = new User({
+										username: userData.username,
+										password: hash.toString('base64'),
+										roles: [role.id],
+										actif: false,
+										creation: new Date(),
+										token: token
+									});
+									user.save(function(err, user) {
+										done(err, user);	
+									});
+								})
 							})
 						}
 					})

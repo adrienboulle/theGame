@@ -83,5 +83,13 @@ function verifyPassword(password, combined, callback) {
   });
 }
 
+function generateToken(length, callback){
+
+  crypto.randomBytes(length, function(err, token) {
+    callback(err, token.toString('hex'));
+  })
+}
+
+exports.generateToken = generateToken;
 exports.hashPassword = hashPassword;
 exports.verifyPassword = verifyPassword;
