@@ -85,7 +85,7 @@
 							ctrl.$setValidity('unique', !exists);
 						})
 					}
-					return;
+					return modelValue;
 				}
 
 				attr.$observe('match', function() {

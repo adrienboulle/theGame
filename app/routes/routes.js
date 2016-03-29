@@ -286,7 +286,7 @@ module.exports = function(app, passport, role) {
 	}
 
 	function signUp(userData, done) {
-		if (userData.passwordConfirmation === userData.password && userData.password.length > 2){
+		if (userData.passwordConfirmation === userData.password && userData.password.length > 2) {
 			User.findOne({username: userData.username}, function(err, user) {
 				if (user) {
 					done("Nom d'utilisateur déjà utilisé");
@@ -297,7 +297,6 @@ module.exports = function(app, passport, role) {
 						} else {
 							Role.findOne({alias:'ROLE_USER'}, function(err, role) {
 								crypto.generateToken(32, function(err, token){
-									console.log(req.body);
 									var user = new User({
 										username: userData.username,
 										password: hash.toString('base64'),
