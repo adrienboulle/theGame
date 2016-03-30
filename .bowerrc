@@ -1,5 +1,3 @@
 {
-  "directory" : "sources/imports/bower_components",
-  "proxy":"http://fw_in.bnf.fr:8080",
-  "https-proxy":"http://fw_in.bnf.fr:8080"
+  "directory" : "sources/imports/bower_components"
 }
