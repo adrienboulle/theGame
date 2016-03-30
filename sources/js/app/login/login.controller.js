@@ -32,11 +32,11 @@
 				$state.go('site.accueil', null, {reload: true});
 			}, function(data) {
 				if (data.indexOf('ERLOG401') != -1) {
-					$scope.erreur = 'Votre compte a ete désactivé';
+					$scope.erreurLogin = 'Votre compte a ete désactivé';
 				} else if (data.indexOf('ERLOG403') != -1) {
-					$scope.erreur = 'Mot de passe erroné';
+					$scope.erreurLogin = 'Mot de passe erroné';
 				} else if (data.indexOf('ERLOG404') != -1) {
-					$scope.erreur = 'Utilisateur inexistant';
+					$scope.erreurLogin = 'Utilisateur inexistant';
 				}
 			})
 		}
@@ -46,10 +46,8 @@
 				SignupService.signup($scope.userInfoSignup).then(function(data) {
 					$state.reload();
 				}, function(data) {
-					$scope.erreur = 'Erreur !';
 				})
 			} else {
-				$scope.erreur = 'non valide';
 			}
 		}
 	}

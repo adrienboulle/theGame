@@ -44,7 +44,7 @@
 						</div>
 						<div class="row">
 							<div class="form-group col-md-12 text-center error">
-								<span>{{erreur}}</span>
+								<span>{{erreurLogin}}</span>
 							</div>
 						</div>
 						<div class="row button text-center"> 
@@ -69,7 +69,7 @@
 						<h2 class="h2-form">S'enregistrer</h2>
 
 						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine}">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine && signupFocus}">
 								<label>Nom d'utilisateur</label>
 								<div remove-handlers>
 									<input
@@ -84,16 +84,16 @@
 										type="text" 
 										placeholder="Entrer nom d'utilisateur"
 										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine">
+									<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine && signupFocus">
 							          	Nom d'utilisateur requis
 							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.unique && !userFormSignup.username.$pristine">
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.unique && !userFormSignup.username.$pristine && signupFocus">
 							          	Ce nom d'utilisateur est déjà pris
 							        </md-tooltip>
-							      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine">
+							      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine && signupFocus">
 							          	Nom d'utilisateur trop court
 							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine">
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine && signupFocus">
 							          	Nom d'utilisateur trop long
 							        </md-tooltip>
 							    </div>
@@ -102,7 +102,7 @@
 							
 						<!-- PASSWORD -->
 						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine}">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine && signupFocus}">
 								<label>Mot de passe</label>
 								<div remove-handlers>
 									<input 
@@ -115,10 +115,10 @@
 										type="password" 
 										placeholder="Entrer mot de passe" 
 										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.required && !userFormSignup.password.$pristine">
+									<md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.required && !userFormSignup.password.$pristine && signupFocus">
 							          	Mot de passe requis
 							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.minlength && !userFormSignup.password.$pristine">
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.minlength && !userFormSignup.password.$pristine && signupFocus">
 							          	Mot de passe trop court
 							        </md-tooltip>
 							    </div>
@@ -127,7 +127,7 @@
 
 						<!-- PASSWORD CONFIRMATION -->
 						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$error && !userFormSignup.passwordConfirmation.$pristine}">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$error && !userFormSignup.passwordConfirmation.$pristine && signupFocus}">
 								<label>Confirmation du mot de passe</label>
 								<div remove-handlers>
 									<input 
@@ -140,10 +140,10 @@
 										type="password" 
 										placeholder="Confirmer mot de passe" 
 										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.required && !userFormSignup.passwordConfirmation.$pristine">
+									<md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.required && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
 							          	Veuillez confirmer votre mot de passe
 							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.match && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine">
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.match && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
 							          	Les mots de passes sont différents
 							        </md-tooltip>
 							    </div>
