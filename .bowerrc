@@ -1,4 +1,5 @@
 {
   "directory" : "sources/imports/bower_components",
-  "proxy":"fw_in.bnf.fr:8080"
+  "proxy":"http://fw_in.bnf.fr:8080",
+  "https-proxy":"http://fw_in.bnf.fr:8080"
 }

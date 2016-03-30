@@ -1,8 +1,9 @@
 'user strict'
 
-var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer'),
+	config = require('./../../config.js');
 
-var Role = function(config) {
+var Role = function() {
 	
 	this.smtpConfig = {
 		host: config.mail.smtp,
@@ -14,10 +15,11 @@ var Role = function(config) {
 		}
 	};
 	
-	this.transporter = nodemailer.createTransport(smtpConfig);
+	this.transporter = nodemailer.createTransport(this.smtpConfig);
 
-	this.sendMail(mail, callback) {
-		transporter.sendMail(mail, function(err, info){
+	this.sendMail = function(mail, callback) {
+		this.transporter.sendMail(mail, function(err, info){
+			if (err) console.log(err);
 			callback(err, info);
 		});
 	}
