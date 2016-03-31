@@ -38,6 +38,15 @@
 					$scope.filtres.unset(filtre);
 				}
 			}
+			if ($scope.usernameFilter !== undefined) {
+				var filtre = new $scope.filtre("username");
+				filtre.add($scope.usernameFilter);
+				if (filtre.data[0].length > 0) {
+					$scope.filtres.set(filtre);
+				} else {
+					$scope.filtres.unset(filtre);
+				}
+			}
 			UsersService.getAll($scope.curPage, $scope.filtres.arr).then(function(data) {
 				$scope.users = data;
 			})
@@ -46,8 +55,6 @@
 			})
 		}
 	
-		$scope.init();
-
 		RolesService.getAll().then(function(data) {
 			if (data[0]) {
 				$scope.roles = data;
@@ -105,6 +112,8 @@
 				this.data.push(f);
 			}
 		}
+
+		$scope.init();
 	}
 
 	function notInFilter() {

@@ -1,15 +1,26 @@
 <div class="row">
-	<div class="col-md-3">
-		Filtre : 
-		<md-chips ng-repeat="r in roles | orderBy:'-level'" readonly="false">
-			<md-chip ng-init="r.selected = false" ng-click="r.selected = !r.selected; init()" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
-				<div class="md-chip-content">
-					<span>
-			        	<strong>{{r.alias.slice(5)}}</strong>
-			        </span>
+	<div class="col-md-12">
+		Filtres :
+		<div class="div-table">
+			<div class="div-row">
+				<div class="div-cell"> 
+					Roles : 
+					<md-chips ng-repeat="r in roles | orderBy:'-level'" readonly="false">
+						<md-chip ng-init="r.selected = false" ng-click="r.selected = !r.selected; init()" ng-class="{selected: r.selected}" class="md-chip noMod selectable {{r.alias.toLowerCase().slice(5)}}">
+							<div class="md-chip-content">
+								<span>
+						        	<strong>{{r.alias.slice(5)}}</strong>
+						        </span>
+							</div>
+						</md-chip>
+					<md-chips>
+				</div>	
+				<div class="div-cell">
+					Username :
+					<input ng-model="usernameFilter" ng-change="init()" type="text"/>
 				</div>
-			</md-chip>
-		<md-chips>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-3">
 		<div>

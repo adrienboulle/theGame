@@ -69,29 +69,7 @@ module.exports = function(app, passport, role) {
 
 	// ramène le nombre d'utilisateurs
 	app.get('/api/users/count', role.want('view users'), function(req, res) {
-		
-		var query = {}
-
-		var filtres = req.query.filtres;
-
-		if (filtres) {
-			filtres = JSON.parse(filtres);
-		} else {
-			filtres = [];
-		}
-
-		for (var i = 0; i < filtres.length; i++) {
-			switch (filtres[i].name) {
-				case "roles":
-					query.roles = {
-						"$in":filtres[i].data
-					}
-					break;
-			}
-		}
-
-
-		User.count(query, function(err, nb) {
+		User.count(getUsersQuery(req), function(err, nb) {
 				if (err) {
 					res.sendStatus(500);
 				} else {
@@ -105,27 +83,7 @@ module.exports = function(app, passport, role) {
 		var page = req.params.page;
 		var skip = (page - 1) * 10;
 
-		var query = {}
-
-		var filtres = req.query.filtres;
-
-		if (filtres) {
-			filtres = JSON.parse(filtres);
-		} else {
-			filtres = [];
-		}
-
-		for (var i = 0; i < filtres.length; i++) {
-			switch (filtres[i].name) {
-				case "roles":
-					query.roles = {
-						"$in":filtres[i].data
-					}
-					break;
-			}
-		}
-
-		User.find(query, null, {skip:skip, limit: 10})
+		User.find(getUsersQuery(req), null, {skip:skip, limit: 10, sort: {creation: -1}})
 			.populate('roles')
 			.exec(function(err, users) {
 				var usersJson = [];
@@ -140,6 +98,31 @@ module.exports = function(app, passport, role) {
 		})
 	});
 
+	function getUsersQuery(req) {
+		var query = {}
+
+		var filtres = req.query.filtres;
+
+		if (filtres) {
+			filtres = JSON.parse(filtres);
+		} else {
+			filtres = [];
+		}
+
+		for (var i = 0; i < filtres.length; i++) {
+			switch (filtres[i].name) {
+				case "roles":
+					query.roles = {
+						"$in":filtres[i].data
+					}
+					break;
+				case "username":
+					query.username = new RegExp(filtres[i].data[0], 'i');
+					break;
+			}
+		}
+		return query;
+	}
 
 	// active/desactive des utilisateurs
 	app.post('/api/users/actif', 
