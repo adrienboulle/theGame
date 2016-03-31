@@ -39,21 +39,28 @@ module.exports = function(app, passport, role) {
 	app.post('/api/signup', function(req, res) {
 		var user = {
 			username: req.body.username,
+			email: req.body.email,
 			password: req.body.password,
 			passwordConfirmation: req.body.passwordConfirmation
 		}
 
 		signUp(user, function(err, user){
 			if (err) {
-				res.sendStatus(400);
+				res.status(400).send(err);
 			} else {
 				res.sendStatus(200);
 			}
 		});
 	});
 
-	app.get('/api/signup/:login', function(req, res) {
-		User.count({username:req.params.login}, function(err, nb) {
+	app.get('/api/signup/username/:username', function(req, res) {
+		User.count({username:req.params.username}, function(err, nb) {
+			res.send({exists:nb !== 0});
+		})
+	});
+
+	app.get('/api/signup/email/:email', function(req, res) {
+		User.count({email:req.params.email}, function(err, nb) {
 			res.send({exists:nb !== 0});
 		})
 	});
@@ -287,7 +294,7 @@ module.exports = function(app, passport, role) {
 	}
 
 	function signUp(userData, done) {
-		if (userData.passwordConfirmation === userData.password && userData.password.length > 2) {
+		if (userData.passwordConfirmation === userData.password) {
 			User.findOne({username: userData.username}, function(err, user) {
 				if (user) {
 					done("ERRLOG403");
@@ -301,6 +308,7 @@ module.exports = function(app, passport, role) {
 									var user = new User({
 										username: userData.username,
 										password: hash.toString('base64'),
+										email: userData.email,
 										roles: [role.id],
 										actif: false,
 										creation: new Date(),
@@ -314,7 +322,7 @@ module.exports = function(app, passport, role) {
 
 											var mail = {
 												from: '"The Game" <the@game.com>',
-												to: 'thegamebg@yopmail.com',
+												to: userData.email,
 												subject: 'Confirmation email',
 												html: '<b><a href="' + appUrl + '/api/signup/valid/' + token + '">Confirmer mon mail</a></b>'
 											}
@@ -323,8 +331,14 @@ module.exports = function(app, passport, role) {
 													// todo si pb mail
 												}
 											});
+											done(err, user);
+										} else {
+											errors = [];
+											if (err.errors.email) {
+												errors.push("ERRLOG052");
+											}
+											done(errors, user);	
 										}
-										done(err, user);	
 									});
 								})
 							})

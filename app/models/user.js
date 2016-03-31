@@ -7,11 +7,18 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	username: {type: String, unique: true},
 	password: String,
+	email: {type: String, unique: true},
 	actif: Boolean,
 	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
 	creation: Date,
 	lastConnexion: Date,
 	token: String
+});
+
+UserSchema.path('email').validate(function(email) {
+	var patt = "^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$";
+	var emailRegex = new RegExp(patt);
+	return emailRegex.test(email);
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {

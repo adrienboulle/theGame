@@ -46,6 +46,7 @@
 				SignupService.signup($scope.userInfoSignup).then(function(data) {
 					$state.reload();
 				}, function(data) {
+
 				})
 			} else {
 			}
@@ -79,9 +80,16 @@
 				
 				ctrl.$validators.unique = function(modelValue, viewValue) {
 					if (modelValue && modelValue.length > 0) {
-						SignupService.testUsername(modelValue).then(function(exists) {
-							ctrl.$setValidity('unique', !exists);
-						})
+						if (attr.unique === "username") {
+							SignupService.testUsername(modelValue).then(function(exists) {
+								ctrl.$setValidity('uniqueUsername', !exists);
+							})
+						}
+						if (attr.unique === "email") {
+							SignupService.testEmail(modelValue).then(function(exists) {
+								ctrl.$setValidity('uniqueEmail', !exists);
+							})
+						}
 					}
 					return modelValue;
 				}

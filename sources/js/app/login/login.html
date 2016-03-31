@@ -73,7 +73,7 @@
 								<label>Nom d'utilisateur</label>
 								<div remove-handlers>
 									<input
-										unique
+										unique="username"
 										ng-focus="signupFocus = true; signinFocus = false"
 										name="username"
 										ng-model="userInfoSignup.username" 
@@ -87,7 +87,7 @@
 									<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine && signupFocus">
 							          	Nom d'utilisateur requis
 							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.unique && !userFormSignup.username.$pristine && signupFocus">
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.uniqueUsername && !userFormSignup.username.$pristine && signupFocus">
 							          	Ce nom d'utilisateur est déjà pris
 							        </md-tooltip>
 							      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine && signupFocus">
@@ -95,6 +95,35 @@
 							        </md-tooltip>
 							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine && signupFocus">
 							          	Nom d'utilisateur trop long
+							        </md-tooltip>
+							    </div>
+							</div>
+						</div>
+
+						<!-- EMAIL -->
+						<div class="row">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.email.$invalid && !userFormSignup.email.$pristine && signupFocus}">
+								<label>Email</label>
+								<div remove-handlers>
+									<input
+										unique="email"
+										ng-focus="signupFocus = true; signinFocus = false"
+										name="email"
+										ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+										ng-model="userInfoSignup.email" 
+										required
+										class="form-control"
+										type="email" 
+										placeholder="Entrer votre email"
+										ng-keyup="$event.keyCode == 13 && signup()" />
+									<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.required && !userFormSignup.email.$pristine && signupFocus">
+							          	Email requis
+							        </md-tooltip>
+							        <md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.uniqueEmail && !userFormSignup.email.$pristine && signupFocus">
+							          	Cet email est déjà pris
+							        </md-tooltip>
+							      	<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.pattern && !userFormSignup.email.$pristine && signupFocus">
+							          	Email invalide
 							        </md-tooltip>
 							    </div>
 							</div>

@@ -23,7 +23,14 @@
 			},
 			testUsername: function(username) {
 				var p = $q.defer();
-				$http.get('/api/signup/' + username).then(function(rep) {
+				$http.get('/api/signup/username/' + username).then(function(rep) {
+					p.resolve(rep.data.exists);
+				})
+				return p.promise;
+			},
+			testEmail: function(email) {
+				var p = $q.defer();
+				$http.get('/api/signup/email/' + email).then(function(rep) {
 					p.resolve(rep.data.exists);
 				})
 				return p.promise;
