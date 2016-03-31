@@ -98,6 +98,7 @@ h2.h2-form {
 .users .email {
 	width: 200px;
 }
+
 .users .roles {
 	width: auto;
 }
@@ -117,6 +118,31 @@ h2.h2-form {
 
 .users .raz {
 	width: 25px;
+}
+
+.divh span {
+	padding-left: 13px;
+}
+
+.sort {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	outline: none;
+	-webkit-user-select: none;       
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.sort.sortedAsc {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	background-position-y: -16px;
+}
+
+.sort.sortedDesc {
+	background-image: url(/img/sort.png);
+	background-repeat: no-repeat;
+	background-position-y: -32px;
 }
 
 .users .div-cell {

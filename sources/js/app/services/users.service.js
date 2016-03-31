@@ -12,13 +12,13 @@
 	function usersService($q, $http, UsersResource) {
 	  	  		
   		return {
-			getAll: function(page, filtres) {
+			getAll: function(page, filtres, sort) {
 				// on va appeler le serveur, on renvois donc une promesse
 				var p = $q.defer();
 
 				if (!filtres || filtres.length === 0) filtres = [];
 
-				UsersResource.get({page:page}, {filtres: JSON.stringify(filtres)}).$promise.then(function(data) {
+				UsersResource.get({page:page, filtres: JSON.stringify(filtres), sort:sort}).$promise.then(function(data) {
 					p.resolve(data);
 				})
 				

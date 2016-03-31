@@ -33,7 +33,9 @@
 		<div class="div-table w100 users ng-cloak">
 			<div class="div-row divh">
 				<div class="div-cell divh username lhc">
-					Username
+					<span ng-click="sortField('username')" class="sort" ng-class="{sortedAsc: sort.field == 'username' && sort.asc, sortedDesc: sort.field == 'username' && !sort.asc}">
+						Username
+					</span>
 				</div>
 				<div class="div-cell divh roles">
 					Roles inactifs :
@@ -41,16 +43,24 @@
 					</md-checkbox>
 				</div>
 				<div class="div-cell divh email">
-					email
+					<span ng-click="sortField('email')" class="sort" ng-class="{sortedAsc: sort.field == 'email' && sort.asc, sortedDesc: sort.field == 'email' && !sort.asc}">
+						email
+					</span>
 				</div>
 				<div class="div-cell divh derCon">
-					Dernière connexion
+					<span ng-click="sortField('lastConnexion')" class="sort" ng-class="{sortedAsc: sort.field == 'lastConnexion' && sort.asc, sortedDesc: sort.field == 'lastConnexion' && !sort.asc}">
+						Dernière connexion
+					</span>
 				</div>
 				<div class="div-cell divh crea">
-					Création
+					<span ng-click="sortField('creation')" class="sort" ng-class="{sortedAsc: sort.field == 'creation' && sort.asc, sortedDesc: sort.field == 'creation' && !sort.asc}">
+						Création
+					</span>
 				</div>
 				<div class="div-cell divh active">
-					Actif
+					<span ng-click="sortField('actif')" class="sort" ng-class="{sortedAsc: sort.field == 'actif' && sort.asc, sortedDesc: sort.field == 'actif' && !sort.asc}">
+						Actif
+					</span>
 				</div>
 				<div class="div-cell divh raz text-center rhc">
 					raz

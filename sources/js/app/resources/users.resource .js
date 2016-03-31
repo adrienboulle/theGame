@@ -14,7 +14,8 @@
 				method: 'GET',
 				isArray: true,
 				params: {
-					filtres: '@filtres'
+					filtres: '@filtres',
+					sort: '@sort'
 				}
 			}
 		})

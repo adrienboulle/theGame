@@ -84,8 +84,9 @@ module.exports = function(app, passport, role) {
 		var skip = (page - 1) * 10;
 		var sort = {}; 
 		
-		if (req.params.sort) {
-			sort[req.params.sort.field] = (req.params.sort.asc === true) ? -1 : 1;
+		if (req.query.sort) {
+			var sortQuery = JSON.parse(req.query.sort);
+			sort[sortQuery.field] = (sortQuery.asc === true) ? 1 : -1;
 		} else {	
 			sort.creation = -1;
 		}

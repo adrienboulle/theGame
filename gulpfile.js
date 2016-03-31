@@ -39,6 +39,9 @@ gulp.task('import', function () {
 	var svgStream = gulp.src(['./sources/svg/**/*.svg'])
  		.pipe(gulp.dest('./public/svg/'));
 
+ 	var pngStream = gulp.src(['./sources/img/**/*.png'])
+ 		.pipe(gulp.dest('./public/img/'));
+
 	var htmlStream = gulp.src(['./sources/js/app/**/*.html'])
  		.pipe(gulp.dest('./public/js/app/'));
 
@@ -53,7 +56,7 @@ gulp.task('import', function () {
  		.pipe(conf.prod ? uglify().on('error', gulpUtil.log) : gulpUtil.noop())
 		.pipe(gulp.dest('./public/js/'));
 				
-	return merge(svgStream, jsStream, cssStream, htmlStream);
+	return merge(svgStream, pngStream, jsStream, cssStream, htmlStream);
 		
 });
 

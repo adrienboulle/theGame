@@ -26,8 +26,8 @@
 		$scope.curPage = 1;
 		$scope.filtres = new filtres();
 		$scope.sort = {
-			field: "";
-			asc: true;
+			field: "creation",
+			asc: true
 		};
 
 		$scope.init = function() {		
@@ -51,7 +51,7 @@
 					$scope.filtres.unset(filtre);
 				}
 			}
-			UsersService.getAll($scope.curPage, $scope.filtres.arr).then(function(data) {
+			UsersService.getAll($scope.curPage, $scope.filtres.arr, $scope.sort).then(function(data) {
 				$scope.users = data;
 			})
 			UsersService.getCount($scope.filtres.arr).then(function(data) {
@@ -64,6 +64,16 @@
 				$scope.roles = data;
 			}
 		})
+
+		$scope.sortField = function(field) {
+			if ($scope.sort.field === field) {
+				$scope.sort.asc = !$scope.sort.asc;
+			} else {
+				$scope.sort.field = field;
+				$scope.sort.asc = true;
+			}
+			$scope.init();
+		}
 
 		$scope.removeRole = function(user, role) {
 			UsersService.removeRole(user, role._id).then(function() {
