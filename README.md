@@ -1,1 +1,3 @@
 # theGame
+
+Angularjs + NodeJs app
