@@ -95,6 +95,9 @@ h2.h2-form {
 	width: 150px;
 }
 
+.users .email {
+	width: 200px;
+}
 .users .roles {
 	width: auto;
 }

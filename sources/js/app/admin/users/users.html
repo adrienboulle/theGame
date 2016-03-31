@@ -29,6 +29,9 @@
 					<md-checkbox class="md-primary" ng-model="showInactive" ng-init="showInactive = true" aria-label="Montrer inacrifs">
 					</md-checkbox>
 				</div>
+				<div class="div-cell divh email">
+					email
+				</div>
 				<div class="div-cell divh derCon">
 					Dernière connexion
 				</div>
@@ -77,6 +80,9 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="div-cell">
+					{{u.email}}
 				</div>
 				<div class="div-cell">
 					{{u.lastConnexion | date:'dd/MM/yyyy HH:mm:ss'}}
