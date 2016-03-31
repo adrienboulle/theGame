@@ -70,11 +70,11 @@ module.exports = function(app, passport, role) {
 	// ramène le nombre d'utilisateurs
 	app.get('/api/users/count', role.want('view users'), function(req, res) {
 		User.count(getUsersQuery(req), function(err, nb) {
-				if (err) {
-					res.sendStatus(500);
-				} else {
-					res.send({count:nb});
-				}
+			if (err) {
+				res.sendStatus(500);
+			} else {
+				res.send({count:nb});
+			}
 		})
 	});
 
@@ -82,8 +82,15 @@ module.exports = function(app, passport, role) {
 	app.get('/api/users/:page', role.want('view users'), function(req, res) {
 		var page = req.params.page;
 		var skip = (page - 1) * 10;
+		var sort = {}; 
+		
+		if (req.params.sort) {
+			sort[req.params.sort.field] = (req.params.sort.asc === true) ? -1 : 1;
+		} else {	
+			sort.creation = -1;
+		}
 
-		User.find(getUsersQuery(req), null, {skip:skip, limit: 10, sort: {creation: -1}})
+		User.find(getUsersQuery(req), null, {skip:skip, limit: 10, sort: sort})
 			.populate('roles')
 			.exec(function(err, users) {
 				var usersJson = [];

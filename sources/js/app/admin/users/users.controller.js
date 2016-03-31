@@ -25,6 +25,10 @@
 		$scope.curUser = user;
 		$scope.curPage = 1;
 		$scope.filtres = new filtres();
+		$scope.sort = {
+			field: "";
+			asc: true;
+		};
 
 		$scope.init = function() {		
 			if ($scope.roles) {
