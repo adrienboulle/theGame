@@ -2,7 +2,7 @@
 	'use strict'
 
 	angular.module('theGame')
-		.controller('motDePasseOubliController', [
+		.controller('MotDePasseOubliController', [
 			'$scope',
 			'$state',
 			'LoginService',

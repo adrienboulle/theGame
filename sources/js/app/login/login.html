@@ -5,9 +5,7 @@
 		 		<!-- SIGNIN FORM -->
 		 		<form name="userFormSignin" novalidate>
 		 			<fieldset class="login fsStyle" ng-class="{focus: signinFocus}">
-						
 						<h2 class="h2-form">S'identifier</h2>
-						
 						<div class="row">
 							<div class="form-group col-md-12">
 								<label>Nom d'utilisateur</label>
@@ -65,10 +63,8 @@
 				<!-- SIGNUP FORM -->
 				<form name="userFormSignup" novalidate>
 					<fieldset class="signup fsStyle" ng-class="{focus: signupFocus}">
-					
-						<!-- USERNAME -->
 						<h2 class="h2-form">S'enregistrer</h2>
-
+						<!-- USERNAME -->
 						<div class="row">
 							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine && signupFocus}">
 								<label>Nom d'utilisateur</label>
@@ -100,7 +96,6 @@
 							    </div>
 							</div>
 						</div>
-
 						<!-- EMAIL -->
 						<div class="row">
 							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.email.$invalid && !userFormSignup.email.$pristine && signupFocus}">
@@ -129,7 +124,6 @@
 							    </div>
 							</div>
 						</div>
-							
 						<!-- PASSWORD -->
 						<div class="row">
 							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine && signupFocus}">
@@ -154,7 +148,6 @@
 							    </div>
 							</div>
 						</div>
-
 						<!-- PASSWORD CONFIRMATION -->
 						<div class="row">
 							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$error && !userFormSignup.passwordConfirmation.$pristine && signupFocus}">

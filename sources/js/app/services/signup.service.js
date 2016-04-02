@@ -14,10 +14,19 @@
 		return {
 			signup: function(userInfo) {
 				var p = $q.defer();
-				SignupResource.signup(userInfo).$promise.then(function(data) {
-					p.resolve(data);
+				SignupResource.signup(userInfo).$promise.then(function(rep) {
+					p.resolve(rep.data);
 				}, function(err) {
 					p.reject(err);
+				})
+				return p.promise;
+			},
+			validate: function(token) {
+				var p = $q.defer();
+				$http.get('/api/signup/valid/' + token).then(function(rep) {
+					p.resolve(rep.data);
+				}, function(rep) {
+					p.reject(rep.data);
 				})
 				return p.promise;
 			},

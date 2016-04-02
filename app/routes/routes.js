@@ -68,17 +68,19 @@ module.exports = function(app, passport, role) {
 
 	app.get('/api/signup/valid/:token', function(req, res) {
 		User.findOne({token:req.params.token}, function(err, user) {
+			if (err) {
+				return res.status(500).send("ERRVAL500");
+			}
 			if (user) {
 				user.actif = true;
 				user.save();
-				res.sendStatus(200);
+				return res.sendStatus(200);
 			} else {
-				res.sendStatus(404);
+				return res.status(404).send("ERRVAL404");
 			}
 			
 		})
 	});
-
 
 	// admin ==================================================================
 
@@ -86,9 +88,9 @@ module.exports = function(app, passport, role) {
 	app.get('/api/users/count', role.want('view users'), function(req, res) {
 		User.count(getUsersQuery(req), function(err, nb) {
 			if (err) {
-				res.sendStatus(500);
+				return res.sendStatus(500);
 			} else {
-				res.send({count:nb});
+				return res.send({count:nb});
 			}
 		})
 	});

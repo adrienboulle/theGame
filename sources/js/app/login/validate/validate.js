@@ -9,14 +9,14 @@
 
     function Config($stateProvider) {
 		$stateProvider
-    		.state('site.login.motDePasseOubli', {
+    		.state('site.login.validate', {
             parent: 'site.login',
-      			url: '/forgot',
+      			url: '/validate/:token',
       			views: {
                 'content@': {
-        			   templateUrl: 'js/app/login/motDePasseOubli/motDePasseOubli.html',
-      				   controller: 'MotDePasseOubliController'
-      				}
+        			      templateUrl: 'js/app/login/validate/validate.html',
+      				      controller: 'ValidateController'
+      				  }
       			}
     		})
     }
