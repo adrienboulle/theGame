@@ -5,6 +5,7 @@
 		.controller('UsersController', [
 			'$scope',
 			'$state',
+			'$timeout',
 			'LoginService',
 			'SignupService',
 			'UsersService',
@@ -20,10 +21,11 @@
 			hasRoleSelected
 		]);
 
-	function usersController($scope, $state, LoginService, SignupService, UsersService, UserService, RolesService, user) {
+	function usersController($scope, $state, $timeout,  LoginService, SignupService, UsersService, UserService, RolesService, user) {
 		
 		$scope.curUser = user;
 		$scope.curPage = 1;
+		$scope.loaded = true;
 		$scope.filtres = new filtres();
 		$scope.sort = {
 			field: "creation",
@@ -31,32 +33,36 @@
 		};
 
 		$scope.init = function() {		
-			if ($scope.roles) {
-				var filtre = new $scope.filtre("roles");
-				for (var i = 0; i < $scope.roles.length; i++) {
-					if ($scope.roles[i].selected) filtre.add($scope.roles[i]._id);
+			if ($scope.loaded) {
+				$scope.loaded = false;
+				if ($scope.roles) {
+					var filtre = new $scope.filtre("roles");
+					for (var i = 0; i < $scope.roles.length; i++) {
+						if ($scope.roles[i].selected) filtre.add($scope.roles[i]._id);
+					}
+					if (filtre.data.length > 0) {
+						$scope.filtres.set(filtre);
+					} else {
+						$scope.filtres.unset(filtre);
+					}
 				}
-				if (filtre.data.length > 0) {
-					$scope.filtres.set(filtre);
-				} else {
-					$scope.filtres.unset(filtre);
+				if ($scope.usernameFilter !== undefined) {
+					var filtre = new $scope.filtre("username");
+					filtre.add($scope.usernameFilter);
+					if (filtre.data[0].length > 0) {
+						$scope.filtres.set(filtre);
+					} else {
+						$scope.filtres.unset(filtre);
+					}
 				}
+				UsersService.getAll($scope.curPage, $scope.filtres.arr, $scope.sort).then(function(data) {
+					$scope.users = data;
+					$scope.loaded = true;
+				})
+				UsersService.getCount($scope.filtres.arr).then(function(data) {
+					$scope.nbUsers = data;
+				})
 			}
-			if ($scope.usernameFilter !== undefined) {
-				var filtre = new $scope.filtre("username");
-				filtre.add($scope.usernameFilter);
-				if (filtre.data[0].length > 0) {
-					$scope.filtres.set(filtre);
-				} else {
-					$scope.filtres.unset(filtre);
-				}
-			}
-			UsersService.getAll($scope.curPage, $scope.filtres.arr, $scope.sort).then(function(data) {
-				$scope.users = data;
-			})
-			UsersService.getCount($scope.filtres.arr).then(function(data) {
-				$scope.nbUsers = data;
-			})
 		}
 	
 		RolesService.getAll().then(function(data) {
