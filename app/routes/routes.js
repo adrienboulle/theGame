@@ -36,6 +36,7 @@ module.exports = function(app, passport, role) {
 	});
 
 	// sign up
+
 	app.post('/api/signup', function(req, res) {
 		var user = {
 			username: req.body.username,
@@ -64,6 +65,20 @@ module.exports = function(app, passport, role) {
 			res.send({exists:nb !== 0});
 		})
 	});
+
+	app.get('/api/signup/valid/:token', function(req, res) {
+		User.findOne({token:req.params.token}, function(err, user) {
+			if (user) {
+				user.actif = true;
+				user.save();
+				res.sendStatus(200);
+			} else {
+				res.sendStatus(404);
+			}
+			
+		})
+	});
+
 
 	// admin ==================================================================
 

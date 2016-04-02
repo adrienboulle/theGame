@@ -15,7 +15,18 @@ fieldset.fsStyle {
     border: 1px solid #C5C0C0;
     padding: 15px;
     border-radius: 8px;
+}
+fieldset.fsStyle.motDePasseOubli {
+    height: 220px;
+}
+
+fieldset.fsStyle.login,
+fieldset.fsStyle.signup {
     height: 408px;
+}
+
+.motDePasseOubli {
+	font-size: 12px;
 }
 
 

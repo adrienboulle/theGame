@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="row"> 
+		 	<div class="col-md-12 text-center">
+				<!-- motDePasseOubli FORM -->
+				<form name="userFormMotDePasseOubli" novalidate>
+					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
+						<!-- EMAIL -->
+						<h2 class="h2-form">Retrouver votre mot de passe</h2>
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label>Veuillez rentrer l'adresse E-mail associée à votre compte</label>
+								<div remove-handlers>
+									<input
+										name="email"
+										ng-model="userInfoMotDePasseOubli.email" 
+										required
+										ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+										class="form-control"
+										type="email" 
+										placeholder="Entrer votre adresse mail"
+										ng-keyup="$event.keyCode == 13 && motDePasseOubli()" />
+									<md-tooltip md-direction="right" md-visible="userFormMotDePasseOubli.email.$error.pattern && !userFormMotDePasseOubli.email.$pristine">
+							        	Email invalide
+							        </md-tooltip>
+							    </div>
+							</div>
+						</div>
+						<div class="row button text-center">
+							<button 
+								type="submit" 
+								class="btn btn-primary" 
+								ng-click="motDePasseOubli()">Changer mot de passe
+							</button>
+						</div>
+					<fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -4,7 +4,7 @@
 		 	<div class="col-md-6">
 		 		<!-- SIGNIN FORM -->
 		 		<form name="userFormSignin" novalidate>
-		 			<fieldset class="fsStyle" ng-class="{focus: signinFocus}">
+		 			<fieldset class="login fsStyle" ng-class="{focus: signinFocus}">
 						
 						<h2 class="h2-form">S'identifier</h2>
 						
@@ -32,6 +32,7 @@
 									type="password" 
 									placeholder="Entrer mot de passe" 
 									ng-keyup="$event.keyCode == 13 && login()" />
+								<p class="text-right motDePasseOubli"><a ui-sref="site.login.motDePasseOubli">Mot de passe oublié ?</a></p>
 							</div>
 						</div>
 						<div class="row">
@@ -63,7 +64,7 @@
 			<div class="col-md-6">
 				<!-- SIGNUP FORM -->
 				<form name="userFormSignup" novalidate>
-					<fieldset class="fsStyle" ng-class="{focus: signupFocus}">
+					<fieldset class="signup fsStyle" ng-class="{focus: signupFocus}">
 					
 						<!-- USERNAME -->
 						<h2 class="h2-form">S'enregistrer</h2>
