@@ -18,12 +18,12 @@
 		$scope.showForm = true;
 
 		$scope.motDePasseOubli = function() {
-			LoginService.motDePasseOubli($scope.userInfoMotDePasseOubli).then(function(data) {
+			LoginService.motDePasseOubli($scope.userInfoMotDePasseOubli.email).then(function(data) {
 				$scope.showForm = false;
 			}, function(data) {
-				if (data.indexOf('ERLOG401') != -1) {
+				if (data.indexOf('ERRLOG401') != -1) {
 					$scope.erreurLogin = 'Votre compte a été désactivé, mot de passe inchangeable';
-				} else if (data.indexOf('ERMAIL404') != -1) {
+				} else if (data.indexOf('ERRMAIL404') != -1) {
 					$scope.erreurLogin = 'Email inexistant';
 				}
 			})

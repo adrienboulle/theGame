@@ -84,6 +84,29 @@ module.exports = function(app, passport, role) {
 		})
 	});
 
+	//Change Password
+
+	app.get('/api/forgot/email/:email', function(req, res) {
+		motDePasseOubli(req.params.email, function(err) {
+			if (err) {
+				return res.status(500).send(err);
+			} else {
+				return res.sendStatus(200);
+			}
+		})
+	});
+
+	app.post('/api/forgot', function(req, res) {
+		changePassword(req.body, function(err) {
+			if (err) {
+				return res.status(500).send(err);
+			} else {
+				return res.sendStatus(200);
+			}
+		})
+	});
+
+
 	// admin ==================================================================
 
 	// ramène le nombre d'utilisateurs
@@ -359,7 +382,60 @@ module.exports = function(app, passport, role) {
 		} else if (userData.passwordConfirmation != userData.password){
 			done("Les mot de passes ne sont pas identiques");
 		} else if (password.length <= 5){
-			done("Mot de passe trop petit, veuillez utiliser 6 caractères au minimun");
+			done("Mot de passe trop petit, veuillez utiliser 3 caractères au minimun");
+		}
+	}
+
+	function motDePasseOubli(email, done) {
+		User.findOne({email: email}, function(err, user) {
+			if (!user) {
+				done("ERRMAIL404");
+			} else if (user.actif === false) {
+				done("ERRLOG401");
+			} else {
+				crypto.generateToken(32, function(err, token){
+					user.token = token;
+					user.save();
+					var appUrl = "http://" + config.host;
+					appUrl += (config.port.length != 0) ? ":" + config.port : ""; 
+					var mail = {
+						from: '"The Game" <the@game.com>',
+						to: email,
+						subject: 'Changer mot de passe',
+						html: '<b><a href="' + appUrl + '/login/forgot/' + token + '">Changer mot de passe</a></b>'
+					}
+					mailUtils.sendMail(mail, function(err, info) {
+						if (err) {
+							// todo si pb mail
+						}
+					});
+					done(err);
+				});
+			}
+		});
+	}
+
+	function changePassword(userData, done) {
+		if (userData.passwordConfirmation === userData.password) {
+			User.findOne({token: userData.token}, function(err, user) {
+				if (!user) {
+					done("ERRTOK404");
+				} else {
+					crypto.hashPassword(userData.password, function(err, hash) {
+						if (err) {
+							callback(err);
+						} else {
+							user.password = hash.toString('base64');
+							user.token = null;
+							user.save();
+						};
+					})
+				}
+			})
+		} else if (userData.passwordConfirmation != userData.password){
+			done("Les mot de passes ne sont pas identiques");
+		} else if (password.length <= 5){
+			done("Mot de passe trop petit, veuillez utiliser 3 caractères au minimun");
 		}
 	}
 
