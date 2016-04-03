@@ -72,6 +72,7 @@ module.exports = function(app, passport, role) {
 				return res.status(500).send("ERRVAL500");
 			}
 			if (user) {
+				if (user.actif) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
 				user.save();
 				return res.sendStatus(200);

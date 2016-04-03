@@ -18,8 +18,8 @@
 			$scope.validation = false;
 			$scope.ok = true;
 		}, function(data) {
-			if (data.indexOf('ERVAL500') != -1) {
-				$scope.error = 'Erreur lors de la validation';
+			if (data.indexOf('ERVAL500') != -1 || data.indexOf('ERRVAL400') != -1) {
+				$state.go('site.login');
 			} else if (data.indexOf('ERRVAL404') != -1) {
 				$scope.error = 'Aucun compte associé';
 			}
