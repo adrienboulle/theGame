@@ -4,6 +4,7 @@
 	angular.module('theGame')
 		.controller('MotDePasseOubliController', [
 			'$scope',
+			'$stateParams',
 			'$state',
 			'LoginService',
 			motDePasseOubliController
@@ -13,9 +14,11 @@
 			removeHandlers
 		]);
 
-	function motDePasseOubliController($scope, $state, LoginService) {
+	function motDePasseOubliController($scope, $stateParams, $state, LoginService) {
 		
 		$scope.showForm = true;
+
+		$scope.token = $stateParams.token;
 
 		$scope.motDePasseOubli = function() {
 			LoginService.motDePasseOubli($scope.userInfoMotDePasseOubli.email).then(function(data) {

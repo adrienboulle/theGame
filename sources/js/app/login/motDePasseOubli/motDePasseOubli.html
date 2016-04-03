@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<div class="row"> 
-		 	<div class="col-md-12 text-center" ng-show="showForm">
+		<div class="row">
+		 	<div class="col-md-12 text-center" ng-show="showForm && !token">
 				<!-- motDePasseOubli FORM -->
 				<form name="userFormMotDePasseOubli" novalidate>
 					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
@@ -41,7 +41,28 @@
 					<fieldset>
 				</form>
 			</div>
-			<div class="col-md-12 text-center" ng-show="!showForm">
+			<div class="col-md-12 text-center" ng-show="showForm && token">
+				<!-- changePassword FORM -->
+				<form name="userFormMotDePasseOubli" novalidate>
+					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
+						<!-- EMAIL -->
+						<h2 class="h2-form">Changer votre mot de passe</h2>
+						<div class="row">
+							<div class="form-group col-md-12 text-center error">
+								<span>{{erreur}}</span>
+							</div>
+						</div>
+						<div class="row button text-center">
+							<button 
+								type="submit" 
+								class="btn btn-primary" 
+								ng-click="motDePasseOubli()">Changer mot de passe
+							</button>
+						</div>
+					<fieldset>
+				</form>
+			</div>
+			<div class="col-md-12 text-center" ng-show="!showForm && !token">
 				<span>Veuillez vérifier vos emails pour réinitialiser votre mot de passe</span>
 			</div>
 		</div>

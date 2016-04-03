@@ -11,7 +11,7 @@
 		$stateProvider
     		.state('site.login.motDePasseOubli', {
             parent: 'site.login',
-      			url: '/forgot',
+      			url: '/forgot/:token',
       			views: {
                 'content@': {
         			   templateUrl: 'js/app/login/motDePasseOubli/motDePasseOubli.html',
