@@ -333,7 +333,7 @@ module.exports = function(app, passport, role) {
 												from: '"The Game" <the@game.com>',
 												to: userData.email,
 												subject: 'Confirmation email',
-												html: '<b><a href="' + appUrl + '/api/signup/valid/' + token + '">Confirmer mon mail</a></b>'
+												html: '<b><a href="' + appUrl + '/login/validate/' + token + '">Confirmer mon mail</a></b>'
 											}
 											mailUtils.sendMail(mail, function(err, info) {
 												if (err) {
