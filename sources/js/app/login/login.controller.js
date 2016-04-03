@@ -33,6 +33,8 @@
 			}, function(data) {
 				if (data.indexOf('ERLOG401') != -1) {
 					$scope.erreurLogin = 'Votre compte a ete désactivé';
+				} else if (data.indexOf('ERVAL009') != -1) {
+					$scope.erreurLogin = 'Votre compte n\'a pas été activé';
 				} else if (data.indexOf('ERLOG403') != -1) {
 					$scope.erreurLogin = 'Mot de passe erroné';
 				} else if (data.indexOf('ERLOG404') != -1) {

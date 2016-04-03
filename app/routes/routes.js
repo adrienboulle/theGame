@@ -74,6 +74,7 @@ module.exports = function(app, passport, role) {
 			if (user) {
 				if (user.actif) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
+				user.token = '';
 				user.save();
 				return res.sendStatus(200);
 			} else {
