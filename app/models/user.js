@@ -22,8 +22,8 @@ UserSchema.path('email').validate(function(email) {
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
-	if (!this.actif && this.token.length > 0) return callback("ERVAL009", false);
-	if (!this.actif && this.token.length === 0) return callback("ERLOG401", false);
+	if (!this.actif && this.token) return callback("ERVAL009", false);
+	if (!this.actif && !this.token) return callback("ERLOG401", false);
 	var combined = new Buffer(this.password, 'base64');
 	crypto.verifyPassword(password, combined, function(err, loggedIn) {
 		if (!err && !loggedIn) {
