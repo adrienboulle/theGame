@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<div class="row"> 
-		 	<div class="col-md-12 text-center">
+		 	<div class="col-md-12 text-center" ng-show="showForm">
 				<!-- motDePasseOubli FORM -->
 				<form name="userFormMotDePasseOubli" novalidate>
 					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
@@ -40,6 +40,9 @@
 						</div>
 					<fieldset>
 				</form>
+			</div>
+			<div class="col-md-12 text-center" ng-show="!showForm">
+				<span>Veuillez vérifier vos emails pour réinitialiser votre mot de passe</span>
 			</div>
 		</div>
 	</div>

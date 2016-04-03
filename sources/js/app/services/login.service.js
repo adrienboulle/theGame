@@ -31,9 +31,9 @@
 				})
 				return p.promise;
 			},
-			motDePasseOubli: function(userInfo) {
+			motDePasseOubli: function(email) {
 				var p = $q.defer();
-				$http.get('api/forgot/email/' + userInfo.email).then(function(rep) {
+				$http.get('api/forgot/email/' + email).then(function(rep) {
 					p.resolve(rep.data);
 				}, function(err) {
 					p.reject(err.data);

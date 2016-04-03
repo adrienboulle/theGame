@@ -32,7 +32,7 @@
 				$state.go('site.accueil', null, {reload: true});
 			}, function(data) {
 				if (data.indexOf('ERLOG401') != -1) {
-					$scope.erreurLogin = 'Votre compte a ete désactivé';
+					$scope.erreurLogin = 'Votre compte a été désactivé';
 				} else if (data.indexOf('ERVAL009') != -1) {
 					$scope.erreurLogin = 'Votre compte n\'a pas été activé';
 				} else if (data.indexOf('ERLOG403') != -1) {
