@@ -16,7 +16,7 @@ var UserSchema = new Schema({
 });
 
 UserSchema.path('email').validate(function(email) {
-	var patt = "^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$";
+	var patt = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
 	var emailRegex = new RegExp(patt);
 	return emailRegex.test(email);
 });
