@@ -77,6 +77,18 @@
 					});
 
 				return p.promise;
+			},
+			toogleEmailConfirm: function(ids, bool) {
+				var p = $q.defer();
+
+				$http.post('/api/users/confirmemail', {'ids': ids, 'confirm': bool})
+					.then(function() {
+						p.resolve();
+					}, function() {
+						p.reject();
+					});
+
+				return p.promise;
 			}
 		}
 	 }

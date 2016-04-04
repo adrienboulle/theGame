@@ -93,6 +93,15 @@
 			})
 		}
 
+		$scope.confirmEmail = function(user, emailConfirm) {
+			var _back = !user.email_confirm;
+			UsersService.toogleEmailConfirm([user._id], emailConfirm).then(function() {
+
+			}, function() {
+				user.email_confirm = _back;
+			});
+		}	
+
 		$scope.setActive = function(user, actif) {
 			var _back = !user.actif;
 			UsersService.toogleActif([user._id], actif).then(function() {

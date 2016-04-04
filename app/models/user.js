@@ -8,6 +8,7 @@ var UserSchema = new Schema({
 	username: {type: String, unique: true},
 	password: String,
 	email: {type: String, unique: true},
+	email_confirm: Boolean,
 	actif: Boolean,
 	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
 	creation: Date,
@@ -22,8 +23,8 @@ UserSchema.path('email').validate(function(email) {
 });
 
 UserSchema.methods.verifyCredentials = function(password, callback) {
-	if (!this.actif && this.token) return callback("ERVAL009", false);
-	if (!this.actif && !this.token) return callback("ERLOG401", false);
+	if (!this.actif) return callback("ERLOG401", false);
+	if (!this.email_confirm) return callback("ERVAL009", false);
 	var combined = new Buffer(this.password, 'base64');
 	crypto.verifyPassword(password, combined, function(err, loggedIn) {
 		if (!err && !loggedIn) {

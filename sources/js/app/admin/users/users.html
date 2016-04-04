@@ -47,6 +47,11 @@
 						email
 					</span>
 				</div>
+				<div class="div-cell divh email-confirm">
+					<span ng-click="sortField('email_confirm')" class="sort" ng-class="{sortedAsc: sort.field == 'email_confirm' && sort.asc, sortedDesc: sort.field == 'email_confirm' && !sort.asc}">
+						cofirm.
+					</span>
+				</div>
 				<div class="div-cell divh derCon">
 					<span ng-click="sortField('lastConnexion')" class="sort" ng-class="{sortedAsc: sort.field == 'lastConnexion' && sort.asc, sortedDesc: sort.field == 'lastConnexion' && !sort.asc}">
 						Dernière connexion
@@ -104,6 +109,10 @@
 				</div>
 				<div class="div-cell">
 					{{u.email}}
+				</div>
+				<div class="div-cell">
+					<md-switch ng-class="{'md-primary': !(curUser.level >= u.level && curUser.level !== 0)}" ng-disabled="curUser.level >= u.level && curUser.level !== 0" ng-model="u.email_confirm" ng-change="confirmEmail(u, u.email_confirm)" aria-label="actif">
+					</md-switch>
 				</div>
 				<div class="div-cell">
 					{{u.lastConnexion | date:'dd/MM/yyyy HH:mm:ss'}}

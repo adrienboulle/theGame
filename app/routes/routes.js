@@ -74,6 +74,7 @@ module.exports = function(app, passport, role) {
 			if (user) {
 				if (user.actif) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
+				user.email_confirm = true;
 				user.token = null;
 				user.save();
 				return res.sendStatus(200);
@@ -195,6 +196,33 @@ module.exports = function(app, passport, role) {
 					for (var i = 0; i < users.length; i++) {
 						var user = users[i];
 						user.actif = req.body.actif;
+						user.save(function(err) {
+							if (err) {
+								res.sendStatus(500);
+							} else {
+								res.sendStatus(200);
+							}
+						});
+					}
+				}
+			})
+	});
+
+	// active/desactive des utilisateurs
+	app.post('/api/users/confirmemail', 
+
+		// middlewares
+		role.want('confirm email'), 
+		role.levelDelta(-1, {field:'ids', isArray:true}), 
+
+		function(req, res) {
+			User.find({'_id': { $in: req.body.ids}}, function(err, users) {
+				if (err) {
+					res.sendStatus(500);
+				} else {
+					for (var i = 0; i < users.length; i++) {
+						var user = users[i];
+						user.email_confirm = req.body.confirm;
 						user.save(function(err) {
 							if (err) {
 								res.sendStatus(500);
@@ -342,6 +370,7 @@ module.exports = function(app, passport, role) {
 										username: userData.username,
 										password: hash.toString('base64'),
 										email: userData.email,
+										email_confirm: false,
 										roles: [role.id],
 										actif: false,
 										creation: new Date(),
