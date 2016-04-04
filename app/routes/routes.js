@@ -396,8 +396,10 @@ module.exports = function(app, passport, role) {
 											done(err, user);
 										} else {
 											errors = [];
-											if (err.errors.email) {
-												errors.push("ERRLOG052");
+											if (err.errors) {
+												if (err.errors.email) {
+													errors.push("ERRLOG052");
+												}
 											}
 											done(errors, user);	
 										}
