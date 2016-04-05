@@ -39,6 +39,15 @@
 					p.reject(err.data);
 				})
 				return p.promise;
+			},
+			changePassword: function(userInfo) {
+				var p = $q.defer();
+				$http.post('api/forgot/', userInfo).then(function(rep) {
+					p.resolve(rep.data);
+				}, function(err) {
+					p.reject(err.data);
+				})
+				return p.promise;
 			}
 		}  
   	}

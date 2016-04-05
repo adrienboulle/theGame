@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<div class="row">
-		 	<div class="col-md-12 text-center" ng-show="showForm && !token">
+		 	<div class="col-md-12 text-center" ng-show="showForm && !userInfoChangePassword.token">
 				<!-- motDePasseOubli FORM -->
 				<form name="userFormMotDePasseOubli" novalidate>
 					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
@@ -41,12 +41,77 @@
 					<fieldset>
 				</form>
 			</div>
-			<div class="col-md-12 text-center" ng-show="showForm && token">
+			<div class="col-md-12 text-center" ng-show="showForm && userInfoChangePassword.token">
 				<!-- changePassword FORM -->
-				<form name="userFormMotDePasseOubli" novalidate>
+				<form name="userFormChangePassword" novalidate>
 					<fieldset class="motDePasseOubli fsStyle" ng-class="{focus: true}">
 						<!-- EMAIL -->
 						<h2 class="h2-form">Changer votre mot de passe</h2>
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label>Veuillez rentrer l'adresse E-mail associée à votre compte</label>
+								<div remove-handlers>
+									<input
+										name="email"
+										ng-model="userInfoChangePassword.email" 
+										required
+										ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
+										class="form-control"
+										type="email" 
+										placeholder="Entrer votre adresse mail"
+										ng-keyup="$event.keyCode == 13 && changePassword()" />
+									<md-tooltip md-direction="right" md-visible="userFormChangePassword.email.$error.pattern && !userFormChangePassword.email.$pristine">
+							        	Email invalide
+							        </md-tooltip>
+							    </div>
+							</div>
+						</div>
+						<!-- PASSWORD -->
+						<div class="row">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormChangePassword.password.$invalid && !userFormChangePassword.password.$pristine}">
+								<label>Mot de passe</label>
+								<div remove-handlers>
+									<input 
+										name="password"
+										ng-model="userInfoChangePassword.password" 
+										required
+										class="form-control"
+										ng-minlength="3"
+										type="password" 
+										placeholder="Entrer mot de passe" 
+										ng-keyup="$event.keyCode == 13 && changePassword()" />
+									<md-tooltip md-direction="right" md-visible="userFormChangePassword.password.$error.required && !userFormChangePassword.password.$pristine">
+							          	Mot de passe requis
+							        </md-tooltip>
+							        <md-tooltip md-direction="right" md-visible="userFormChangePassword.password.$error.minlength && !userFormChangePassword.password.$pristine">
+							          	Mot de passe trop court
+							        </md-tooltip>
+							    </div>
+							</div>
+						</div>
+						<!-- PASSWORD CONFIRMATION -->
+						<div class="row">
+							<div class="form-group col-md-12" ng-class="{'has-error': userFormChangePassword.passwordConfirmation.$invalid && !userFormChangePassword.password.$error && !userFormChangePassword.passwordConfirmation.$pristine}">
+								<label>Confirmation du mot de passe</label>
+								<div remove-handlers>
+									<input 
+										name="passwordConfirmation"
+										ng-model="userInfoChangePassword.passwordConfirmation" 
+										required
+										match="password"
+										class="form-control"
+										type="password" 
+										placeholder="Confirmer mot de passe" 
+										ng-keyup="$event.keyCode == 13 && changePassword()" />
+									<md-tooltip md-direction="right" md-visible="userFormChangePassword.passwordConfirmation.$error.required && !userFormChangePassword.passwordConfirmation.$pristine">
+							          	Veuillez confirmer votre mot de passe
+							        </md-tooltip>
+							        <md-tooltip md-direction="right" md-visible="userFormChangePassword.passwordConfirmation.$error.match && !userFormChangePassword.password.$invalid && !userFormChangePassword.passwordConfirmation.$pristine">
+							          	Les mots de passes sont différents
+							        </md-tooltip>
+							    </div>
+							</div>
+						</div>
 						<div class="row">
 							<div class="form-group col-md-12 text-center error">
 								<span>{{erreur}}</span>
@@ -56,13 +121,13 @@
 							<button 
 								type="submit" 
 								class="btn btn-primary" 
-								ng-click="motDePasseOubli()">Changer mot de passe
+								ng-click="changePassword()">Changer mot de passe
 							</button>
 						</div>
 					<fieldset>
 				</form>
 			</div>
-			<div class="col-md-12 text-center" ng-show="!showForm && !token">
+			<div class="col-md-12 text-center" ng-show="!showForm && !userInfoChangePassword.token">
 				<span>Veuillez vérifier vos emails pour réinitialiser votre mot de passe</span>
 			</div>
 		</div>

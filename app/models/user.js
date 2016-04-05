@@ -7,13 +7,14 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	username: {type: String, unique: true},
 	password: String,
+	password_token: {type: String, unique: true},
 	email: {type: String, unique: true},
 	email_confirm: Boolean,
+	email_token: {type: String, unique: true},
 	actif: Boolean,
 	roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
 	creation: Date,
-	lastConnexion: Date,
-	token: String
+	lastConnexion: Date
 });
 
 UserSchema.path('email').validate(function(email) {
@@ -26,7 +27,7 @@ UserSchema.methods.verifyCredentials = function(password, callback) {
 	if (!this.actif) return callback("ERLOG401", false);
 	if (!this.email_confirm) return callback("ERVAL009", false);
 	var combined = new Buffer(this.password, 'base64');
-	crypto.verifyPassword(password, combined, function(err, loggedIn) {
+	crypto.verify(password, combined, function(err, loggedIn) {
 		if (!err && !loggedIn) {
 			err = "ERLOG403";
 		}

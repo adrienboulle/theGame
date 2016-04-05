@@ -35,7 +35,7 @@ module.exports = function(app, passport, role) {
 		res.sendStatus(200);
 	});
 
-	// sign up
+	// sign up ==============================================================
 
 	app.post('/api/signup', function(req, res) {
 		var user = {
@@ -67,7 +67,7 @@ module.exports = function(app, passport, role) {
 	});
 
 	app.get('/api/signup/valid/:token', function(req, res) {
-		User.findOne({token:req.params.token}, function(err, user) {
+		User.findOne({email_token:req.params.token}, function(err, user) {
 			if (err) {
 				return res.status(500).send("ERRVAL500");
 			}
@@ -75,7 +75,7 @@ module.exports = function(app, passport, role) {
 				if (user.actif) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
 				user.email_confirm = true;
-				user.token = null;
+				user.email_token = null;
 				user.save();
 				return res.sendStatus(200);
 			} else {
@@ -85,8 +85,8 @@ module.exports = function(app, passport, role) {
 		})
 	});
 
-	//Change Password
-
+	// Change Password =======================================================
+	
 	app.get('/api/forgot/email/:email', function(req, res) {
 		motDePasseOubli(req.params.email, function(err) {
 			if (err) {
@@ -360,21 +360,21 @@ module.exports = function(app, passport, role) {
 				if (user) {
 					done("ERRLOG403");
 				} else {
-					crypto.hashPassword(userData.password, function(err, hash) {
+					crypto.hash(userData.password, function(err, hash) {
 						if (err) {
 							callback(err);
 						} else {
 							Role.findOne({alias:'ROLE_USER'}, function(err, role) {
-								crypto.generateToken(32, function(err, token){
+								crypto.generateToken(8, function(err, token){
 									var user = new User({
 										username: userData.username,
 										password: hash.toString('base64'),
 										email: userData.email,
 										email_confirm: false,
+										email_token: token,
 										roles: [role.id],
 										actif: false,
-										creation: new Date(),
-										token: token
+										creation: new Date()
 									});
 									user.save(function(err, user) {
 										if (!err) {
@@ -424,23 +424,26 @@ module.exports = function(app, passport, role) {
 			} else if (user.actif === false) {
 				done("ERRLOG401");
 			} else {
-				crypto.generateToken(32, function(err, token){
-					user.token = token;
-					user.save();
-					var appUrl = "http://" + config.host;
-					appUrl += (config.port.length != 0) ? ":" + config.port : ""; 
-					var mail = {
-						from: '"The Game" <the@game.com>',
-						to: email,
-						subject: 'Changer mot de passe',
-						html: '<b><a href="' + appUrl + '/login/forgot/' + token + '">Changer mot de passe</a></b>'
-					}
-					mailUtils.sendMail(mail, function(err, info) {
-						if (err) {
-							// todo si pb mail
+				crypto.generateToken(8, function(err, token){
+					crypto.hash(token, function(err, hash) {
+						console.log(token);
+						user.password_token = hash.toString('base64');
+						user.save();
+						var appUrl = "http://" + config.host;
+						appUrl += (config.port.length != 0) ? ":" + config.port : ""; 
+						var mail = {
+							from: '"The Game" <the@game.com>',
+							to: email,
+							subject: 'Changer mot de passe',
+							html: '<b><a href="' + appUrl + '/login/forgot/' + email + '/' + token + '">Changer mot de passe</a></b>'
 						}
-					});
-					done(err);
+						mailUtils.sendMail(mail, function(err, info) {
+							if (err) {
+								// todo si pb mail
+							}
+						});
+						done(err);
+					})
 				});
 			}
 		});
@@ -448,20 +451,29 @@ module.exports = function(app, passport, role) {
 
 	function changePassword(userData, done) {
 		if (userData.passwordConfirmation === userData.password) {
-			User.findOne({token: userData.token}, function(err, user) {
+			User.findOne({email: userData.email}, function(err, user) {
+				if (err) {
+					done("ERR99");
+				}
 				if (!user) {
 					done("ERRTOK404");
-				} else {
-					crypto.hashPassword(userData.password, function(err, hash) {
+				}
+				var combined = new Buffer(user.password_token, 'base64');
+				crypto.verify(userData.token, combined, function(err, tokenOk) {
+					if (!err && !tokenOk) {
+						err = "ERRTOK403";
+					}
+					crypto.hash(userData.password, function(err, hash) {
 						if (err) {
-							callback(err);
+							done("ERRMP500");
 						} else {
 							user.password = hash.toString('base64');
-							user.token = null;
+							user.password_token = null;
 							user.save();
 						};
 					})
-				}
+					return done();
+				})
 			})
 		} else if (userData.passwordConfirmation != userData.password){
 			done("Les mot de passes ne sont pas identiques");

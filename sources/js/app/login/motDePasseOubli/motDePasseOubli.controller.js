@@ -18,7 +18,12 @@
 		
 		$scope.showForm = true;
 
-		$scope.token = $stateParams.token;
+		if ($stateParams.token && $stateParams.email) {
+			$scope.userInfoChangePassword = {
+				email: $stateParams.email,
+				token: $stateParams.token
+			}
+		}
 
 		$scope.motDePasseOubli = function() {
 			LoginService.motDePasseOubli($scope.userInfoMotDePasseOubli.email).then(function(data) {
@@ -29,6 +34,14 @@
 				} else if (data.indexOf('ERRMAIL404') != -1) {
 					$scope.erreurLogin = 'Email inexistant';
 				}
+			})
+		}
+
+		$scope.changePassword = function() {
+			LoginService.changePassword($scope.userInfoChangePassword).then(function(data) {
+				// todo
+			}, function(data) {
+				// todo
 			})
 		}
 	}
