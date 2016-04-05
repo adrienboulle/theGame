@@ -39,9 +39,19 @@
 
 		$scope.changePassword = function() {
 			LoginService.changePassword($scope.userInfoChangePassword).then(function(data) {
-				// todo
+				$scope.showForm = false;
 			}, function(data) {
-				// todo
+				if (data.indexOf('ERR99') != -1) {
+					$scope.erreurMdpOubli = 'Une erreur s\'est produite';
+				} else if (data.indexOf('ERRMAIL404') != -1) {
+					$scope.erreurMdpOubli = 'Email inexistant';
+				} else if (data.indexOf('ERRTOK400') != -1) {
+					$scope.erreurMdpOubli = 'Le mot de passe a déjà été changé, veuillez vous loguer ou recommencer';
+				} else if (data.indexOf('ERRLOG401') != -1) {
+					$scope.erreurMdpOubli = 'Votre compte a été désactivé, mot de passe inchangeable';
+				} else if (data.indexOf('ERRTOK403') != -1) {
+					$scope.erreurMdpOubli = 'Une erreur s\'est produite';
+				}
 			})
 		}
 	}

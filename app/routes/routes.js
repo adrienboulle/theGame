@@ -426,7 +426,6 @@ module.exports = function(app, passport, role) {
 			} else {
 				crypto.generateToken(8, function(err, token){
 					crypto.hash(token, function(err, hash) {
-						console.log(token);
 						user.password_token = hash.toString('base64');
 						user.save();
 						var appUrl = "http://" + config.host;
@@ -453,19 +452,22 @@ module.exports = function(app, passport, role) {
 		if (userData.passwordConfirmation === userData.password) {
 			User.findOne({email: userData.email}, function(err, user) {
 				if (err) {
-					done("ERR99");
+					return done("ERR99");
 				}
 				if (!user) {
-					done("ERRTOK404");
+					return done("ERRMAIL404");
+				}
+				if (user.password_token === null) {
+					return done("ERRTOK400");	
 				}
 				var combined = new Buffer(user.password_token, 'base64');
 				crypto.verify(userData.token, combined, function(err, tokenOk) {
 					if (!err && !tokenOk) {
-						err = "ERRTOK403";
+						return done("ERRTOK403");
 					}
 					crypto.hash(userData.password, function(err, hash) {
 						if (err) {
-							done("ERRMP500");
+							return done("ERRMP500");
 						} else {
 							user.password = hash.toString('base64');
 							user.password_token = null;
