@@ -22,6 +22,8 @@
 				$state.go('site.login');
 			} else if (data.indexOf('ERRVAL404') != -1) {
 				$scope.error = 'Aucun compte associé';
+			} else if (data.indexOf('ERRVAL403') != -1) {
+				$scope.error = 'Votre compte a été désactivé';
 			}
 			$scope.validation = false;
 			$scope.ok = false;

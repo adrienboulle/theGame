@@ -72,8 +72,9 @@ module.exports = function(app, passport, role) {
 				return res.status(500).send("ERRVAL500");
 			}
 			if (user) {
-				if (user.email_confirm === true) return res.status(400).send("ERRVAL400"); 
-				user.actif = true;
+				if (user.email_confirm === true) return res.status(400).send("ERRVAL400");
+				if (user.actif === false) return res.status(403).send("ERRVAL403"); 
+
 				user.email_confirm = true;
 				user.email_token = undefined;
 				user.save(function(err) {
@@ -386,7 +387,7 @@ module.exports = function(app, passport, role) {
 										email_confirm: false,
 										email_token: token,
 										roles: [role.id],
-										actif: false,
+										actif: true,
 										creation: new Date()
 									});
 									user.save(function(err, user) {

@@ -32,7 +32,7 @@ function addUser(line, done) {
 			email_token: token,
     		email_confirm: false,
 			roles: [userRole.id],
-			actif: false,
+			actif: true,
 			creation: new Date()
 		});
 		user.save(function(err, user) {
