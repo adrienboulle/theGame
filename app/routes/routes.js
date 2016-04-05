@@ -75,9 +75,14 @@ module.exports = function(app, passport, role) {
 				if (user.actif) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
 				user.email_confirm = true;
-				user.email_token = null;
-				user.save();
-				return res.sendStatus(200);
+				user.email_token = undefined;
+				user.save(function(err) {
+					if (err) {
+						return res.status(500).send("ERRVAL500");
+					} else {
+						return res.sendStatus(200);
+					}
+				});
 			} else {
 				return res.status(404).send("ERRVAL404");
 			}
@@ -457,7 +462,7 @@ module.exports = function(app, passport, role) {
 				if (!user) {
 					return done("ERRMAIL404");
 				}
-				if (user.password_token === null) {
+				if (!user.password_token) {
 					return done("ERRTOK400");	
 				}
 				var combined = new Buffer(user.password_token, 'base64');
@@ -470,7 +475,7 @@ module.exports = function(app, passport, role) {
 							return done("ERRMP500");
 						} else {
 							user.password = hash.toString('base64');
-							user.password_token = null;
+							user.password_token = undefined;
 							user.save();
 						};
 					})

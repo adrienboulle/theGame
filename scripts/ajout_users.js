@@ -21,21 +21,22 @@ var parser = parse({delimiter: ','}, function (err, data) {
 Role.findOne({alias:'ROLE_USER'}, function(err, role) {
 	userRole = role;
 	fs.createReadStream(inputFile).pipe(parser);
-	console.log('done');
 })
 
 function addUser(line, done) {
-	var user = new User({
-		username: line[0],
-		password: "AAAAEAANUVfpJA37BWxObpIE7Hn8W2/DTaVyR9cYFx5zFE7ZQFqe55PkkSP5CUr46RgmGqyeCz4=",
-		email: line[0].toLowerCase() + '@yopmail.com',
-		email_token: "cf62aad7d98b11a8",
-		email_confirm: false
-		roles: [userRole.id],
-		actif: false,
-		creation: new Date()
-	});
-	user.save(function(err, user) {
-		done();
-	});
+	crypto.generateToken(8, function(err, token){
+		var user = new User({
+			username: line[0] + token.substring(0, 8),
+			password: "AAAAEAANUVfpJA37BWxObpIE7Hn8W2/DTaVyR9cYFx5zFE7ZQFqe55PkkSP5CUr46RgmGqyeCz4=",
+			email: line[0].toLowerCase() + token.substring(0, 4) + '@yopmail.com',
+			email_token: token,
+    		email_confirm: false,
+			roles: [userRole.id],
+			actif: false,
+			creation: new Date()
+		});
+		user.save(function(err, user) {
+			done();
+		});
+	})
 }
