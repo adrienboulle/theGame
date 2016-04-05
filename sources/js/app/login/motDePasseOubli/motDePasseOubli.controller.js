@@ -30,9 +30,9 @@
 				$scope.showForm = false;
 			}, function(data) {
 				if (data.indexOf('ERRLOG401') != -1) {
-					$scope.erreurLogin = 'Votre compte a été désactivé, mot de passe inchangeable';
+					$scope.erreurMdpOubli = 'Votre compte a été désactivé, mot de passe inchangeable';
 				} else if (data.indexOf('ERRMAIL404') != -1) {
-					$scope.erreurLogin = 'Email inexistant';
+					$scope.erreurMdpOubli = 'Email inexistant';
 				}
 			})
 		}

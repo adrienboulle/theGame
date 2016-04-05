@@ -20,6 +20,10 @@ fieldset.fsStyle.motDePasseOubli {
     height: 220px;
 }
 
+fieldset.fsStyle.motDePasseChange {
+    height: 365px;
+}
+
 fieldset.fsStyle.login,
 fieldset.fsStyle.signup {
     height: 408px;
