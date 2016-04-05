@@ -25,18 +25,17 @@ Role.findOne({alias:'ROLE_USER'}, function(err, role) {
 })
 
 function addUser(line, done) {
-	crypto.generateToken(32, function(err, token){
-		var user = new User({
-			username: line[0],
-			password: "AAAAEAANUVfpJA37BWxObpIE7Hn8W2/DTaVyR9cYFx5zFE7ZQFqe55PkkSP5CUr46RgmGqyeCz4=",
-			email: line[0].toLowerCase() + '@yopmail.com',
-			roles: [userRole.id],
-			actif: false,
-			creation: new Date(),
-			token: token
-		});
-		user.save(function(err, user) {
-			done();
-		});
-	})
+	var user = new User({
+		username: line[0],
+		password: "AAAAEAANUVfpJA37BWxObpIE7Hn8W2/DTaVyR9cYFx5zFE7ZQFqe55PkkSP5CUr46RgmGqyeCz4=",
+		email: line[0].toLowerCase() + '@yopmail.com',
+		email_token: "cf62aad7d98b11a8",
+		email_confirm: false
+		roles: [userRole.id],
+		actif: false,
+		creation: new Date()
+	});
+	user.save(function(err, user) {
+		done();
+	});
 }
