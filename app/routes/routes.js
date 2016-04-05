@@ -72,7 +72,7 @@ module.exports = function(app, passport, role) {
 				return res.status(500).send("ERRVAL500");
 			}
 			if (user) {
-				if (user.actif) return res.status(400).send("ERRVAL400"); 
+				if (user.email_confirm === true) return res.status(400).send("ERRVAL400"); 
 				user.actif = true;
 				user.email_confirm = true;
 				user.email_token = undefined;
@@ -223,16 +223,24 @@ module.exports = function(app, passport, role) {
 		function(req, res) {
 			User.find({'_id': { $in: req.body.ids}}, function(err, users) {
 				if (err) {
-					res.sendStatus(500);
+					return res.sendStatus(500);
 				} else {
 					for (var i = 0; i < users.length; i++) {
 						var user = users[i];
-						user.email_confirm = req.body.confirm;
+						if (req.body.confirm === true) {
+							user.email_confirm = true;
+							user.email_token = undefined;
+						} else if (req.body.confirm === false) {
+							user.email_confirm = false;
+							user.email_token = undefined;
+						} else {
+							return res.sendStatus(500);	
+						}
 						user.save(function(err) {
 							if (err) {
-								res.sendStatus(500);
+								return res.sendStatus(500);
 							} else {
-								res.sendStatus(200);
+								return res.sendStatus(200);
 							}
 						});
 					}
