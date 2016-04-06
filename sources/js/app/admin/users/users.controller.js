@@ -16,9 +16,6 @@
 		])
 		.filter('notIn', [
 			notInFilter
-		])
-		.filter('hasRoleSelected', [
-			hasRoleSelected
 		]);
 
 	function usersController($scope, $state, $timeout,  LoginService, SignupService, UsersService, UserService, RolesService, user) {
