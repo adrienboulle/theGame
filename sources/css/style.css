@@ -6,6 +6,15 @@ html, body {
 	margin-top: 10px;
 }
 
+.login-container {
+	width: 600px;
+	float: right;
+}
+
+.logo-container {
+	display: inline-block;
+}
+
 md-tooltip .md-content {
 	background-color: #A94442 !important;
 	font-size: 13px !important;

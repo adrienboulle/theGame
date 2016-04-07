@@ -1,187 +1,192 @@
 <div class="row">
-	<div class="col-md-6 col-md-offset-3">
-		<div class="row"> 
-		 	<div class="col-md-6">
-		 		<!-- SIGNIN FORM -->
-		 		<form name="userFormSignin" novalidate>
-		 			<fieldset class="login fsStyle" ng-class="{focus: signinFocus}">
-						<h2 class="h2-form">S'identifier</h2>
-						<div class="row">
-							<div class="form-group col-md-12">
-								<label>Nom d'utilisateur</label>
-								<input 
-									ng-focus="signinFocus = true; signupFocus = false"
-									name="username"
-									ng-model="userInfoSignin.username" 
-									class="form-control"
-									type="text" 
-									placeholder="Entrer nom d'utilisateur" 
-									ng-keyup="$event.keyCode == 13 && login()" />
-							</div>
-						</div>	
-						<div class="row">
-							<div class="form-group col-md-12">
-								<label>Mot de passe</label>
-								<input 
-									ng-focus="signinFocus = true; signupFocus = false"
-									name="password"
-									ng-model="userInfoSignin.password"
-									class="form-control"
-									type="password" 
-									placeholder="Entrer mot de passe" 
-									ng-keyup="$event.keyCode == 13 && login()" />
-								<p class="text-right motDePasseOubli"><a ui-sref="site.login.motDePasseOubli">Mot de passe oublié ?</a></p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-md-12 checkbox-inline">
-								<input 
-									ng-focus="signinFocus = true; signupFocus = false"
-									type="checkbox"/>
-								<label>Rester connecté</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-md-12 text-center error">
-								<span>{{erreurLogin}}</span>
-							</div>
-						</div>
-						<div class="row button text-center"> 
-							<div class="col-md-12"> 
-								<button 
-									ng-focus="signinFocus = true; signupFocus = false"
-									type="submit" 
-									class="btn btn-primary" 
-									ng-click="login()">Se connecter
-								</button>
-							<div>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div class="col-md-6">
-				<!-- SIGNUP FORM -->
-				<form name="userFormSignup" novalidate>
-					<fieldset class="signup fsStyle" ng-class="{focus: signupFocus}">
-						<h2 class="h2-form">S'enregistrer</h2>
-						<!-- USERNAME -->
-						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine && signupFocus}">
-								<label>Nom d'utilisateur</label>
-								<div remove-handlers>
-									<input
-										unique="username"
-										ng-focus="signupFocus = true; signinFocus = false"
-										name="username"
-										ng-model="userInfoSignup.username" 
-										required
-										class="form-control"
-										ng-minlength="3"
-										ng-maxlength="15"
-										type="text" 
-										placeholder="Entrer nom d'utilisateur"
-										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine && signupFocus">
-							          	Nom d'utilisateur requis
-							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.uniqueUsername && !userFormSignup.username.$pristine && signupFocus">
-							          	Ce nom d'utilisateur est déjà pris
-							        </md-tooltip>
-							      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine && signupFocus">
-							          	Nom d'utilisateur trop court
-							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine && signupFocus">
-							          	Nom d'utilisateur trop long
-							        </md-tooltip>
-							    </div>
-							</div>
-						</div>
-						<!-- EMAIL -->
-						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.email.$invalid && !userFormSignup.email.$pristine && signupFocus}">
-								<label>Email</label>
-								<div remove-handlers>
-									<input
-										unique="email"
-										ng-focus="signupFocus = true; signinFocus = false"
-										name="email"
-										ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
-										ng-model="userInfoSignup.email" 
-										required
-										class="form-control"
-										type="email" 
-										placeholder="Entrer votre email"
-										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.required && !userFormSignup.email.$pristine && signupFocus">
-							          	Email requis
-							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.uniqueEmail && !userFormSignup.email.$pristine && signupFocus">
-							          	Cet email est déjà pris
-							        </md-tooltip>
-							      	<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.pattern && !userFormSignup.email.$pristine && signupFocus">
-							          	Email invalide
-							        </md-tooltip>
-							    </div>
-							</div>
-						</div>
-						<!-- PASSWORD -->
-						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine && signupFocus}">
-								<label>Mot de passe</label>
-								<div remove-handlers>
+	<div class="col-md-12">
+		<div class="row">
+			<div class="logo-container">
+				<img src="/img/logo.png">
+			</div>	
+			<div class="login-container">
+				<div class="col-md-6">
+			 		<!-- SIGNIN FORM -->
+			 		<form name="userFormSignin" novalidate>
+			 			<fieldset class="login fsStyle" ng-class="{focus: signinFocus}">
+							<h2 class="h2-form">S'identifier</h2>
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label>Nom d'utilisateur</label>
 									<input 
-										ng-focus="signupFocus = true; signinFocus = false"
-										name="password"
-										ng-model="userInfoSignup.password" 
-										required
+										ng-focus="signinFocus = true; signupFocus = false"
+										name="username"
+										ng-model="userInfoSignin.username" 
 										class="form-control"
-										ng-minlength="3"
+										type="text" 
+										placeholder="Entrer nom d'utilisateur" 
+										ng-keyup="$event.keyCode == 13 && login()" />
+								</div>
+							</div>	
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label>Mot de passe</label>
+									<input 
+										ng-focus="signinFocus = true; signupFocus = false"
+										name="password"
+										ng-model="userInfoSignin.password"
+										class="form-control"
 										type="password" 
 										placeholder="Entrer mot de passe" 
-										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.required && !userFormSignup.password.$pristine && signupFocus">
-							          	Mot de passe requis
-							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.minlength && !userFormSignup.password.$pristine && signupFocus">
-							          	Mot de passe trop court
-							        </md-tooltip>
-							    </div>
+										ng-keyup="$event.keyCode == 13 && login()" />
+									<p class="text-right motDePasseOubli"><a ui-sref="site.login.motDePasseOubli">Mot de passe oublié ?</a></p>
+								</div>
 							</div>
-						</div>
-						<!-- PASSWORD CONFIRMATION -->
-						<div class="row">
-							<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine && signupFocus}">
-								<label>Confirmation du mot de passe</label>
-								<div remove-handlers>
+							<div class="row">
+								<div class="form-group col-md-12 checkbox-inline">
 									<input 
-										ng-focus="signupFocus = true; signinFocus = false"
-										name="passwordConfirmation"
-										ng-model="userInfoSignup.passwordConfirmation" 
-										required
-										match="password"
-										class="form-control"
-										type="password" 
-										placeholder="Confirmer mot de passe" 
-										ng-keyup="$event.keyCode == 13 && signup()" />
-									<md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.required && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
-							          	Veuillez confirmer votre mot de passe
-							        </md-tooltip>
-							        <md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.match && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
-							          	Les mots de passes sont différents
-							        </md-tooltip>
-							    </div>
+										ng-focus="signinFocus = true; signupFocus = false"
+										type="checkbox"/>
+									<label>Rester connecté</label>
+								</div>
 							</div>
-						</div>
-						<div class="row button text-center">
-							<button 
-								ng-focus="signupFocus = true; signinFocus = false"
-								type="submit" 
-								class="btn btn-primary" 
-								ng-click="signup()">S'enregistrer
-							</button>
-						</div>
-					<fieldset>
-				</form>
+							<div class="row">
+								<div class="form-group col-md-12 text-center error">
+									<span>{{erreurLogin}}</span>
+								</div>
+							</div>
+							<div class="row button text-center"> 
+								<div class="col-md-12"> 
+									<button 
+										ng-focus="signinFocus = true; signupFocus = false"
+										type="submit" 
+										class="btn btn-primary" 
+										ng-click="login()">Se connecter
+									</button>
+								<div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="col-md-6">
+					<!-- SIGNUP FORM -->
+					<form name="userFormSignup" novalidate>
+						<fieldset class="signup fsStyle" ng-class="{focus: signupFocus}">
+							<h2 class="h2-form">S'enregistrer</h2>
+							<!-- USERNAME -->
+							<div class="row">
+								<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.username.$invalid && !userFormSignup.username.$pristine && signupFocus}">
+									<label>Nom d'utilisateur</label>
+									<div remove-handlers>
+										<input
+											unique="username"
+											ng-focus="signupFocus = true; signinFocus = false"
+											name="username"
+											ng-model="userInfoSignup.username" 
+											required
+											class="form-control"
+											ng-minlength="3"
+											ng-maxlength="15"
+											type="text" 
+											placeholder="Entrer nom d'utilisateur"
+											ng-keyup="$event.keyCode == 13 && signup()" />
+										<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.required && !userFormSignup.username.$pristine && signupFocus">
+								          	Nom d'utilisateur requis
+								        </md-tooltip>
+								        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.uniqueUsername && !userFormSignup.username.$pristine && signupFocus">
+								          	Ce nom d'utilisateur est déjà pris
+								        </md-tooltip>
+								      	<md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.minlength && !userFormSignup.username.$pristine && signupFocus">
+								          	Nom d'utilisateur trop court
+								        </md-tooltip>
+								        <md-tooltip md-direction="right" md-visible="userFormSignup.username.$error.maxlength && !userFormSignup.username.$pristine && signupFocus">
+								          	Nom d'utilisateur trop long
+								        </md-tooltip>
+								    </div>
+								</div>
+							</div>
+							<!-- EMAIL -->
+							<div class="row">
+								<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.email.$invalid && !userFormSignup.email.$pristine && signupFocus}">
+									<label>Email</label>
+									<div remove-handlers>
+										<input
+											unique="email"
+											ng-focus="signupFocus = true; signinFocus = false"
+											name="email"
+											ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/"
+											ng-model="userInfoSignup.email" 
+											required
+											class="form-control"
+											type="email" 
+											placeholder="Entrer votre email"
+											ng-keyup="$event.keyCode == 13 && signup()" />
+										<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.required && !userFormSignup.email.$pristine && signupFocus">
+								          	Email requis
+								        </md-tooltip>
+								        <md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.uniqueEmail && !userFormSignup.email.$pristine && signupFocus">
+								          	Cet email est déjà pris
+								        </md-tooltip>
+								      	<md-tooltip md-direction="right" md-visible="userFormSignup.email.$error.pattern && !userFormSignup.email.$pristine && signupFocus">
+								          	Email invalide
+								        </md-tooltip>
+								    </div>
+								</div>
+							</div>
+							<!-- PASSWORD -->
+							<div class="row">
+								<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.password.$invalid && !userFormSignup.password.$pristine && signupFocus}">
+									<label>Mot de passe</label>
+									<div remove-handlers>
+										<input 
+											ng-focus="signupFocus = true; signinFocus = false"
+											name="password"
+											ng-model="userInfoSignup.password" 
+											required
+											class="form-control"
+											ng-minlength="3"
+											type="password" 
+											placeholder="Entrer mot de passe" 
+											ng-keyup="$event.keyCode == 13 && signup()" />
+										<md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.required && !userFormSignup.password.$pristine && signupFocus">
+								          	Mot de passe requis
+								        </md-tooltip>
+								        <md-tooltip md-direction="right" md-visible="userFormSignup.password.$error.minlength && !userFormSignup.password.$pristine && signupFocus">
+								          	Mot de passe trop court
+								        </md-tooltip>
+								    </div>
+								</div>
+							</div>
+							<!-- PASSWORD CONFIRMATION -->
+							<div class="row">
+								<div class="form-group col-md-12" ng-class="{'has-error': userFormSignup.passwordConfirmation.$invalid && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine && signupFocus}">
+									<label>Confirmation du mot de passe</label>
+									<div remove-handlers>
+										<input 
+											ng-focus="signupFocus = true; signinFocus = false"
+											name="passwordConfirmation"
+											ng-model="userInfoSignup.passwordConfirmation" 
+											required
+											match="password"
+											class="form-control"
+											type="password" 
+											placeholder="Confirmer mot de passe" 
+											ng-keyup="$event.keyCode == 13 && signup()" />
+										<md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.required && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
+								          	Veuillez confirmer votre mot de passe
+								        </md-tooltip>
+								        <md-tooltip md-direction="right" md-visible="userFormSignup.passwordConfirmation.$error.match && !userFormSignup.password.$invalid && !userFormSignup.passwordConfirmation.$pristine && signupFocus">
+								          	Les mots de passes sont différents
+								        </md-tooltip>
+								    </div>
+								</div>
+							</div>
+							<div class="row button text-center">
+								<button 
+									ng-focus="signupFocus = true; signinFocus = false"
+									type="submit" 
+									class="btn btn-primary" 
+									ng-click="signup()">S'enregistrer
+								</button>
+							</div>
+						<fieldset>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
