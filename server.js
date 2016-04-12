@@ -2,6 +2,7 @@
 
 var express 		= require('express'),
 	app 			= express(),
+	http 			= require('http'),
 	port 			= process.env.PORT || 8085,
 	mongoose 		= require('mongoose'),
 	passport 		= require('passport'),
@@ -38,8 +39,17 @@ require('./app/routes/routes.js')(app, passport, role);
 require('./config/passport.js')(passport);
 
 // launch ====================================================================
+app.server = http.createServer(app);
 app.listen(port, function() {
 	console.log('http://localhost:' + port)
+});
+
+// chat ====================================================================
+require('./app/utils/chat/index.js')(app);
+
+// tout le reste
+app.all('/*', function(req, res) {
+	res.sendFile('/public/index.html', { root: process.env.NODE_PATH });
 });
 
 exports.app = app;

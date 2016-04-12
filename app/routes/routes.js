@@ -345,11 +345,6 @@ module.exports = function(app, passport, role) {
 				})
 	});
 
-	// tout le reste
-	app.all('/*', function(req, res) {
-		res.sendFile('/public/index.html', { root: process.env.NODE_PATH });
-	});
-
 	function verifyCredentials(username, password, done) {
 		User.findOne({username: username}, function(err, user) {
 			if (!err && user) {
