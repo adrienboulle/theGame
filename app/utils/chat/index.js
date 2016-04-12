@@ -5,6 +5,21 @@ module.exports = function(app) {
 	var io = require('socket.io')(app.server);
 	
 	app.get('/chat', function (req, res) {
-  		res.sendfile(__dirname + '/index.html');
+  		res.sendFile(__dirname + '/index.html');
 	});
+
+	app.get('/chat/chat.js', function (req, res) {
+  		res.sendFile(__dirname + '/chat.js');
+	});
+
+	io.sockets.on('connection', function(socket) {
+
+		console.log("New user");
+
+		socket.on('newMsg', function(msg) {
+			io.sockets.emit('newMsg', msg);
+		})
+	
+	})
+
 }

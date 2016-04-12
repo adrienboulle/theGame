@@ -31,23 +31,26 @@ app.use(expressSession({
 app.use(passport.initialize());
 app.use(passport.session());	
 
-// roles ====================================================================
+// roles =====================================================================
 require('./config/role.js')(role);
 
 // routes ====================================================================
 require('./app/routes/routes.js')(app, passport, role);
 require('./config/passport.js')(passport);
 
-// launch ====================================================================
+// create server =============================================================
 app.server = http.createServer(app);
-app.listen(port, function() {
+
+// chat ======================================================================
+require('./app/utils/chat/index.js')(app);
+
+// launch ====================================================================
+app.server.listen(port, function() {
 	console.log('http://localhost:' + port)
 });
 
-// chat ====================================================================
-require('./app/utils/chat/index.js')(app);
 
-// tout le reste
+// tout le reste =============================================================
 app.all('/*', function(req, res) {
 	res.sendFile('/public/index.html', { root: process.env.NODE_PATH });
 });
