@@ -1,0 +1,22 @@
+.rooms {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 20px;
+}
+
+.room {
+	position: relative;
+	border-style: solid;
+	height: 350px;
+	width: 300px;
+	padding: 10px;
+	background-color: lightgrey;
+}
+
+.input {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+}

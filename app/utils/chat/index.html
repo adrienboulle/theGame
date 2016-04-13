@@ -2,27 +2,25 @@
 <html>
     <head>
         <title>Socket.IO chat</title>
-        <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font: 13px Helvetica, Arial; }
-                form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-                form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-                form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-                #messages { list-style-type: none; margin: 0; padding: 0; }
-                #messages li { padding: 5px 10px; }
-                #messages li:nth-child(odd) { background: #eee; }
-        </style>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
-        <script src="chat/chat.js"></script>
+        <link rel="stylesheet" href="chat/index.css"></link>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="chat/chat.js"></script>
     </head>
+
     <body ng-app="Chat" ng-controller="chat">
-        <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
-            <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+        <div class="rooms">
+            <div class="room">
+                <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
+                    <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+                </div>
+                <div class="input">
+                    <form>
+                        <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <form>
-            <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
-        </form>
     </body>
 </html>

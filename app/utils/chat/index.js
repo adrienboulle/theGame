@@ -8,6 +8,10 @@ module.exports = function(app) {
   		res.sendFile(__dirname + '/index.html');
 	});
 
+	app.get('/chat/index.css', function (req, res) {
+  		res.sendFile(__dirname + '/index.css');
+	})
+
 	app.get('/chat/chat.js', function (req, res) {
   		res.sendFile(__dirname + '/chat.js');
 	});
