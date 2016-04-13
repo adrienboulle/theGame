@@ -6,7 +6,7 @@ angular
         
         $scope.msgs = [];
 
-        $scope.socket = io.connect('http://localhost:8085');
+        $scope.socket = io.connect('/');
 
         $scope.socket.on('newMsg', function(msg) {
             $scope.msgs.push(msg);
