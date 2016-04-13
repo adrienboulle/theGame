@@ -15,10 +15,12 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <script src="chat/chat.js"></script>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     </head>
     <body ng-app="Chat" ng-controller="chat">
-        <ul ng-repeat="m in msgs track by $index" id="messages">{{m}}</ul>
+        <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
+            <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+        </div>
         <form>
             <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
         </form>

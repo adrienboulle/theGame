@@ -16,8 +16,10 @@ module.exports = function(app) {
 
 		console.log("New user");
 
-		socket.on('newMsg', function(msg) {
+		socket.on('newMsg', function(msg, callback) {
+			msg.date = new Date();
 			io.sockets.emit('newMsg', msg);
+			callback(null);
 		})
 	
 	})
