@@ -28,25 +28,29 @@
 }
 
 .time {
-	position: absolute;
-	bottom: 3px;
-	right: 3px;
 	color: grey;
 	font-size: 10px;
 }
 
+.receiver {
+	float: left;
+}
+
 .bubble-receiver {
-	width: auto;
-	padding: 2px;
+	padding: 3px;
 	position: relative;
 	border-radius: 5px;
 	background-color: #919BD6;
+	margin-bottom: 5px;
+	display: inline-block;
 }
 
 .bubble-sender {
-	width: auto;
-	padding: 2px;
+	padding: 3px;
 	position: relative;
 	border-radius: 5px;
 	background-color: #91D6AD;
+	margin-bottom: 5px;
+	display: inline-block;
 }
+

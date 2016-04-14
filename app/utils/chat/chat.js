@@ -25,6 +25,7 @@ angular
             }
             self.addMsg = function(msg) {
                 self.msgs.push(msg);
+                $('#' + self.id).mCustomScrollbar('scrollTo', "bottom", {scrollInertia: 100});
             }
         }
 
