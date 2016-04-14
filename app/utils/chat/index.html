@@ -5,15 +5,39 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="chat/index.css"></link>
+        <script src="chat/jquery.js"></script>
+        <script src="chat/mCustomScrollbar.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="chat/mCustomScrollbar.css">
         <script src="chat/chat.js"></script>
+        <script>
+            (function($){
+                $(window).load(function(){
+                    $(".content").mCustomScrollbar();
+                });
+            })(jQuery);
+        </script>
     </head>
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="rooms">
             <div class="room">
-                <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
-                    <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+                <div class="msgs mCustomScrollbar">
+                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
+                        <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+                    </div>
+                </div>
+                <div class="input">
+                    <form>
+                        <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div class="room">
+                <div class="msgs mCustomScrollbar">
+                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
+                        <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+                    </div>
                 </div>
                 <div class="input">
                     <form>

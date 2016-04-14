@@ -2,16 +2,20 @@
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	padding: 20px;
 }
 
 .room {
+	float: left;
 	position: relative;
 	border-style: solid;
 	height: 350px;
 	width: 300px;
-	padding: 10px;
+	margin-left: 10px;
 	background-color: lightgrey;
+}
+
+.room .msgs {
+	height: 300px;
 }
 
 .input {
