@@ -3,7 +3,8 @@
 var User 			= require('../models/user.js'),
 	Role 			= require('../models/role.js'),
 	passportLocal 	= require('passport-local'),
-	mailUtils		= require('../utils/mails.js');
+	mailUtils		= require('../utils/mails.js'),
+	config		    = require('../../config.js'),
 	crypto 			= require('../utils/crypto.js');
 
 module.exports = function(app, passport, role) {
