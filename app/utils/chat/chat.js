@@ -4,9 +4,6 @@ angular
     .module('Chat', []) 
     .controller('chat', function($scope){
         
-        $scope.msgs = [];
-        $scope.sender = Math.floor((Math.random() * 100000) + 1);
-
         $scope.socket = io.connect('/');
 
         $scope.room = function(id) {
@@ -17,7 +14,7 @@ angular
             self.newMsg = '';
             self.sendMsg = function() {
                 if (self.newMsg.length === 0) return;
-                $scope.socket.emit('newMsg', {msg: self.newMsg, sender: $scope.sender, room: self.id}, function(err) {
+                $scope.socket.emit('newMsg', {msg: self.newMsg, room: self.id}, function(err) {
                     if (err) {
 
                     } else {
@@ -31,7 +28,11 @@ angular
             }
         }
 
-        $scope.rooms = [new $scope.room('r1'), new $scope.room('r2')];
+        $scope.rooms = [new $scope.room('r1')];
+
+        $scope.socket.on('connected', function(res) {
+            $scope.sender = res.user;
+        }) 
 
         $scope.socket.on('newMsg', function(msg) {
             for (var i = 0; i < $scope.rooms.length; i++) {

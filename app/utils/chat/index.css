@@ -2,6 +2,7 @@
 	position: absolute;
 	bottom: 0;
 	right: 0;
+	padding: 5px;
 }
 
 .room {
@@ -12,6 +13,7 @@
 	width: 300px;
 	margin-left: 10px;
 	background-color: lightgrey;
+	padding: 5px;
 }
 
 .room .msgs {
@@ -23,4 +25,28 @@
 	bottom: 0;
 	right: 0;
 	padding: 10px;
+}
+
+.time {
+	position: absolute;
+	bottom: 3px;
+	right: 3px;
+	color: grey;
+	font-size: 10px;
+}
+
+.bubble-receiver {
+	width: auto;
+	padding: 2px;
+	position: relative;
+	border-radius: 5px;
+	background-color: #919BD6;
+}
+
+.bubble-sender {
+	width: auto;
+	padding: 2px;
+	position: relative;
+	border-radius: 5px;
+	background-color: #91D6AD;
 }

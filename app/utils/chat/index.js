@@ -42,6 +42,8 @@ module.exports = function(app, redisStore) {
 	io.sockets.on('connection', function(socket) {
 
 		console.log("New user : " + socket.request.user.username);
+		
+		socket.emit('connected', {user: socket.request.user.username});
 
 		socket.on('join', function(options) {
 			if (options.room && canAccesRoom(options.room)) {
@@ -52,7 +54,7 @@ module.exports = function(app, redisStore) {
 		socket.on('newMsg', function(msg, callback) {
 			msg.date = new Date();
 			msg.sender = socket.request.user.username;
-			io.to(msg.room).emit('newMsg', msg);
+			io.to(msg.room).emit('newMsg', msg);			
 			callback(null);
 		})
 	
