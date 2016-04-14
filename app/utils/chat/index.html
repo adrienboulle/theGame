@@ -24,7 +24,7 @@
             <div class="room" ng-repeat="r in rooms">
                 <div class="msgs mCustomScrollbar">
                     <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in r.msgs track by $index" id="messages">
-                        <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
+                        <span>{{m.date | date:'HH:mm'}} <b>{{m.sender}} :</b> {{m.msg}}</span>
                     </div>
                 </div>
                 <div class="input">

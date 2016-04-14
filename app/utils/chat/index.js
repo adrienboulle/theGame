@@ -51,6 +51,7 @@ module.exports = function(app, redisStore) {
 
 		socket.on('newMsg', function(msg, callback) {
 			msg.date = new Date();
+			msg.sender = socket.request.user.username;
 			io.to(msg.room).emit('newMsg', msg);
 			callback(null);
 		})
