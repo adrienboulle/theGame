@@ -7,23 +7,33 @@ var express 		= require('express'),
 	mongoose 		= require('mongoose'),
 	passport 		= require('passport'),
 
+	redis 			= require('redis'),
 	logger 			= require('express-logger'),
 	bodyParser 		= require('body-parser'),
 	cookieParser 	= require('cookie-parser'),
 	expressSession 	= require('express-session'),
-	role 			= require('./app/utils/role/role.js');
+	RedisStore 		= require('connect-redis')(expressSession),
+	role 			= require('./app/utils/role/role.js'),
 
-	config 			= require('./config.js');
+	config 			= require('./config.js'),
 	configDb 		= require('./config/database.js');
 
 // configuration =============================================================
+
+var client = redis.createClient();
+
 mongoose.connect(configDb.url);
 
 app.use(logger({path: __dirname + '/logfile.txt'}));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+var redisStore = new RedisStore();
+
 app.use(expressSession({
+	store: redisStore,
+	key: process.env.SESSION_KEY || 'key',
 	secret: process.env.SESSION_SECRET || 'secret',
 	resave: false,
 	saveUninitialized: false
@@ -42,7 +52,7 @@ require('./config/passport.js')(passport);
 app.server = http.createServer(app);
 
 // chat ======================================================================
-require('./app/utils/chat/index.js')(app);
+require('./app/utils/chat/index.js')(app, redisStore);
 
 // launch ====================================================================
 app.server.listen(port, function() {

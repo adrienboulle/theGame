@@ -1,9 +1,19 @@
 'user strict'
 
-module.exports = function(app) {
+module.exports = function(app, redisStore) {
 	
-	var io = require('socket.io')(app.server);
-	
+	var io 				 = require('socket.io')(app.server),
+		passportSocketIo = require("passport.socketio"),
+		cookieParser     = require('cookie-parser');
+
+	io.use(passportSocketIo.authorize({
+		cookieParser: cookieParser,
+		store: 		  redisStore,
+	  	key:          process.env.SESSION_SECRET || 'key',
+	  	secret:       process.env.SESSION_KEY || 'secret'
+	}));
+
+
 	app.get('/chat', function (req, res) {
   		res.sendFile(__dirname + '/index.html');
 	});
