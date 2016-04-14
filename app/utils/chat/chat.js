@@ -9,21 +9,38 @@ angular
 
         $scope.socket = io.connect('/');
 
-        $scope.socket.on('newMsg', function(msg) {
-            $scope.msgs.push(msg);
-            $scope.$apply();
-        })
+        $scope.room = function(id) {
+            var self = this;
+            $scope.socket.emit('join', {room: id});
+            self.id = id;
+            self.msgs = [];
+            self.newMsg = '';
+            self.sendMsg = function() {
+                if (self.newMsg.length === 0) return;
+                $scope.socket.emit('newMsg', {msg: self.newMsg, sender: $scope.sender, room: self.id}, function(err) {
+                    if (err) {
 
-        $scope.sendMsg = function() {
-            if ($scope.newMsg.length === 0) return;
-            $scope.socket.emit('newMsg', {msg: $scope.newMsg, sender: $scope.sender}, function(err) {
-                if (err) {
-
-                } else {
-                    $scope.newMsg = '';
-                }
-                $scope.$apply();
-            });
+                    } else {
+                        self.newMsg = '';
+                    }
+                    $scope.$apply();
+                });
+            }
+            self.addMsg = function(msg) {
+                self.msgs.push(msg);
+            }
         }
-      
+
+        $scope.rooms = [new $scope.room('r1'), new $scope.room('r2')];
+
+        $scope.socket.on('newMsg', function(msg) {
+            for (var i = 0; i < $scope.rooms.length; i++) {
+                if ($scope.rooms[i].id === msg.room) {
+                    $scope.rooms[i].addMsg(msg);
+                    $scope.$apply();
+                    return;
+                }
+            }
+        })   
+
     });

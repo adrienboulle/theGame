@@ -21,27 +21,15 @@
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="rooms">
-            <div class="room">
+            <div class="room" ng-repeat="r in rooms">
                 <div class="msgs mCustomScrollbar">
-                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
+                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in r.msgs track by $index" id="messages">
                         <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
                     </div>
                 </div>
                 <div class="input">
                     <form>
-                        <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
-                    </form>
-                </div>
-            </div>
-            <div class="room">
-                <div class="msgs mCustomScrollbar">
-                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in msgs track by $index" id="messages">
-                        <span>{{m.date | date:'dd/MM HH:mm'}} : {{m.msg}}</span>
-                    </div>
-                </div>
-                <div class="input">
-                    <form>
-                        <input ng-model="newMsg" id="m" autocomplete="off" /><button ng-click="sendMsg()">Send</button>
+                        <input ng-model="r.newMsg" id="m" autocomplete="off" /><button ng-click="r.sendMsg()">Send</button>
                     </form>
                 </div>
             </div>
