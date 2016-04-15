@@ -12,8 +12,10 @@
 	height: 350px;
 	width: 300px;
 	margin-left: 10px;
-	background-color: lightgrey;
+	background-color: #F3F3F3;
 	padding: 5px;
+	border-width: 2px;
+	border-color: #CAC1C1;
 }
 
 .room .msgs {
@@ -21,10 +23,26 @@
 }
 
 .input {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	padding: 10px;
+	width: 100%;
+}
+
+.bot {
+	margin: -6px;
+    width: 298px;
+}
+
+.bot form {
+	float: left;
+    width: 100%;
+    display: inline-flex;
+}
+
+.bot button {
+	float: right;
+}
+
+.bot input {
+	width: 100%;
 }
 
 .time {
@@ -37,19 +55,19 @@
 }
 
 .bubble-receiver {
-	padding: 3px;
+	padding: 5px;
 	position: relative;
 	border-radius: 5px;
-	background-color: #919BD6;
+	background-color: #62CCFF;
 	margin-bottom: 5px;
 	display: inline-block;
 }
 
 .bubble-sender {
-	padding: 3px;
+	padding: 5px;
 	position: relative;
 	border-radius: 5px;
-	background-color: #91D6AD;
+	background-color: #DAD7D3;
 	margin-bottom: 5px;
 	display: inline-block;
 }

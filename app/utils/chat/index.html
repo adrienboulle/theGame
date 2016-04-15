@@ -25,7 +25,7 @@
                 <div class="msgs mCustomScrollbar">
                     <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in r.msgs track by $index" id="messages">
                         <div ng-if="m.sender === sender" class="bubble-sender">
-                            <div>
+                            <div class="text-right">
                                 {{m.msg}}
                             </div>
                             <div class="time">
