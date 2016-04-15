@@ -2,7 +2,7 @@
 
 angular
     .module('Chat', []) 
-    .controller('chat', 
+    .controller('chat', [
         '$scope',
         '$timeout',
         function($scope, $timeout) {
@@ -30,7 +30,7 @@ angular
                     self.msgs.push(msg);
                     $timeout(function() {
                         $('#' + self.id).mCustomScrollbar('scrollTo', "bottom", {scrollInertia: 100});
-                    }, 0);
+                    }, 0)
                 }
             }
 
@@ -50,4 +50,4 @@ angular
                 }
             })   
 
-        });
+        }]);

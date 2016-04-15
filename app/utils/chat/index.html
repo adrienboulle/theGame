@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div ng-if="m.sender !== sender" class="bubble-receiver">
-                            <div>
+                            <div class="username">
                                 <b>{{m.sender}}</b>
                             </div>
                             <div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="input">
+                <div class="bot">
                     <form>
                         <input ng-model="r.newMsg" id="m" autocomplete="off" /><button ng-click="r.sendMsg()">Send</button>
                     </form>
