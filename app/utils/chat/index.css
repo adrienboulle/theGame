@@ -2,7 +2,7 @@
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	padding: 5px;
+	padding: 0 5px;
 }
 
 .room {
@@ -15,7 +15,7 @@
 	background-color: #F3F3F3;
 	padding: 5px;
 	border-width: 2px;
-	border-color: #CAC1C1;
+	border-color: #9A9191;
 }
 
 .room .msgs {
@@ -28,8 +28,9 @@
 
 .bot {
 	margin: -5px;
-    width: 297px;
+    width: 296px;
     margin-top: 0px;
+    border-top: solid 2px #CAC1C1;
 }
 
 .bot form {
@@ -42,19 +43,15 @@
 	float: right;
     border: none;
     background-color: #8CD6F3;
-    border-top: solid 2px #CAC1C1;
-    border-left: solid 2px #CAC1C1;;
+    width: 70px;
 }
 
 .bot input {
 	width: 100%;
-    border-left: solid 0px;
-    border-right: solid 0px;
-    border-bottom: solid 0px;
-    border-top: solid 2px #CAC1C1;
-    height: 35px;
+    height: 33px;
     outline: none;
     padding-left: 7px;
+    border: none;
 }
 
 .time {
