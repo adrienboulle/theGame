@@ -22,25 +22,27 @@
     <body ng-app="Chat" ng-controller="chat">
         <div class="rooms">
             <div class="room" ng-repeat="r in rooms">
-                <div class="msgs mCustomScrollbar">
-                    <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in r.msgs track by $index" id="messages">
-                        <div ng-if="m.sender === sender" class="bubble-sender">
-                            <div class="text-right">
-                                {{m.msg}}
+                <div class="msgs-container">
+                    <div class="msgs mCustomScrollbar">
+                        <div ng-class="{'text-right': m.sender === sender}" ng-repeat="m in r.msgs track by $index" id="messages">
+                            <div ng-if="m.sender === sender" class="bubble-sender">
+                                <div class="text-right">
+                                    {{m.msg}}
+                                </div>
+                                <div class="time">
+                                    {{m.date | date:'HH:mm'}}
+                                </div>
                             </div>
-                            <div class="time">
-                                {{m.date | date:'HH:mm'}}
-                            </div>
-                        </div>
-                        <div ng-if="m.sender !== sender" class="bubble-receiver">
-                            <div class="username">
-                                <b>{{m.sender}}</b>
-                            </div>
-                            <div>
-                                {{m.msg}}
-                            </div>
-                            <div class="time receiver">
-                                {{m.date | date:'HH:mm'}}
+                            <div ng-if="m.sender !== sender" class="bubble-receiver">
+                                <div class="username">
+                                    <b>{{m.sender}}</b>
+                                </div>
+                                <div>
+                                    {{m.msg}}
+                                </div>
+                                <div class="time receiver">
+                                    {{m.date | date:'HH:mm'}}
+                                </div>
                             </div>
                         </div>
                     </div>

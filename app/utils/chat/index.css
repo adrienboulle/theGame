@@ -13,9 +13,12 @@
 	width: 300px;
 	margin-left: 10px;
 	background-color: #F3F3F3;
-	padding: 5px;
 	border-width: 2px;
 	border-color: #9A9191;
+}
+
+.room .msgs-container {
+	padding: 5px; 
 }
 
 .room .msgs {
@@ -27,9 +30,7 @@
 }
 
 .bot {
-	margin: -5px;
     width: 296px;
-    margin-top: 0px;
     border-top: solid 2px #CAC1C1;
 }
 
@@ -48,7 +49,7 @@
 
 .bot input {
 	width: 100%;
-    height: 33px;
+    height: 29px;
     outline: none;
     padding-left: 7px;
     border: none;
@@ -88,3 +89,25 @@
 	display: inline-block;
 }
 
+.mCSB_scrollTools .mCSB_draggerRail {
+	width: 8px !important;
+	border-radius: 1px !important;
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	width: 6px !important;
+	border-radius: 1px !important;
+}
+
+.mCSB_scrollTools {
+	width: 8px !important;
+}
+
+.room .mCSB_inside>.mCSB_container {
+    margin-right: 15px;
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	height: calc(100% - 2px) !important;
+	margin-top: 1px !important;
+}
