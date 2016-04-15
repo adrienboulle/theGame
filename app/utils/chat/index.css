@@ -25,6 +25,11 @@
 	height: 306px;
 }
 
+.room .msg {
+	display: table;
+	width: 100%;
+}
+
 .input {
 	width: 100%;
 }
@@ -87,6 +92,7 @@
 	background-color: #DAD7D3;
 	margin-bottom: 5px;
 	display: inline-block;
+	float: right;
 }
 
 .mCSB_scrollTools .mCSB_draggerRail {

@@ -50,4 +50,17 @@ angular
                 }
             })   
 
+        }])
+    .directive('spanW', [
+        '$timeout',
+        function($timeout) {
+            return {
+                restrict: 'A',
+                link: function(scope, elm, attr, ctrl) {
+                    $timeout(function() {
+                        var w = elm[0].children[0].offsetWidth;
+                        elm[0].setAttribute("style","width:" + w + "px");
+                    }, 0);
+                }
+            }
         }]);
