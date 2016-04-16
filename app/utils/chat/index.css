@@ -19,7 +19,7 @@
 
 .room .msgs-container {
 	padding: 5px;
-	box-shadow: 0px 0px 102px -12px rgba(0, 0, 0, 0.15) inset;
+	box-shadow: 0px 0px 102px 62px rgba(0, 0, 0, 0.05) inset;
 }
 
 .room .msgs {
@@ -91,7 +91,7 @@
 	display: inline-block;
 	word-break: break-word;
 	max-width: 250px;
-	box-shadow: 2px 2px 5px -2px rgba(0, 0, 0, 0.85);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .05), 0 1px 4px 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
 }
 
 .bubble-sender {
@@ -104,7 +104,7 @@
 	float: right;
 	word-break: break-word;
 	max-width: 250px;
-	box-shadow: 2px 2px 5px -2px rgba(0, 0, 0, 0.85);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .05), 0 1px 4px 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
 	margin-right: 3px;
 }
 
