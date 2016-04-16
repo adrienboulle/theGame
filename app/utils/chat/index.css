@@ -19,7 +19,7 @@
 
 .room .msgs-container {
 	padding: 5px;
-	box-shadow: 0px 0px 102px -12px rgba(0, 0, 0, 0.29) inset;
+	box-shadow: 0px 0px 102px -12px rgba(0, 0, 0, 0.15) inset;
 }
 
 .room .msgs {
