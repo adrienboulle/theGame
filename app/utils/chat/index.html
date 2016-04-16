@@ -26,6 +26,9 @@
                     <div class="msgs mCustomScrollbar">
                         <div class="msg" ng-repeat="m in r.msgs track by $index" id="messages">
                             <div ng-if="m.sender === sender" class="bubble-sender">
+                                <div class="username">
+                                    <b>Moi</b>
+                                </div>
                                 <div span-w>
                                     <span>{{m.msg}}</span>
                                 </div>
@@ -49,7 +52,7 @@
                 </div>
                 <div class="bot">
                     <form>
-                        <input ng-model="r.newMsg" id="m" autocomplete="off" /><button ng-click="r.sendMsg()">Send</button>
+                        <input type="text" ng-model="r.newMsg" id="m" /><button ng-click="r.sendMsg()">Send</button>
                     </form>
                 </div>
             </div>
