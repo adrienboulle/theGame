@@ -22,6 +22,9 @@
     <body ng-app="Chat" ng-controller="chat">
         <div class="rooms">
             <div class="room" ng-repeat="r in rooms">
+                <div class="head">
+                    Room
+                </div>
                 <div class="msgs-container">
                     <div class="msgs mCustomScrollbar">
                         <div class="msg" ng-repeat="m in r.msgs track by $index" id="messages">

@@ -9,7 +9,7 @@
 	float: left;
 	position: relative;
 	border-style: solid;
-	height: 350px;
+	height: 375px;
 	width: 300px;
 	margin-left: 10px;
 	background-color: #F3F3F3;
@@ -33,6 +33,16 @@
 
 .input {
 	width: 100%;
+}
+
+.head {
+	padding-top: 3px;
+	padding-left: 8px;
+	background-color: #2D5FA9;
+	color: white;
+    font-weight: 600;
+    height: 25px;
+    border-bottom: solid 1px #425080;
 }
 
 .bot {
