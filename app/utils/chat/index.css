@@ -83,6 +83,8 @@
 	background-color: #62CCFF;
 	margin-bottom: 5px;
 	display: inline-block;
+	word-break: break-word;
+	max-width: 250px;
 }
 
 .bubble-sender {
@@ -93,6 +95,8 @@
 	margin-bottom: 5px;
 	display: inline-block;
 	float: right;
+	word-break: break-word;
+	max-width: 250px;
 }
 
 .mCSB_scrollTools .mCSB_draggerRail {
