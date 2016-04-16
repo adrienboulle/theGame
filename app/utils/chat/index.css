@@ -61,6 +61,7 @@
     outline: none;
     padding-left: 7px;
     border: none;
+    border-right: solid 1px #425080
 }
 
 .time {
