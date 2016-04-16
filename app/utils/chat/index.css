@@ -81,7 +81,7 @@
 }
 
 .bubble-receiver {
-	padding: 2px 10px 7px 10px;
+	padding: 2px 10px 7px 7px;
 	position: relative;
 	border-radius: 5px;
 	background-color: #62CCFF;
@@ -92,7 +92,7 @@
 }
 
 .bubble-sender {
-	padding: 2px 10px 7px 10px;
+	padding: 2px 10px 7px 7px;
 	position: relative;
 	border-radius: 5px;
 	background-color: #DAD7D3;
