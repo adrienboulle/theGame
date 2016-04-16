@@ -48,8 +48,10 @@
 .bot button {
 	float: right;
     border: none;
-    background-color: #8CD6F3;
+    background-color: #2D5FA9;
     width: 70px;
+    color: white;
+    font-weight: 600;
 }
 
 .bot input {
