@@ -12,6 +12,7 @@ angular
             $scope.room = function(id) {
                 var self = this;
                 $scope.socket.emit('join', {room: id});
+                self.name = Math.floor((Math.random() * 10000000000) + 1);
                 self.id = id;
                 self.msgs = [];
                 self.newMsg = '';
@@ -22,6 +23,7 @@ angular
 
                         } else {
                             self.newMsg = '';
+                            self.name = Math.floor((Math.random() * 10000000000) + 1);
                         }
                         $scope.$apply();
                     });
