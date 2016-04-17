@@ -38,7 +38,7 @@
 .head {
 	padding-top: 3px;
 	padding-left: 8px;
-	background-color: #2D5FA9;
+	background-color: #081f2c;
 	color: white;
     font-weight: 600;
     height: 25px;
@@ -59,7 +59,7 @@
 .bot button {
 	float: right;
     border: none;
-    background-color: #2D5FA9;
+    background-color: #081f2c;
     width: 70px;
     color: white;
     font-weight: 600;
@@ -96,7 +96,7 @@
 	padding: 2px 10px 7px 7px;
 	position: relative;
 	border-radius: 5px;
-	background-color: #62CCFF;
+	background-color: #f68d2e;
 	margin-bottom: 5px;
 	display: inline-block;
 	word-break: break-word;
@@ -108,7 +108,7 @@
 	padding: 2px 10px 7px 7px;
 	position: relative;
 	border-radius: 5px;
-	background-color: #D4CDC2;
+	background-color: #e8d98b;
 	margin-bottom: 5px;
 	display: inline-block;
 	float: right;
