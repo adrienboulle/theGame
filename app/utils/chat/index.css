@@ -9,7 +9,7 @@
 	float: left;
 	position: relative;
 	border-style: solid;
-	height: 375px;
+	height: 378px;
 	width: 300px;
 	margin-left: 10px;
 	background-color: #F3F3F3;
@@ -36,13 +36,13 @@
 }
 
 .head {
-	padding-top: 3px;
+	padding-top: 4px;
 	padding-left: 8px;
-	background-color: #081f2c;
+	background-color: #0C3A55;
 	color: white;
     font-weight: 600;
-    height: 25px;
-    border-bottom: solid 1px #425080;
+    height: 28px;
+    border-bottom: solid 1px #09283A;
 }
 
 .bot {
@@ -59,10 +59,11 @@
 .bot button {
 	float: right;
     border: none;
-    background-color: #081f2c;
+    background-color: #0C3A55;
     width: 70px;
     color: white;
     font-weight: 600;
+    border-left: solid 1px #09283A;
 }
 
 .bot input {
@@ -71,7 +72,6 @@
     outline: none;
     padding-left: 7px;
     border: none;
-    border-right: solid 1px #425080
 }
 
 .time {
