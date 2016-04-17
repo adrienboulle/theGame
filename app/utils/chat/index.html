@@ -21,8 +21,8 @@
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="rooms">
-            <div class="room" ng-class="{min: min}" ng-repeat="r in rooms">
-                <div class="head" ng-click="min = !min">
+            <div class="room" ng-class="{min: r.min}" ng-repeat="r in rooms">
+                <div class="head" ng-click="r.min = !r.min">
                     Room
                 </div>
                 <div class="msgs-container">
