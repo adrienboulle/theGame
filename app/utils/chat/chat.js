@@ -39,11 +39,17 @@ angular
                 }
             }
 
-            $scope.rooms = [new $scope.room('r1')];
+            $scope.rooms = [new $scope.room('Romain'), new $scope.room('Adrien'), new $scope.room('Thierry')];
+
+            $scope.currRoom = $scope.rooms[0];
 
             $scope.socket.on('connected', function(res) {
                 $scope.sender = res.user;
             }) 
+
+            $scope.setRoom = function(r) {
+                $scope.currRoom = r;
+            }
 
             $scope.socket.on('newMsg', function(msg) {
                 for (var i = 0; i < $scope.rooms.length; i++) {

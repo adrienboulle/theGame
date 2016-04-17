@@ -1,37 +1,62 @@
-.rooms {
+.chat-container {
 	position: absolute;
 	bottom: 0;
-	right: 0;
+	right: 20px;
 	padding: 0 5px;
 }
 
-.room {
+.chat {
 	float: left;
 	position: relative;
 	border-style: solid;
-	height: 376px;
-	width: 300px;
-	margin-left: 10px;
+	height: 375px;
+	width: 298px;
 	background-color: #F3F3F3;
-	border-width: 2px;
+	border-width: 1px;
 	border-color: #B6ADAD;
 }
 
+.rooms .room.curr {
+	margin-right: -1px;
+    border-radius: 10px 0px 0px 10px;
+    font-weight: 600;
+    border-right: none;
+    padding-right: 14px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, .05), 0 1px 0 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
+}
+
+.rooms {
+	float: left;
+	top: 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.rooms .room {
+	background-color: #E7E7E7;
+	margin: 5px;
+	cursor: pointer;
+	padding: 1px 7px;
+	border: solid 1px #B6ADAD;
+	border-radius: 10px;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .05), 0 1px 4px 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
+}
+
 .min {
-	height: 30px;
+	height: 28px;
 	overflow: hidden;
 }
 
-.room .msgs-container {
+.chat .msgs-container {
 	padding: 5px;
 	box-shadow: 0px 0px 102px 62px rgba(0, 0, 0, 0.05) inset;
 }
 
-.room .msgs {
+.chat .msgs {
 	height: 306px;
 }
 
-.room .msg {
+.chat .msg {
 	display: table;
 	width: 100%;
 }
@@ -52,7 +77,7 @@
 }
 
 .bot {
-    width: 297px;
+    width: 296px;
     border-top: solid 2px #CAC1C1;
 }
 
@@ -139,7 +164,7 @@
 	width: 8px !important;
 }
 
-.room .mCSB_inside>.mCSB_container {
+.chat .mCSB_inside>.mCSB_container {
     margin-right: 15px;
 }
 

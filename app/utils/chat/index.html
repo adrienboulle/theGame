@@ -20,14 +20,19 @@
     </head>
 
     <body ng-app="Chat" ng-controller="chat">
-        <div class="rooms">
-            <div class="room" ng-class="{min: r.min}" ng-repeat="r in rooms">
-                <div class="head" ng-click="r.min = !r.min">
-                    Room
+        <div class="chat-container">
+            <div ng-show="!min" class="rooms">
+                <div ng-class="{curr: currRoom.name === r.name}" ng-repeat="r in rooms" ng-click="setRoom(r)" class="room">
+                    <span>{{r.id}}</span>
+                </div>
+            </div>
+            <div class="chat" ng-class="{min: min}">
+                <div class="head" ng-click="min = !min">
+                    {{currRoom.id}}
                 </div>
                 <div class="msgs-container">
                     <div class="msgs mCustomScrollbar">
-                        <div class="msg" ng-repeat="m in r.msgs track by $index" id="messages">
+                        <div class="msg" ng-repeat="m in currRoom.msgs track by $index" id="messages">
                             <div ng-if="m.sender === sender" class="bubble-sender">
                                 <div class="username">
                                     <b>Moi</b>
@@ -55,7 +60,7 @@
                 </div>
                 <div class="bot">
                     <form>
-                        <input type="text" ng-model="r.newMsg" id="m" name="{{r.name}}"/><button ng-click="r.sendMsg()">Send</button>
+                        <input type="text" ng-model="currRoom.newMsg" id="m" name="{{currRoom.name}}"/><button ng-click="currRoom.sendMsg()">Send</button>
                     </form>
                 </div>
             </div>
