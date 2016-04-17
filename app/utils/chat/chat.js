@@ -39,7 +39,7 @@ angular
                 }
             }
 
-            $scope.rooms = [new $scope.room('Romain'), new $scope.room('Adrien'), new $scope.room('Thierry')];
+            $scope.rooms = [new $scope.room('Romain'), new $scope.room('Adrien'), new $scope.room('Ca va envoyer du paté')];
 
             $scope.currRoom = $scope.rooms[0];
 
