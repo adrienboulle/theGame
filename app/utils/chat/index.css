@@ -17,8 +17,8 @@
 }
 
 .rooms .room.curr {
-	margin-right: -6px;
-    border-radius: 10px 0px 0px 10px;
+	margin-right: -4px;
+    border-radius: 4px 0px 0px 4px;
     font-weight: 600;
     border-right: none;
     padding-right: 14px;
@@ -33,19 +33,21 @@
 }
 
 .rooms .room-container {
-	margin: 5px;
+	margin: 3px;
 	height: 23px;
+	width: 100px;
 }
 
 .room {
-	border-radius: 10px;
+	border-radius: 4px;
 	padding: 1px 7px;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .05), 0 1px 4px 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
 	border: solid 1px #B6ADAD;
 	cursor: pointer;
 	background-color: #E7E7E7;
-	float: right;
-    clear: right;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .min {
