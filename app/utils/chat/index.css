@@ -9,7 +9,7 @@
 	float: left;
 	position: relative;
 	border-style: solid;
-	height: 378px;
+	height: 376px;
 	width: 300px;
 	margin-left: 10px;
 	background-color: #F3F3F3;
@@ -38,10 +38,10 @@
 .head {
 	padding-top: 4px;
 	padding-left: 8px;
-	background-color: #0C3A55;
+	background-color: #0C3249;
 	color: white;
     font-weight: 600;
-    height: 28px;
+    height: 26px;
     border-bottom: solid 1px #09283A;
 }
 
@@ -59,10 +59,11 @@
 .bot button {
 	float: right;
     border: none;
-    background-color: #0C3A55;
+    background-color: #0C3249;
     width: 70px;
     color: white;
     font-weight: 600;
+    outline: none;
     border-left: solid 1px #09283A;
 }
 
