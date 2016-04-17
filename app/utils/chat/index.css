@@ -17,6 +17,11 @@
 	border-color: #B6ADAD;
 }
 
+.min {
+	height: 30px;
+	overflow: hidden;
+}
+
 .room .msgs-container {
 	padding: 5px;
 	box-shadow: 0px 0px 102px 62px rgba(0, 0, 0, 0.05) inset;
@@ -36,6 +41,7 @@
 }
 
 .head {
+	cursor: pointer;
 	padding-top: 4px;
 	padding-left: 8px;
 	background-color: #0C3249;
