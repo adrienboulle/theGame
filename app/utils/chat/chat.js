@@ -12,7 +12,7 @@ angular
             $scope.room = function(id) {
                 var self = this;
                 $scope.socket.emit('join', {room: id});
-                self.name = Math.floor((Math.random() * 10000000000) + 1);
+                self.name = randomName();
                 self.id = id;
                 self.msgs = [];
                 self.newMsg = '';
@@ -23,7 +23,7 @@ angular
 
                         } else {
                             self.newMsg = '';
-                            self.name = Math.floor((Math.random() * 10000000000) + 1);
+                            self.name = randomName();
                         }
                         $scope.$apply();
                     });
@@ -33,6 +33,9 @@ angular
                     $timeout(function() {
                         $('#' + self.id).mCustomScrollbar('scrollTo', "bottom", {scrollInertia: 100});
                     }, 0)
+                }
+                function randomName() {
+                    return Math.floor((Math.random() * 10000000000) + 1);
                 }
             }
 
