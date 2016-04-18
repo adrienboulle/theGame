@@ -26,6 +26,8 @@
 	top: 28px;
     position: relative;
     z-index: 1;
+    width: 10px;
+    overflow: hidden;
     width: 102px;
 }
 
@@ -33,6 +35,7 @@
 	margin: 3px;
 	height: 23px;
 	width: 100px;
+	padding-left: 94px;
 }
 
 .room {

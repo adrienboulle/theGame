@@ -21,7 +21,7 @@
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="chat-container">
-            <div ng-show="!min" class="rooms">
+            <div deck ng-show="!min" class="rooms">
                 <div ng-repeat="r in rooms" ng-click="setRoom(r)" class="room-container">
                     <div ng-class="{curr: currRoom.name === r.name}" class="room">
                         <span>{{r.id}}</span>

@@ -39,7 +39,17 @@ angular
                 }
             }
 
-            $scope.rooms = [new $scope.room('Romain'), new $scope.room('Adrien'), new $scope.room('Ca va envoyer du paté')];
+            $scope.rooms = [
+                new $scope.room('Romain'), 
+                new $scope.room('Adrien'), 
+                new $scope.room('Ca va envoyer du paté'),
+                new $scope.room('Romain'), 
+                new $scope.room('Adrien'), 
+                new $scope.room('Ca va envoyer du paté'),
+                new $scope.room('Romain'), 
+                new $scope.room('Adrien'), 
+                new $scope.room('Ca va envoyer du paté')
+            ];
 
             $scope.currRoom = $scope.rooms[0];
 
@@ -71,6 +81,35 @@ angular
                     $timeout(function() {
                         var w = elm[0].children[0].offsetWidth;
                         elm[0].setAttribute("style","width:" + w + "px");
+                    }, 0);
+                }
+            }
+        }])
+    .directive('deck', [
+        '$timeout',
+        function($timeout) {
+            return {
+                restrict: 'A',
+                link: function(scope, elm, attr, ctrl) {
+                    $timeout(function() {
+                        elm.on('mousemove', function(event) {
+                            var n = this.children.length;
+
+                            var left = $('.chat').offset().left - event.pageX;
+                            var top = event.pageY - $('.chat').offset().top - 28;
+                                 
+                            for (var i = 0; i < n; i++) {
+                                var delta = - top + (i + 1)*26 - 15;
+                                if (left > 30) left = 30;
+                                var h = 94*(1 - (left/30)*Math.exp(-0.5*Math.pow((delta/50), 2)));
+                                this.children[i].setAttribute("style","padding-left:" + h + "px;overflow:visible");
+                            }                            
+                        })
+                        elm.on('mouseleave', function() {
+                            for (var i = 0; i < this.children.length; i++) {
+                                this.children[i].setAttribute("style","");
+                            } 
+                        })
                     }, 0);
                 }
             }
