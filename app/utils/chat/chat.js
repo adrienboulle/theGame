@@ -103,7 +103,7 @@ angular
                             for (var i = 0; i < n; i++) {
                                 var delta = - top + (i + 1)*26 - 15;
                                 if (left > 80) left = 80;
-                                var h = 144*(1 - (deltaY/45)*Math.exp(-0.5*Math.pow((delta/50), 2)));
+                                var h = 144*(1 - (deltaY/45)*Math.exp(-0.5*Math.pow((delta/25), 2)));
                                 this.children[i].setAttribute("style","padding-left:" + h + "px;overflow:visible");
                             }                            
                         })

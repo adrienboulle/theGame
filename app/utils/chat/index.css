@@ -23,12 +23,14 @@
 
 .rooms {
 	float: left;
-	top: 28px;
+	top: -22px;
     position: relative;
     z-index: 1;
     width: 10px;
     overflow: hidden;
     width: 150px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .rooms .room-container {
