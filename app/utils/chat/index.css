@@ -28,14 +28,14 @@
     z-index: 1;
     width: 10px;
     overflow: hidden;
-    width: 102px;
+    width: 150px;
 }
 
 .rooms .room-container {
 	margin: 3px;
 	height: 23px;
-	width: 100px;
-	padding-left: 94px;
+	width: 150px;
+	padding-left: 144px;
 }
 
 .room {
@@ -45,7 +45,6 @@
 	border: solid 1px #B6ADAD;
 	cursor: pointer;
 	background-color: #E7E7E7;
-	text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }

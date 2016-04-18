@@ -97,11 +97,13 @@ angular
 
                             var left = $('.chat').offset().left - event.pageX;
                             var top = event.pageY - $('.chat').offset().top - 28;
-                                 
+                            
+                            var deltaY = 40*Math.exp(-0.5*Math.pow(((75 - left)/35), 2));
+
                             for (var i = 0; i < n; i++) {
                                 var delta = - top + (i + 1)*26 - 15;
-                                if (left > 30) left = 30;
-                                var h = 94*(1 - (left/30)*Math.exp(-0.5*Math.pow((delta/50), 2)));
+                                if (left > 80) left = 80;
+                                var h = 144*(1 - (deltaY/45)*Math.exp(-0.5*Math.pow((delta/50), 2)));
                                 this.children[i].setAttribute("style","padding-left:" + h + "px;overflow:visible");
                             }                            
                         })
