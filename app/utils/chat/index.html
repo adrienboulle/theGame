@@ -21,15 +21,18 @@
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="chat-container">
-            <div class="drawer-container" ng-class="{out: outall}" ng-show="!min">
+            <div class="drawer-container" ng-class="{out: out, outall: outall}" ng-show="!min">
                 <div class="drawer-button-container" ng-mouseover="!outall && (out = true)" ng-mouseleave="!outall && (out = false)">
-                    <div class="drawer-button" ng-click="outall = !outall" ng-class="{out: out || outall}">
+                    <div class="drawer-trigger" ng-mouseover="!outall && (out = true)" ng-mouseleave="!outall && (out = false)">
 
                     </div>
+                    <div class="drawer-button" ng-click="outall = !outall">
+                        <span>{{rooms.length}}</span>
+                    </div>
                 </div>
-                <div class="rooms" ng-show="outall">
+                <div class="rooms" ng-class="{out: outall}">
                     <div ng-repeat="r in rooms" ng-click="setRoom(r)" >
-                        <span>{{r.id}}</span>
+                        {{r.id}}
                     </div>
                 </div>
             </div>
