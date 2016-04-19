@@ -1,3 +1,7 @@
+
+
+
+
 .chat-container {
 	position: absolute;
 	bottom: 0;
@@ -18,37 +22,44 @@
 
 .rooms .room.curr {
     font-weight: 600;
-    border-right: none;
 }
 
 .rooms {
-	float: left;
-	top: -22px;
-    position: relative;
-    z-index: 1;
-    width: 10px;
-    overflow: hidden;
-    width: 150px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+
 }
 
-.rooms .room-container {
-	margin: 3px;
-	height: 23px;
-	width: 150px;
-	padding-left: 144px;
+.drawer-button {
+	padding-left: 20px;
+}
+
+.drawer-container {
+    float: left;
+    width: 150px;
+    top: 30px;
+    position: relative;
+	
+}
+
+.drawer-button-container {
+    position: relative;
+    height: 20px;
+	background-color: red;
+	transition: all 0.2s;
+	right: -145px;
+}
+
+.drawer-button-container.out {
+	transition: all 0.2s;
+	right: -125px;
+}
+
+.drawer-button-container.outall {
+	transition: all 0.2s;
+	right: 0px;
 }
 
 .room {
-	border-radius: 4px 0px 0px 4px;
-	padding: 1px 7px;
-	box-shadow: 0 2px 0 0 rgba(0, 0, 0, .05), 0 1px 0 0 rgba(0, 0, 0, .08), 0 3px 1px -2px rgba(0, 0, 0, .2);
-	border: solid 1px #B6ADAD;
-	cursor: pointer;
-	background-color: #E7E7E7;
-    white-space: nowrap;
-    overflow: hidden;
+
 }
 
 .min {

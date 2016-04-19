@@ -21,9 +21,13 @@
 
     <body ng-app="Chat" ng-controller="chat">
         <div class="chat-container">
-            <div deck ng-show="!min" class="rooms">
-                <div ng-repeat="r in rooms" ng-click="setRoom(r)" class="room-container">
-                    <div ng-class="{curr: currRoom.name === r.name}" class="room">
+            <div class="drawer-container" ng-class="{out: out, outall: outall}" ng-show="!min">
+                <div class="drawer-button-container" ng-mouseover="out = true" ng-mouseleave="out = false">
+                    <div class="drawer-button" ng-click="outall = !outall">
+                    </div>
+                </div>
+                <div class="rooms" ng-show="outall">
+                    <div ng-repeat="r in rooms" >
                         <span>{{r.id}}</span>
                     </div>
                 </div>

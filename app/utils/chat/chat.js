@@ -42,13 +42,8 @@ angular
             $scope.rooms = [
                 new $scope.room('Romain'), 
                 new $scope.room('Adrien'), 
-                new $scope.room('Ca va envoyer du paté'),
-                new $scope.room('Romain'), 
-                new $scope.room('Adrien'), 
-                new $scope.room('Ca va envoyer du paté'),
-                new $scope.room('Romain'), 
-                new $scope.room('Adrien'), 
-                new $scope.room('Ca va envoyer du paté')
+                new $scope.room('Thierry'),
+                new $scope.room('Balabalabalabalabalabouuuubiii')
             ];
 
             $scope.currRoom = $scope.rooms[0];
