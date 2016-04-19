@@ -20,7 +20,8 @@
 	border-color: #B6ADAD;
 }
 
-.rooms .room.curr {
+.rooms 
+.room.curr {
     font-weight: 600;
 }
 
@@ -28,34 +29,42 @@
 
 }
 
-.drawer-button {
-	padding-left: 20px;
-}
 
 .drawer-container {
     float: left;
     width: 150px;
     top: 30px;
     position: relative;
-	
+	transition: all 0.2s;
+	left: 145px;
 }
 
 .drawer-button-container {
     position: relative;
+	right: 20px;
+}
+
+.drawer-container.out 
+.drawer-button-container {
+	right: 0px;
+}
+
+.drawer-button {
+	border-radius: 3px;
     height: 20px;
 	background-color: red;
+	margin-left: 20px;
 	transition: all 0.2s;
-	right: -145px;
 }
 
-.drawer-button-container.out {
+.drawer-container.out {
 	transition: all 0.2s;
-	right: -125px;
+	left: 0px;
 }
 
-.drawer-button-container.outall {
+.drawer-button.out {
 	transition: all 0.2s;
-	right: 0px;
+	margin-left: 0px;
 }
 
 .room {
