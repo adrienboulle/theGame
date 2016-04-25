@@ -31,6 +31,7 @@ angular
                             }) 
                             scope.currRoom = scope.chatRooms[0];
                         }
+                        $(".content").mCustomScrollbar();
                     })
 
                     scope.Room = function(id) {
