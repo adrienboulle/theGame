@@ -1,0 +1,57 @@
+<div class="chat-container">
+    <div class="drawer-container" ng-show="!min">
+        <div class="drawer" ng-class="{out: out, outall: outall}">
+            <div class="drawer-button-container" ng-mouseover="!outall && (out = true)" ng-mouseleave="!outall && (out = false)">
+                <div class="drawer-trigger" ng-mouseover="!outall && (out = true)" ng-mouseleave="!outall && (out = false)">
+
+                </div>
+                <div class="drawer-button" ng-click="outall = !outall">
+                    <span>{{rooms.length}}</span>
+                </div>
+            </div>
+            <div class="rooms" ng-class="{out: outall}">
+                <div ng-repeat="r in rooms" ng-click="setRoom(r)" >
+                    {{r.id}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat" ng-class="{min: min}">
+        <div class="head" ng-click="min = !min">
+            {{currRoom.id}}
+        </div>
+        <div class="msgs-container">
+            <div class="msgs mCustomScrollbar">
+                <div class="msg" ng-repeat="m in currRoom.msgs track by $index" id="messages">
+                    <div ng-if="m.sender === sender" class="bubble-sender">
+                        <div class="username">
+                            <b>Moi</b>
+                        </div>
+                        <div span-w>
+                            <span>{{m.msg}}</span>
+                        </div>
+                        <div class="time text-right">
+                            {{m.date | date:'HH:mm'}}
+                        </div>
+                    </div>
+                    <div ng-if="m.sender !== sender" class="bubble-receiver">
+                        <div class="username">
+                            <b>{{m.sender}}</b>
+                        </div>
+                        <div span-w>
+                            <span>{{m.msg}}</span>
+                        </div>
+                        <div class="time receiver">
+                            {{m.date | date:'HH:mm'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bot">
+            <form>
+                <input type="text" ng-model="currRoom.newMsg" id="m" name="{{currRoom.name}}"/><button ng-click="currRoom.sendMsg()">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
