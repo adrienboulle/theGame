@@ -5,6 +5,8 @@
     <base href="/"></base>
     <!-- inject:css -->
     <!-- endinject -->
+    <link rel="stylesheet" href="chat/chat.css"></link>
+    <link rel="stylesheet" href="chat/mCustomScrollbar.css">
   <style>
     [ng\:cloak], [ng-cloak], .ng-cloak {
       display: none !important;
@@ -16,10 +18,13 @@
     
     <div class="container" ui-view="navbar"></div>
     <div class="container" ui-view="content"></div>
+    <div is-connected="true" chat class="hidden"/>
 
   </body>
 
   <!-- inject:js -->
   <!-- endinject -->
-
+  <script src="socket.io/socket.io.js"></script>
+  <script src="chat/mCustomScrollbar.js"></script>
+  <script src="chat/chat.js"></script>
 </html>

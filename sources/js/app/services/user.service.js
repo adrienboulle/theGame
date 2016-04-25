@@ -152,7 +152,11 @@
 					}
 				})
 				return _p.promise;       
+			},
+			isAuthenticatedSync: function() {
+				return authenticated;
 			}
+
 		}
 	 }
 

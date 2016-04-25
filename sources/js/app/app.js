@@ -7,7 +7,8 @@
 		'ui.bootstrap',
 		'ngMaterial',
 		'ngAnimate',
-		'ngMessages'
+		'ngMessages',
+		'chat'
 		])
 	angular.module('theGame')
 		.config([

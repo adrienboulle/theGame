@@ -14,12 +14,16 @@ module.exports = function(app, redisStore) {
 	}));
 
 
-	app.get('/chat', function (req, res) {
-  		res.sendFile(__dirname + '/index.html');
+	app.get('/chat/chat.js', function (req, res) {
+  		res.sendFile(__dirname + '/chat.js');
 	});
 
-	app.get('/chat/index.css', function (req, res) {
-  		res.sendFile(__dirname + '/index.css');
+	app.get('/chat/chat.html', function (req, res) {
+  		res.sendFile(__dirname + '/chat.html');
+	});
+
+	app.get('/chat/chat.css', function (req, res) {
+  		res.sendFile(__dirname + '/chat.css');
 	})
 
 	app.get('/chat/jquery.js', function (req, res) {
