@@ -9,6 +9,11 @@
 		.directive('isConnected', [
 			'UserService',
 			IsConnected
+		])
+		.controller('ChatController', [
+			'$scope',
+			'$timeout',
+			ChatController
 		]);
 
 	function Config($stateProvider) {
@@ -40,9 +45,6 @@
 	function IsConnected(UserService) {
         return {
             restrict: 'A',
-            scope: {
-            	isConnected: '='
-            },
             link: function(scope, elm, attr, ctrl) {
             	var hidde = function() {
         				elm.addClass('hidden');
@@ -51,12 +53,14 @@
         				elm.removeClass('hidden');	
         			},
         			defineVisibility = function(isAuthenticated) {
-    					if (isAuthenticated === scope.isConnected) {
+    					if (isAuthenticated === isConnected) {
 							show();
     					} else {
     						hidde();
     					}
-        			};
+        			},
+        			isConnected = !!attr.isConnected;
+
 
         		scope.$watch(function() {
                     return UserService.isAuthenticatedSync();
@@ -65,6 +69,12 @@
                 });
             }
         }
+    }
+
+    function ChatController($scope, $timeout) {
+        $timeout(function() {
+        	$scope.rooms = ['Adrien', 'Romain', 'Thierry', 'Balalabouuubiiiiiiiii'];
+    	}, 3000);
     }
 
 })();

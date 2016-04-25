@@ -8,10 +8,29 @@ angular
             return {
                 restrict: 'AE',
                 templateUrl: 'chat/chat.html',
+                scope: {
+                    rooms: '=chat'
+                },
                 link: function(scope, elm, attr, ctrl) {
+
                     scope.socket = io.connect('/');
 
-                    scope.room = function(id) {
+                    scope.chatRooms = [];
+
+                    scope.$watch('rooms', function() {
+                        if (scope.rooms) {
+                            for (var i = 0; i < scope.rooms.length; i++) {
+                                var room = new scope.Room(scope.rooms[i]);
+                                scope.chatRooms.push(room);
+                            }
+                        }
+                        if (scope.rooms && scope.rooms.length > 0) {
+                            scope.socket = io.connect('/');
+                            scope.currRoom = scope.chatRooms[0];
+                        }
+                    })
+
+                    scope.Room = function(id) {
                         var self = this;
                         scope.socket.emit('join', {room: id});
                         self.name = randomName();
@@ -41,27 +60,14 @@ angular
                         }
                     }
 
-                    scope.rooms = [
-                        new scope.room('Romain'), 
-                        new scope.room('Adrien'), 
-                        new scope.room('Thierry'),
-                        new scope.room('Balabalabalabalabalabouuuubiii')
-                    ];
-
-                    scope.currRoom = scope.rooms[0];
-
-                    scope.socket.on('connected', function(res) {
-                        scope.sender = res.user;
-                    }) 
-
                     scope.setRoom = function(r) {
                         scope.currRoom = r;
                     }
 
                     scope.socket.on('newMsg', function(msg) {
                         for (var i = 0; i < scope.rooms.length; i++) {
-                            if (scope.rooms[i].id === msg.room) {
-                                scope.rooms[i].addMsg(msg);
+                            if (scope.chatRooms[i].id === msg.room) {
+                                scope.chatRooms[i].addMsg(msg);
                                 scope.$apply();
                                 return;
                             }

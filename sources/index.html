@@ -18,7 +18,9 @@
     
     <div class="container" ui-view="navbar"></div>
     <div class="container" ui-view="content"></div>
-    <div is-connected="true" chat class="hidden"/>
+    <div ng-controller="ChatController" is-connected="true">
+      <div chat="rooms"></div>
+    </div>
 
   </body>
 
