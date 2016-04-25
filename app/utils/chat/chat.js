@@ -26,8 +26,8 @@ angular
                         }
                         if (scope.rooms && scope.rooms.length > 0) {
                             scope.socket = io.connect('/');
-                            $scope.socket.on('connected', function(res) {
-                                $scope.sender = res.user;
+                            scope.socket.on('connected', function(res) {
+                                scope.sender = res.user;
                             }) 
                             scope.currRoom = scope.chatRooms[0];
                         }
