@@ -11,14 +11,14 @@
             </div>
             <div class="rooms" ng-class="{out: outall}">
                 <div ng-repeat="r in chatRooms" ng-click="setRoom(r)" >
-                    {{r.id}}
+                    <span>{{r.name}}</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="chat" ng-class="{min: min}">
         <div class="head" ng-click="min = !min">
-            {{currRoom.id}}
+            {{currRoom.name}}
         </div>
         <div class="msgs-container">
             <div class="msgs mCustomScrollbar">

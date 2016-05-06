@@ -20,6 +20,12 @@
     font-weight: 600;
 }
 
+.rooms div span {
+	overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
 .rooms div {
 	padding-left: 10px;
 	text-overflow: ellipsis;

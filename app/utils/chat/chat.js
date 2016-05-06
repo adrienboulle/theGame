@@ -34,11 +34,13 @@ angular
                         $(".content").mCustomScrollbar();
                     })
 
-                    scope.Room = function(id) {
+                    scope.Room = function(other) {
                         var self = this;
-                        scope.socket.emit('join', {room: id});
-                        self.name = randomName();
-                        self.id = id;
+                        scope.socket.emit('join', {others: [other]}, function(room) {
+                            self.id = room.id;
+                            self.name = room.name;
+                        });
+                        self.other = other;
                         self.msgs = [];
                         self.newMsg = '';
                         self.sendMsg = function() {

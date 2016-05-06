@@ -74,7 +74,7 @@
     function ChatController($scope, $timeout) {
         $timeout(function() {
         	$scope.rooms = ['Adrien', 'Romain', 'Thierry', 'Balalabouuubiiiiiiiii'];
-    	}, 3000);
+    	}, 100);
     }
 
 })();

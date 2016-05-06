@@ -52,16 +52,18 @@ module.exports = function(app, redisStore) {
 		
 		socket.emit('connected', {user: socket.request.user.username});
 
-		socket.on('join', function(options) {
+		socket.on('join', function(options, callback) {
 			if (options.roomId && canAccesRoom(options.roomId)) {
 				socket.join(options.roomId);
 			} else if (!options.roomId) {
 				var room = new Room({
-					name: socket.request.user.username + "&" + options.others[0],
+					name: socket.request.user.username + " & " + options.others[0],
 					participants: options.others,
 					owners: socket.request.user.username 
 				});
-				room.save(function(err, room) {});
+				room.save(function(err, room) {
+					callback({id: room.id, name: room.name});
+				});
 			}
 		})
 
