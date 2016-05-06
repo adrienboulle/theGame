@@ -4,7 +4,10 @@ module.exports = function(app, redisStore) {
 	
 	var io 				 = require('socket.io')(app.server),
 		passportSocketIo = require("passport.socketio"),
-		cookieParser     = require('cookie-parser');
+		cookieParser     = require('cookie-parser'),
+		Room             = require('./models/room.js'),
+		Message          = require('./models/message.js');
+
 
 	io.use(passportSocketIo.authorize({
 		cookieParser: cookieParser,
@@ -50,8 +53,15 @@ module.exports = function(app, redisStore) {
 		socket.emit('connected', {user: socket.request.user.username});
 
 		socket.on('join', function(options) {
-			if (options.room && canAccesRoom(options.room)) {
-				socket.join(options.room);
+			if (options.roomId && canAccesRoom(options.roomId)) {
+				socket.join(options.roomId);
+			} else if (!options.roomId) {
+				var room = new Room({
+					name: socket.request.user.username + "&" + options.others[0],
+					participants: options.others,
+					owners: socket.request.user.username 
+				});
+				room.save(function(err, room) {});
 			}
 		})
 
@@ -64,7 +74,7 @@ module.exports = function(app, redisStore) {
 	
 	})
 
-	function canAccesRoom(room) {
+	function canAccesRoom(roomId) {
 		return true;
 	}
 
