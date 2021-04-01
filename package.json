@@ -23,7 +23,7 @@
     "gulp-usemin": "^0.3.21",
     "gulp-watch": "^4.3.5",
     "main-bower-files": "^2.11.1",
-    "mongoose": "^4.4.7",
+    "mongoose": "^5.12.3",
     "nodemailer": "^2.3.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
