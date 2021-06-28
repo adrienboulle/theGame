@@ -24,7 +24,7 @@
     "gulp-watch": "^4.3.5",
     "main-bower-files": "^2.11.1",
     "mongoose": "^4.4.7",
-    "nodemailer": "^2.3.0",
+    "nodemailer": "^6.6.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport.socketio": "^3.6.1",
